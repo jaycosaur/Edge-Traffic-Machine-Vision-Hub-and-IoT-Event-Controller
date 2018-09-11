@@ -1,0 +1,20 @@
+{
+    "apps": [
+      {
+        "name": "logging",
+        "script": "./Logging/index.js",
+        "exec_mode": "cluster",
+        "instances": 2,
+        "node_args": "--max_old_space_size=8192"
+      },
+      {
+        "name": "processing",
+        "script": "./Processing/index.js",
+        "node_args": "--max_old_space_size=8192"
+      },
+      {
+        "name": "vision",
+        "script": "./Vision/main.py"
+      }
+    ]
+  }

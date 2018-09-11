@@ -1,0 +1,7 @@
+{
+    "RAW_STORE_PATH": "./../store/raw/",
+    "STAGED_STORE_PATH": "./../store/staged/",
+    "PROCESSED_STORE_PATH": "./../store/processed/",
+    "EVENT_LOGS_PATH": "./../logs/events.csv",
+    "PROCESSED_LOGS_PATH": "./../logs/processed.csv"
+}

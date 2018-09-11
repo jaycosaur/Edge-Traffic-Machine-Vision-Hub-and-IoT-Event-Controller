@@ -1,0 +1,24 @@
+{
+  "name": "processing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "csv-writer": "^1.2.0",
+    "imagemin": "^6.0.0",
+    "imagemin-jpegtran": "^5.0.2",
+    "moment": "^2.22.2",
+    "node-gyp": "^3.8.0",
+    "node-watch": "^0.5.8",
+    "prompt-list": "^3.2.0",
+    "rebuild": "^0.1.2",
+    "sha256": "^0.2.0",
+    "terminal-task-runner": "^1.6.0"
+  }
+}
