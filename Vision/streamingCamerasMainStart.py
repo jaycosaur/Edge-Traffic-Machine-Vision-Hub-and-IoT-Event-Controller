@@ -54,7 +54,7 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        if(IS_ROTATE==True):
+        if IS_ROTATE:
             cv2.imshow("Livestream", np.rot90(image.copy()))
         else:
             cv2.imshow("Livestream", image.copy())
