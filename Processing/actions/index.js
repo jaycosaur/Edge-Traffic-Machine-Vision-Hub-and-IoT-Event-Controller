@@ -109,7 +109,7 @@ module.exports = actionHandler = (action) => {
             // strip out details and transform to exif tags
             // write exif tags
         //below goes in exif write callback
-        axios.get('http://0.0.0.0:8000/gps-coords')
+        axios.get('http://192.168.1.100:8000/gps-coords')
             .then(function (response) {
                 console.log(response);
                 const objToWrite = {
