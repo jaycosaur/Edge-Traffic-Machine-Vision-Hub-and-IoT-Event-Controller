@@ -40,14 +40,14 @@ CAM_CONFIG = {
 
 #pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
 
-h = Harvester()
-h.add_cti_file('/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti')
-h.update_device_info_list()
+
 
 def worker(camId):
     CAM_NAME = CAM_CONFIG[camId]['name']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
-
+    h = Harvester()
+    h.add_cti_file('/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti')
+    h.update_device_info_list()
     try:
         cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
         print ("Camera found")
