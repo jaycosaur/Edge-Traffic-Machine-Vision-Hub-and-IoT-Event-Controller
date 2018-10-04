@@ -4,7 +4,7 @@ import time
 import cv2
 import urllib.request
 import numpy as np 
-#import pyyolo
+import pyyolo
 import urllib.request
 from harvesters.core import Harvester
 
@@ -38,7 +38,7 @@ CAM_CONFIG = {
     },
 }
 
-#pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
+pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
 
 
 
