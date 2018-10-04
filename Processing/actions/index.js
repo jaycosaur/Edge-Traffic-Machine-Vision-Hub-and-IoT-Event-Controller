@@ -4,7 +4,6 @@ const fs = require('fs');
 const chalk = require('chalk');
 const moment = require('moment')
 const imagemin = require('imagemin');
-const imageminJpegtran = require('imagemin-jpegtran');
 const leven = require('leven');
 const logWriter = require('./../utils/sightingEventHandler')
 
@@ -82,7 +81,7 @@ module.exports = actionHandler = (action) => {
         // add exif data (waiting on gps)
         const exifDataToWrite = null
         imagemin([action.payload.path], `${config.PROCESSED_STORE_PATH}`, {
-            plugins: [imageminJpegtran()]
+            plugins: []
         }).then(async res => {
             const { data, path } = res[0]
             // delete old file
