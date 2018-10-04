@@ -14,8 +14,6 @@ from harvesters.core import Harvester
 thresh = 0.5
 hier_thresh = 0.2
 
-
-
 darknet_path = '/home/server/Projects/pyyolo/darknet'
 datacfg = 'cfg/coco.data'
 cfgfile = 'cfg/yolov3-tiny.cfg'
@@ -27,7 +25,6 @@ TRIGGER_TRUCK_URL = 'http://192.168.1.100:8000/trigger-truck'
 TRIGGER_FAR_FLASH_URL = 'http://192.168.1.100:8000/trigger-far-flash'
 TRIGGER_CLOSE_FLASH_URL = 'http://192.168.1.100:8000/trigger-close-flash'
 TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
-
 
 CAM_CONFIG = {
     'CAM_1': {
@@ -51,8 +48,6 @@ h.update_device_info_list()
 
 
 def worker(camId):
-
-
     CAM_NAME = CAM_CONFIG[camId]['name']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
 
@@ -98,7 +93,7 @@ def worker(camId):
 
 if __name__ == '__main__':
    # camIds = ['CAM_1','CAM_2']
-    camIds = ['CAM_2']
+    camIds = ['CAM_1']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
         p.start()
