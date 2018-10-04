@@ -68,6 +68,7 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
+        print(image.shape)
         #c, h, w = image.shape[0], image.shape[1], image.shape[2]
         #predictions = pyyolo.detect(w, h, c, image, thresh, hier_thresh)
         #for output in predictions:
