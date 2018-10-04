@@ -49,8 +49,8 @@ class fileBackupQueue {
             res => {
                 //backup log files
                 return Promise.all(this.backupPath.map(bpath => ([
-                    fs.copy(EVENT_LOGS_PATH, path.join(bpath,events.csv)),
-                    fs.copy(PROCESSED_LOGS_PATH, path.join(bpath,processed.csv))
+                    fs.copy(EVENT_LOGS_PATH, path.join(bpath,'events.csv')),
+                    fs.copy(PROCESSED_LOGS_PATH, path.join(bpath,'processed.csv'))
                 ])))
             }
         ).catch(err=>console.log(err))  
