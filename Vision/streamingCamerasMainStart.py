@@ -67,6 +67,7 @@ def worker(camId):
         image = buffer.payload.components[0].data
         im = np.zeros((3,image.shape[0],image.shape[1]))
         im[1,:,:] = image.copy()
+        print(shape(image))
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
         #c, h, w = 1, image.shape[0], image.shape[1]
         #im = image.copy()
