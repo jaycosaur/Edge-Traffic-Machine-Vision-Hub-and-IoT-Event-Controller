@@ -108,7 +108,7 @@ def worker(camId):
 
 if __name__ == '__main__':
    # camIds = ['CAM_1','CAM_2']
-    camIds = ['CAM_2']
+    camIds = ['CAM_1']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
         p.start()
