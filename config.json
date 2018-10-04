@@ -1,9 +1,9 @@
 {
-    "RAW_STORE_PATH": "./../store/raw/",
-    "STAGED_STORE_PATH": "./../store/staged/",
-    "PROCESSED_STORE_PATH": "./../store/processed/",
-    "EVENT_LOGS_PATH": "./../store/events.csv",
-    "PROCESSED_LOGS_PATH": "./../store/processed.csv",
-    "BACKUP_LOCATIONS": ["./../store/backups/nas/","./../store/backups/HD1/","./../store/backups/HD2/"],
+    "RAW_STORE_PATH": "/home/server/store/raw/",
+    "STAGED_STORE_PATH": "/home/server/store/staged/",
+    "PROCESSED_STORE_PATH": "/home/server/store/processed/",
+    "EVENT_LOGS_PATH": "/home/server/store/events.csv",
+    "PROCESSED_LOGS_PATH": "/home/server/store/processed.csv",
+    "BACKUP_LOCATIONS": ["/home/server/store/backups/nas/","/home/server/store/backups/HD1/","/home/server/store/backups/HD2/"],
     "AUTO_BACKUP_BUFFER": "100"
 }
