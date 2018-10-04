@@ -90,7 +90,7 @@ def worker(camId):
             if( what == 'car' ):
                 print(output)
                 numberCars += 1
-                if ( camId =="CAM_2" ):
+                if ( camId =="CAM_1" ):
                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
