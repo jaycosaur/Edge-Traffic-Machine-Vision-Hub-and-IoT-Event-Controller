@@ -113,11 +113,11 @@ module.exports = actionHandler = (action) => {
             .then(function (response) {
                 const { lat, lon, time } = response.data
                 const objToWrite = {
-                    id: ID,
+                    ID: ID,
                     timeUNIX: UNIX,
                     timeISO: moment.unix(UNIX).toISOString(),
                     timeGPS: time,
-                    GPS_COORDS: JSON.stringify({lat, lon}),
+                    GPS_COORDS: `${lat}, ${lon}`,
                     CAM,
                     PLATE,
                     PACKAGE_ID: 0,
