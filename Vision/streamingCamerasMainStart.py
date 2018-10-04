@@ -109,8 +109,8 @@ def worker(camId):
     cam.destroy()
 
 if __name__ == '__main__':
-   # camIds = ['CAM_1','CAM_2']
-    camIds = ['CAM_1']
+    camIds = ['CAM_1','CAM_2']
+    #camIds = ['CAM_1']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
         p.start()
