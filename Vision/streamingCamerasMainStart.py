@@ -71,9 +71,8 @@ def worker(camId):
         data = im.ravel()/255.0
         data = np.ascontiguousarray(data, dtype=np.float32)
         predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
-        for output in predictions:
-            print(output)
-
+        print(predictions)
+        
         if IS_ROTATE:
             cv2.imshow(CAM_NAME, np.rot90(image.copy()))
         else:
