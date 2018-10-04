@@ -65,7 +65,7 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        im = np.zeros((3,image.shape[0],image.shape[1]))
+        im = np.zeros((3,image.shape[1],image.shape[0]))
         im[1,:,:] = np.rot90(image.copy())
         #print(image.shape)
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
