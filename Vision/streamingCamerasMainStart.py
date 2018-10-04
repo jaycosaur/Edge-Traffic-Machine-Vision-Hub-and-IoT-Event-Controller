@@ -65,14 +65,11 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        im = np.zeros((3,image.shape[1],image.shape[0]))
-        clone = image.copy()
-        im[0,:,:] = np.rot90(clone)
-        im[1,:,:] = np.rot90(clone)
-        im[2,:,:] = np.rot90(clone)
         small = cv2.resize(image, dsize=(640, 400), interpolation=cv2.INTER_CUBIC)
-        print(image.shape)
-        print(small.shape)
+        im = np.zeros((3,small.shape[1],small.shape[0]))
+        im[0,:,:] = np.rot90(small)
+        im[1,:,:] = np.rot90(small)
+        im[2,:,:] = np.rot90(small)
 
         #print(image.shape)
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
