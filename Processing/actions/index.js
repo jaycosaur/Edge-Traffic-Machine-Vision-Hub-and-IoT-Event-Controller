@@ -8,7 +8,7 @@ const leven = require('leven');
 const logWriter = require('./../utils/sightingEventHandler')
 const fsExtra = require('fs-extra')
 
-const imageminPngquant = require('imagemin-jpegtran');
+//const imageminPngquant = require('imagemin-jpegtran');
 
 const processedRecordLog = new logWriter({path: config.PROCESSED_LOGS_PATH})
 //const extractPlateFromImage = require('../utils/extractPlateFromImage')
