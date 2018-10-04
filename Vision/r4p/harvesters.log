@@ -1,103 +1,29 @@
-2018-10-04 17:29:55,109 :: harvesters :: INFO :: Added /usr/local/lib/baumer/libbgapi2_gige.cti to the CTI file list.
-2018-10-04 17:29:55,110 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:29:55,177 :: harvesters :: INFO :: Initialized GenTL Producer, /usr/local/lib/baumer/libbgapi2_gige.cti.
-2018-10-04 17:29:55,187 :: harvesters :: INFO :: Opened System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
-2018-10-04 17:29:55,192 :: harvesters :: INFO :: Opened Interface module, enp3s0f0.
-2018-10-04 17:29:55,193 :: harvesters :: INFO :: Opened Interface module, enp3s0f1.
-2018-10-04 17:29:55,193 :: harvesters :: INFO :: Opened Interface module, enp4s0f0.
-2018-10-04 17:29:55,193 :: harvesters :: INFO :: Opened Interface module, enp4s0f1.
-2018-10-04 17:29:55,194 :: harvesters :: INFO :: Opened Interface module, ens5.
-2018-10-04 17:29:56,207 :: harvesters :: INFO :: Opened Interface module, virbr0.
-2018-10-04 17:29:57,209 :: harvesters :: INFO :: Opened Interface module, virbr0-nic.
-2018-10-04 17:29:57,210 :: harvesters :: INFO :: Opened Interface module, docker0.
-2018-10-04 17:29:58,211 :: harvesters :: INFO :: Updated the device information list.
-2018-10-04 17:29:58,216 :: harvesters :: INFO :: Opened Device module, devicemodul00_21_49_00_8b_57.
-2018-10-04 17:29:58,216 :: harvesters :: INFO :: URL: Local:MER-231-41Gx_V1.0.48.zip;40ba0000;4E09
-2018-10-04 17:29:58,635 :: harvesters :: INFO :: Started resetting the Harvester object.
-2018-10-04 17:29:58,635 :: harvesters :: INFO :: Removed the all CTI file from the list.
-2018-10-04 17:29:58,636 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:29:58,636 :: harvesters :: INFO :: Closed Interface module, enp3s0f0.
-2018-10-04 17:29:58,636 :: harvesters :: INFO :: Closed Interface module, enp3s0f1.
-2018-10-04 17:29:58,636 :: harvesters :: INFO :: Closed Interface module, enp4s0f0.
-2018-10-04 17:29:58,636 :: harvesters :: INFO :: Closed Interface module, enp4s0f1.
-2018-10-04 17:29:58,636 :: harvesters :: INFO :: Closed Interface module, ens5.
-2018-10-04 17:29:58,637 :: harvesters :: INFO :: Closed Interface module, virbr0.
-2018-10-04 17:29:58,637 :: harvesters :: INFO :: Closed Interface module, virbr0-nic.
-2018-10-04 17:29:58,637 :: harvesters :: INFO :: Closed Interface module, docker0.
-2018-10-04 17:29:58,644 :: harvesters :: INFO :: Closed System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
-2018-10-04 17:29:58,651 :: harvesters :: INFO :: Closed /usr/local/lib/baumer/libbgapi2_gige.cti.
-2018-10-04 17:29:58,651 :: harvesters :: INFO :: Completed resetting the Harvester object.
-2018-10-04 17:31:24,604 :: harvesters :: INFO :: Added /usr/local/lib/baumer/libbgapi2_gige.cti to the CTI file list.
-2018-10-04 17:31:24,604 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:31:24,608 :: harvesters :: INFO :: Initialized GenTL Producer, /usr/local/lib/baumer/libbgapi2_gige.cti.
-2018-10-04 17:31:24,609 :: harvesters :: INFO :: Opened System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
-2018-10-04 17:31:24,610 :: harvesters :: INFO :: Opened Interface module, enp3s0f0.
-2018-10-04 17:31:24,611 :: harvesters :: INFO :: Opened Interface module, enp3s0f1.
-2018-10-04 17:31:24,611 :: harvesters :: INFO :: Opened Interface module, enp4s0f0.
-2018-10-04 17:31:24,612 :: harvesters :: INFO :: Opened Interface module, enp4s0f1.
-2018-10-04 17:31:24,612 :: harvesters :: INFO :: Opened Interface module, ens5.
-2018-10-04 17:31:25,626 :: harvesters :: INFO :: Opened Interface module, virbr0.
-2018-10-04 17:31:26,628 :: harvesters :: INFO :: Opened Interface module, virbr0-nic.
-2018-10-04 17:31:26,629 :: harvesters :: INFO :: Opened Interface module, docker0.
-2018-10-04 17:31:27,630 :: harvesters :: INFO :: Updated the device information list.
-2018-10-04 17:31:27,641 :: harvesters :: INFO :: Opened Device module, devicemodul00_21_49_00_8b_57.
-2018-10-04 17:31:27,641 :: harvesters :: INFO :: URL: Local:MER-231-41Gx_V1.0.48.zip;40ba0000;4E09
-2018-10-04 17:31:27,766 :: harvesters :: INFO :: Started resetting the Harvester object.
-2018-10-04 17:31:27,767 :: harvesters :: INFO :: Removed the all CTI file from the list.
-2018-10-04 17:31:27,767 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:31:27,767 :: harvesters :: INFO :: Closed Interface module, enp3s0f0.
-2018-10-04 17:31:27,767 :: harvesters :: INFO :: Closed Interface module, enp3s0f1.
-2018-10-04 17:31:27,768 :: harvesters :: INFO :: Closed Interface module, enp4s0f0.
-2018-10-04 17:31:27,768 :: harvesters :: INFO :: Closed Interface module, enp4s0f1.
-2018-10-04 17:31:27,768 :: harvesters :: INFO :: Closed Interface module, ens5.
-2018-10-04 17:31:27,768 :: harvesters :: INFO :: Closed Interface module, virbr0.
-2018-10-04 17:31:27,768 :: harvesters :: INFO :: Closed Interface module, virbr0-nic.
-2018-10-04 17:31:27,768 :: harvesters :: INFO :: Closed Interface module, docker0.
-2018-10-04 17:31:27,768 :: harvesters :: INFO :: Closed System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
-2018-10-04 17:31:27,778 :: harvesters :: INFO :: Closed /usr/local/lib/baumer/libbgapi2_gige.cti.
-2018-10-04 17:31:27,778 :: harvesters :: INFO :: Completed resetting the Harvester object.
-2018-10-04 17:38:54,757 :: harvesters :: INFO :: Added /usr/local/lib/baumer/libbgapi2_gige.cti to the CTI file list.
-2018-10-04 17:38:54,758 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:38:54,761 :: harvesters :: INFO :: Initialized GenTL Producer, /usr/local/lib/baumer/libbgapi2_gige.cti.
-2018-10-04 17:38:54,761 :: harvesters :: INFO :: Opened System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
-2018-10-04 17:38:54,762 :: harvesters :: INFO :: Opened Interface module, enp3s0f0.
-2018-10-04 17:38:54,762 :: harvesters :: INFO :: Opened Interface module, enp3s0f1.
-2018-10-04 17:38:54,763 :: harvesters :: INFO :: Opened Interface module, enp4s0f0.
-2018-10-04 17:38:54,763 :: harvesters :: INFO :: Opened Interface module, enp4s0f1.
-2018-10-04 17:38:54,764 :: harvesters :: INFO :: Opened Interface module, ens5.
-2018-10-04 17:38:55,776 :: harvesters :: INFO :: Opened Interface module, virbr0.
-2018-10-04 17:38:56,778 :: harvesters :: INFO :: Opened Interface module, virbr0-nic.
-2018-10-04 17:38:56,779 :: harvesters :: INFO :: Opened Interface module, docker0.
-2018-10-04 17:38:57,781 :: harvesters :: INFO :: Updated the device information list.
-2018-10-04 17:38:57,792 :: harvesters :: INFO :: Opened Device module, devicemodul00_21_49_00_8b_57.
-2018-10-04 17:38:57,792 :: harvesters :: INFO :: URL: Local:MER-231-41Gx_V1.0.48.zip;40ba0000;4E09
-2018-10-04 17:38:57,921 :: harvesters :: INFO :: Started resetting the Harvester object.
-2018-10-04 17:38:57,921 :: harvesters :: INFO :: Removed the all CTI file from the list.
-2018-10-04 17:38:57,922 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:38:57,922 :: harvesters :: INFO :: Closed Interface module, enp3s0f0.
-2018-10-04 17:38:57,922 :: harvesters :: INFO :: Closed Interface module, enp3s0f1.
-2018-10-04 17:38:57,922 :: harvesters :: INFO :: Closed Interface module, enp4s0f0.
-2018-10-04 17:38:57,922 :: harvesters :: INFO :: Closed Interface module, enp4s0f1.
-2018-10-04 17:38:57,922 :: harvesters :: INFO :: Closed Interface module, ens5.
-2018-10-04 17:38:57,923 :: harvesters :: INFO :: Closed Interface module, virbr0.
-2018-10-04 17:38:57,923 :: harvesters :: INFO :: Closed Interface module, virbr0-nic.
-2018-10-04 17:38:57,923 :: harvesters :: INFO :: Closed Interface module, docker0.
-2018-10-04 17:38:57,923 :: harvesters :: INFO :: Closed System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
-2018-10-04 17:38:57,928 :: harvesters :: INFO :: Closed /usr/local/lib/baumer/libbgapi2_gige.cti.
-2018-10-04 17:38:57,929 :: harvesters :: INFO :: Completed resetting the Harvester object.
-2018-10-04 17:41:57,085 :: harvesters :: INFO :: Added /home/server/Desktop/ctifiles/GxGVTL.cti to the CTI file list.
-2018-10-04 17:41:57,085 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:41:57,085 :: harvesters :: ERROR :: GenTL exception: Failed to load CTI file; /home/server/Desktop/ctifiles/GxGVTL.cti: invalid ELF header (ID: -10001)
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.5/dist-packages/harvesters/core.py", line 1946, in update_device_info_list
-    self._open_gentl_producers()
-  File "/usr/local/lib/python3.5/dist-packages/harvesters/core.py", line 1825, in _open_gentl_producers
-    producer.open(file_path)
-  File "/usr/local/lib/python3.5/dist-packages/genicam2/gentl.py", line 2323, in open
-    return _gentl.GenTLProducer_open(self, path_name)
-_gentl.LoadLibraryException: GenTL exception: Failed to load CTI file; /home/server/Desktop/ctifiles/GxGVTL.cti: invalid ELF header (ID: -10001)
-2018-10-04 17:41:57,087 :: harvesters :: INFO :: Updated the device information list.
-2018-10-04 17:41:57,143 :: harvesters :: INFO :: Started resetting the Harvester object.
-2018-10-04 17:41:57,144 :: harvesters :: INFO :: Removed the all CTI file from the list.
-2018-10-04 17:41:57,144 :: harvesters :: INFO :: Discarded the device information list.
-2018-10-04 17:41:57,144 :: harvesters :: INFO :: Completed resetting the Harvester object.
+2018-10-04 18:08:17,953 :: harvesters :: INFO :: Added /usr/local/lib/baumer/libbgapi2_gige.cti to the CTI file list.
+2018-10-04 18:08:17,953 :: harvesters :: INFO :: Discarded the device information list.
+2018-10-04 18:08:17,957 :: harvesters :: INFO :: Initialized GenTL Producer, /usr/local/lib/baumer/libbgapi2_gige.cti.
+2018-10-04 18:08:17,958 :: harvesters :: INFO :: Opened System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
+2018-10-04 18:08:17,959 :: harvesters :: INFO :: Opened Interface module, enp3s0f0.
+2018-10-04 18:08:17,959 :: harvesters :: INFO :: Opened Interface module, enp3s0f1.
+2018-10-04 18:08:17,959 :: harvesters :: INFO :: Opened Interface module, enp4s0f0.
+2018-10-04 18:08:17,960 :: harvesters :: INFO :: Opened Interface module, enp4s0f1.
+2018-10-04 18:08:17,960 :: harvesters :: INFO :: Opened Interface module, ens5.
+2018-10-04 18:08:18,975 :: harvesters :: INFO :: Opened Interface module, virbr0.
+2018-10-04 18:08:19,977 :: harvesters :: INFO :: Opened Interface module, virbr0-nic.
+2018-10-04 18:08:19,977 :: harvesters :: INFO :: Opened Interface module, docker0.
+2018-10-04 18:08:20,978 :: harvesters :: INFO :: Updated the device information list.
+2018-10-04 18:08:20,989 :: harvesters :: INFO :: Opened Device module, devicemodul00_21_49_00_8b_57.
+2018-10-04 18:08:20,989 :: harvesters :: INFO :: URL: Local:MER-231-41Gx_V1.0.48.zip;40ba0000;4E09
+2018-10-04 18:08:21,117 :: harvesters :: INFO :: Started resetting the Harvester object.
+2018-10-04 18:08:21,117 :: harvesters :: INFO :: Removed the all CTI file from the list.
+2018-10-04 18:08:21,117 :: harvesters :: INFO :: Discarded the device information list.
+2018-10-04 18:08:21,117 :: harvesters :: INFO :: Closed Interface module, enp3s0f0.
+2018-10-04 18:08:21,117 :: harvesters :: INFO :: Closed Interface module, enp3s0f1.
+2018-10-04 18:08:21,117 :: harvesters :: INFO :: Closed Interface module, enp4s0f0.
+2018-10-04 18:08:21,118 :: harvesters :: INFO :: Closed Interface module, enp4s0f1.
+2018-10-04 18:08:21,118 :: harvesters :: INFO :: Closed Interface module, ens5.
+2018-10-04 18:08:21,118 :: harvesters :: INFO :: Closed Interface module, virbr0.
+2018-10-04 18:08:21,118 :: harvesters :: INFO :: Closed Interface module, virbr0-nic.
+2018-10-04 18:08:21,118 :: harvesters :: INFO :: Closed Interface module, docker0.
+2018-10-04 18:08:21,119 :: harvesters :: INFO :: Closed System module, /usr/local/lib/baumer/libbgapi2_gige.cti_2.9.18805.18905.
+2018-10-04 18:08:21,124 :: harvesters :: INFO :: Closed /usr/local/lib/baumer/libbgapi2_gige.cti.
+2018-10-04 18:08:21,124 :: harvesters :: INFO :: Completed resetting the Harvester object.
