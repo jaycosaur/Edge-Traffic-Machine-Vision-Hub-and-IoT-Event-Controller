@@ -111,13 +111,13 @@ module.exports = actionHandler = (action) => {
         //below goes in exif write callback
         axios.get('http://192.168.1.100:8000/gps-coords')
             .then(function (response) {
-                console.log(response.data);
+                const { lat, lon, time } = response.data
                 const objToWrite = {
                     id: ID,
                     timeUNIX: UNIX,
                     timeISO: moment.unix(UNIX).toISOString(),
-                    timeGPS: null,
-                    GPS_COORDS: null,
+                    timeGPS: time,
+                    GPS_COORDS: {lat, lon},
                     CAM,
                     PLATE,
                     PACKAGE_ID: 0,
