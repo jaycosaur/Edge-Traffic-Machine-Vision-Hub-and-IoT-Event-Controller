@@ -4,6 +4,6 @@
     "PROCESSED_STORE_PATH": "/home/server/store/processed/",
     "EVENT_LOGS_PATH": "/home/server/store/events.csv",
     "PROCESSED_LOGS_PATH": "/home/server/store/processed.csv",
-    "BACKUP_LOCATIONS": ["/home/server/store/backups/nas/","/home/server/store/backups/HD1/","/home/server/store/backups/HD2/"],
+    "BACKUP_LOCATIONS": ["/media/server/TOSHIBA EXT/store/"],
     "AUTO_BACKUP_BUFFER": "100"
 }
