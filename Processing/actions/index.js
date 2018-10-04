@@ -2,10 +2,12 @@ const config = require('./../../config.json')
 const actionTypes = require('./actionTypes')
 const fs = require('fs');
 const chalk = require('chalk');
-const moment = require('moment')
+const moment = require('moment');
 const imagemin = require('imagemin');
 const leven = require('leven');
 const logWriter = require('./../utils/sightingEventHandler')
+
+const imageminPngquant = require('imagemin-pngquant');
 
 const processedRecordLog = new logWriter({path: config.PROCESSED_LOGS_PATH})
 //const extractPlateFromImage = require('../utils/extractPlateFromImage')
@@ -81,7 +83,7 @@ module.exports = actionHandler = (action) => {
         // add exif data (waiting on gps)
         const exifDataToWrite = null
         imagemin([action.payload.path], `${config.PROCESSED_STORE_PATH}`, {
-            plugins: []
+            plugins: [imageminPngquant()]
         }).then(async res => {
             const { data, path } = res[0]
             // delete old file
