@@ -74,6 +74,7 @@ CAM_CONFIG = {
 
 def worker(camId):
     CAM_NAME = CAM_CONFIG[camId]['name']
+    WINDOW_NAME = CAM_CONFIG[camId]['window']
     PIXEL_CONFIG = Aravis.PIXEL_FORMAT_MONO_8
 
     if (CAM_CONFIG[camId]['pixel_format']=="BAYERRG8"):
@@ -114,7 +115,7 @@ def worker(camId):
     print ("Trigger Activation  : %s" %(cam.get_device().get_string_feature_value("TriggerActivation")))
     print ("Acquisition Mode  : %s" %(cam.get_acquisition_mode()))
     print ("Pixel Formats  : %s" %(cam.get_available_pixel_formats_as_display_names()))
-    cv2.namedWindow(CAM_NAME, flags=0)
+    cv2.namedWindow(WINDOW_NAME, flags=0)
 
     for i in range(0,5):
         stream.push_buffer (Aravis.Buffer.new_allocate (payload))
@@ -131,14 +132,14 @@ def worker(camId):
             # alt c type definition for bayer-rg-8
             b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
             im = np.ctypeslib.as_array(b, (height, width))
-            cv2.imshow(CAM_NAME, im.copy())	#remove .copy() before production
+            cv2.imshow(WINDOW_NAME, im.copy())	#remove .copy() before production
             #gen uid for image
             uid = uuid.uuid4()
 
             #name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
             imageName = "ID="+str(uid)+"_CAM="+CAM_CONFIG[camId]['ref']+"_UNIX="+str(round(time.time()*1000))+".png"
             cv2.imwrite(CACHE_PATH+imageName,im.copy())
-            print('Camera ', CAM_NAME, ' was triggered at ', time.time())
+            print('Camera ', WINDOW_NAME, ' was triggered at ', time.time())
             lastTime = time.time()
         cv2.waitKey(1)
     cam.stop_acquisition ()
