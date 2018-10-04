@@ -71,10 +71,10 @@ def worker(camId):
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
         #c, h, w = 1, image.shape[0], image.shape[1]
         #im = image.copy()
-        data = im.ravel()/255.0
+        data = im.ravel()
         print(data.shape)
-        data = np.ascontiguousarray(data, dtype=np.float32)
-        print(data.shape)
+        #data = np.ascontiguousarray(data, dtype=np.float32)
+        #print(data.shape)
         predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
         for output in predictions:
             left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
