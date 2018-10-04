@@ -72,7 +72,7 @@ def worker(camId):
         #c, h, w = 1, image.shape[0], image.shape[1]
         #im = image.copy()
         data = im.ravel()/255.0
-        #data = np.ascontiguousarray(data, dtype=np.float32)
+        data = np.ascontiguousarray(data, dtype=np.float32)
         predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
         for output in predictions:
             left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
@@ -80,6 +80,7 @@ def worker(camId):
             #lastSnapshot = snapshot.copy()
             #cv2.imshow("Snapshots", lastSnapshot)
             if( what == 'car' ):
+                print(output)
                 numberCars += 1
 
         if IS_ROTATE:
