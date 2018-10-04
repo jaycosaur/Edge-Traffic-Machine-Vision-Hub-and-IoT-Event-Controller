@@ -8,6 +8,8 @@ const path = require('path');
 const WATCH_PATH = config.PROCESSED_STORE_PATH
 const BACKUP_LOCATIONS = config.BACKUP_LOCATIONS
 const BACKUP_BUFFER = config.AUTO_BACKUP_BUFFER
+const EVENT_LOGS_PATH = config.EVENT_LOGS_PATH
+const PROCESSED_LOGS_PATH = config.PROCESSED_LOGS_PATH
 
 console.log(chalk.bgGreen.bold.black("STARTING AUTO BACKUP SCRIPTS ..."))
 console.log(chalk.bgGreen.black(`Now watching '${WATCH_PATH}' for Auto Backup to ${BACKUP_LOCATIONS.join(", ")} | Buffer length: ${BACKUP_BUFFER}`))
@@ -43,7 +45,15 @@ class fileBackupQueue {
             return Promise.all(
                 this.backupStack.map(file=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
             )
-        })).catch(err=>console.log('oh no!'))  
+        })).then(
+            res => {
+                //backup log files
+                return Promise.all([
+                    fs.copy(EVENT_LOGS_PATH, path.join(bpath,events.csv)),
+                    fs.copy(PROCESSED_LOGS_PATH, path.join(bpath,processed.csv))
+                ])
+            }
+        ).catch(err=>console.log('oh no!'))  
         // backup csv
     }
 
