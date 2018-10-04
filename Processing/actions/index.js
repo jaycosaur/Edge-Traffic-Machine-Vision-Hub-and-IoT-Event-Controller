@@ -95,7 +95,7 @@ module.exports = actionHandler = (action) => {
             const { data, path } = res[0]
             // delete old file
             await fs.unlink(action.payload.path, (err) => {
-                if (err) throw err;
+                if (err) console.log(err);
                 return 'OK'
             })
         }).catch(err=>console.log(err))
