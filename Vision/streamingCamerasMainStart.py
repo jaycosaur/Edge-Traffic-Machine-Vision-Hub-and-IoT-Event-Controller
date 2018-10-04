@@ -92,7 +92,7 @@ def worker(camId):
                 print(output)
                 numberCars += 1
                 cv2.rectangle(clone, (50,50), (100,150), (255, 255, 255), 20)
-                if ( camId =="CAM_1" ):
+                if ( camId =="CAM_2" ):
                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
