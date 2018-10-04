@@ -13,12 +13,14 @@ CAM_CONFIG = {
     'CAM_1': {
         'name': 'QG0170070015',
         'pixel_format': 'MONO8',
-        'ref': 'QG0170070015'
+        'ref': 'QG0170070015',
+        'rotate': True
     },
     'CAM_2': {
         'name': 'QG0170070016',
         'pixel_format': 'MONO8',
-        'ref': 'QG0170070016'
+        'ref': 'QG0170070016',
+        'rotate': False
     },
 }
 
@@ -31,6 +33,7 @@ def worker(camId):
 
 
     CAM_NAME = CAM_CONFIG[camId]['name']
+    IS_ROTATE = CAM_CONFIG[camId]['rotate']
 
     try:
         cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
@@ -41,7 +44,7 @@ def worker(camId):
         exit ()
 
     cam.start_image_acquisition()
-    
+
     lastTime = time.time()
     transposeTime = 0
     i = 0
@@ -51,7 +54,10 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        cv2.imshow("Livestream", np.rot90(image.copy()))
+        if(IS_ROTATE):
+            cv2.imshow("Livestream", np.rot90(image.copy()))
+        else:
+            cv2.imshow("Livestream", image.copy())
         cv2.waitKey(1)
         buffer.queue()
         
