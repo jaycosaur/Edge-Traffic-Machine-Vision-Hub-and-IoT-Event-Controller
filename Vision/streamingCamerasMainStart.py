@@ -13,10 +13,10 @@ hier_thresh = 0.2
 
 darknet_path = '/home/server/Projects/pyyolo/darknet'
 datacfg = 'cfg/coco.data'
-#cfgfile = 'cfg/yolov3-tiny.cfg'
-#weightfile = '../yolov3-tiny.weights'
-cfgfile = 'tiny-yolo/yolov2-tiny.cfg'
-weightfile = 'tiny-yolo/yolov2-tiny.weights'
+cfgfile = 'cfg/yolov3-tiny.cfg'
+weightfile = '../yolov3-tiny.weights'
+#cfgfile = 'tiny-yolo/yolov2-tiny.cfg'
+#weightfile = 'tiny-yolo/yolov2-tiny.weights'
 
 TRIGGER_FAR_URL = 'http://192.168.1.100:8000/trigger-far'
 TRIGGER_CLOSE_URL = 'http://192.168.1.100:8000/trigger-close'
