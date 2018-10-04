@@ -127,7 +127,7 @@ def worker(camId):
             uid = uuid.uuid4()
 
             #name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
-            imageName = "ID_"+str(uid)+"_CAM_"+CAM_CONFIG[camId]['ref']+"_UNIX_"+str(round(time.time()*1000))+".png"
+            imageName = "ID="+str(uid)+"_CAM="+CAM_CONFIG[camId]['ref']+"_UNIX="+str(round(time.time()*1000))+".png"
             cv2.imwrite(CACHE_PATH+imageName,im.copy())
             print('Camera ', CAM_NAME, ' was triggered at ', time.time())
             lastTime = time.time()

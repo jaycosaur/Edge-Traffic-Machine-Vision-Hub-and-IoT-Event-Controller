@@ -68,7 +68,7 @@ module.exports = actionHandler = (action) => {
         // name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID } = convertNameToObj(pathComps[pathComps.length-1])
-        move(action.payload.path,`${config.STAGED_STORE_PATH}ID_${ID}_CAM_${CAM}_PLATE_${'ERROR'}_UNIX_${UNIX}${fileType}`,(err)=>console.log(err))
+        move(action.payload.path,`${config.STAGED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,(err)=>console.log(err))
         // run through alpr
         /* extractPlateFromImage(imageInt, `${config.RAW_STORE_PATH}${action.payload.path.split("/")[1]}`,((plate, time, id)=>{
             // move to new path with plate appended to name
