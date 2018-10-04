@@ -66,6 +66,7 @@ def worker(camId):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
         small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
+        clone = small.copy()
         im = np.zeros((3,small.shape[1],small.shape[0]))
 
         im[0,:,:] = np.rot90(small)
@@ -90,15 +91,17 @@ def worker(camId):
             if( what == 'car' ):
                 print(output)
                 numberCars += 1
+                cv2.rectangle(clone, (left,top), (bottom,right), (0, 255, 0), 2)
                 if ( camId =="CAM_1" ):
                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
 
+
         if IS_ROTATE:
-            cv2.imshow(CAM_NAME, np.rot90(small.copy()))
+            cv2.imshow(CAM_NAME, np.rot90(clone))
         else:
-            cv2.imshow(CAM_NAME, small.copy())
+            cv2.imshow(CAM_NAME, clone)
 
         cv2.waitKey(1)
         buffer.queue()
