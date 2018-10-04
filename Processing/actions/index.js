@@ -117,7 +117,7 @@ module.exports = actionHandler = (action) => {
                     timeUNIX: UNIX,
                     timeISO: moment.unix(UNIX).toISOString(),
                     timeGPS: time,
-                    GPS_COORDS: {lat, lon},
+                    GPS_COORDS: JSON.stringify({lat, lon}),
                     CAM,
                     PLATE,
                     PACKAGE_ID: 0,
