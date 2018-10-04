@@ -24,7 +24,7 @@ lastSnapshot = None
 
 while(i<1000):
     print(i)
-    cam.fetch_buffer()
+    buffer = cam.fetch_buffer()
     image = buffer.payload.components[0].data
     cv2.imshow("Livestream", image.copy())	
     cv2.waitKey(1)
