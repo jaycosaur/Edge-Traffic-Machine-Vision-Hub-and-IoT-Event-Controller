@@ -132,7 +132,7 @@ def worker(camId):
             # alt c type definition for bayer-rg-8
             b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
             im = np.ctypeslib.as_array(b, (height, width))
-            rgb = cv2.cvtColor(im, cv2.COLOR_BAYER_RG2RGB)
+            rgb = cv2.cvtColor(im, cv2.COLOR_BAYER_GB2BGR)
             cv2.imshow(WINDOW_NAME, rgb.copy())	#remove .copy() before production
             #gen uid for image
             uid = uuid.uuid4()
