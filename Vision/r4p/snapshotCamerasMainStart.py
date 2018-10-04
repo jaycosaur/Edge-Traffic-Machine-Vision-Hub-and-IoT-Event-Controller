@@ -18,46 +18,55 @@ CACHE_PATH = "/home/server/store/raw/"
 CAM_CONFIG = {
     'CAM_1': {
         'name': 'Daheng Imaging-CAA18080045',
+        'window': 'UPROAD-COLOR',
         'pixel_format': 'BAYERRG8',
         'ref': 'CAM1'
     },
     'CAM_2': {
         'name': 'Daheng Imaging-CAA18080046',
+        'window': 'TRUCK-COLOR',
         'pixel_format': 'BAYERRG8',
         'ref': 'CAM2'
     },
     'CAM_3': {
         'name': 'Daheng Imaging-CAA18080047',
+        'window': 'CLOSE-COLOR',
         'pixel_format': 'BAYERRG8',
         'ref': 'CAM3'
     },
     'CAM_4': {
         'name': 'Daheng Imaging-CAB18080019',
+        'window': 'UPROAD-4K',
         'pixel_format': 'MONO8',
         'ref': 'CAM4'
     },
     'CAM_5': {
         'name': 'Daheng Imaging-CAB18080020',
+        'window': 'TRUCK-4K',
         'pixel_format': 'MONO8',
         'ref': 'CAM5'
     },
     'CAM_6': {
         'name': 'Daheng Imaging-CAB18080021',
+        'window': 'CLOSE-4K',
         'pixel_format': 'MONO8',
         'ref': 'CAM6'
     },
     'CAM_7': {
         'name': 'Daheng Imavision-QV0170030004',
+        'window': 'TRUCK-2K',
         'pixel_format': 'MONO8',
         'ref': 'CAM7'
     },
     'CAM_8': {
         'name': 'Daheng Imavision-QV0180080308',
+        'window': 'CLOSE-2K',
         'pixel_format': 'MONO8',
         'ref': 'CAM8'
     },
     'CAM_9': {
         'name': 'Daheng Imavision-QV0180080309',
+        'window': 'UPROAD-2K',
         'pixel_format': 'MONO8',
         'ref': 'CAM9'
     }
