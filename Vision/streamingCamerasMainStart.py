@@ -87,9 +87,9 @@ def worker(camId):
             if( what == 'car' ):
                 print(output)
                 numberCars += 1
-                urllib.request.urlopen(TRIGGER_FAR_URL).read()
-                urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
-                urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
+                urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
 
         if IS_ROTATE:
             cv2.imshow(CAM_NAME, np.rot90(image.copy()))
