@@ -70,7 +70,7 @@ def worker(camId):
         im[0,:,:] = np.rot90(clone)
         im[1,:,:] = np.rot90(clone)
         im[2,:,:] = np.rot90(clone)
-        small = cv2.resize(image, dsize=(300, 400), interpolation=cv2.INTER_CUBIC)
+        small = cv2.resize(image, dsize=(640, 400), interpolation=cv2.INTER_CUBIC)
         print(image.shape)
         print(small.shape)
 
@@ -97,9 +97,9 @@ def worker(camId):
                 urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
 
         if IS_ROTATE:
-            cv2.imshow(CAM_NAME, np.rot90(image.copy()))
+            cv2.imshow(CAM_NAME, np.rot90(small.copy()))
         else:
-            cv2.imshow(CAM_NAME, image.copy())
+            cv2.imshow(CAM_NAME, small.copy())
 
         cv2.waitKey(1)
         buffer.queue()
