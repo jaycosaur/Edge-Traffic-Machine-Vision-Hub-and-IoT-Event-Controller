@@ -70,9 +70,13 @@ def worker(camId):
         im[0,:,:] = np.rot90(clone)
         im[1,:,:] = np.rot90(clone)
         im[2,:,:] = np.rot90(clone)
+        small = cv2.resize(image, dsize=(300, 400), interpolation=cv2.INTER_CUBIC)
+        print(image.shape)
+        print(small.shape)
 
         #print(image.shape)
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
+
         #c, h, w = 1, image.shape[0], image.shape[1]
         #im = image.copy()
         data = im.ravel()/255.0
