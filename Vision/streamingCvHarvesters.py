@@ -3,7 +3,8 @@ import numpy as np
 from harvesters.core import Harvester
 
 h = Harvester()
-h.add_cti_file('/usr/local/lib/baumer/libbgapi2_gige.cti')
+#h.add_cti_file('/usr/local/lib/baumer/libbgapi2_gige.cti')
+h.add_cti_file('/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti')
 
 h.update_device_info_list()
 
