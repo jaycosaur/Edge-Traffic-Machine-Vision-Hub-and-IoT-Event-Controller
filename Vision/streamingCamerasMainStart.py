@@ -66,9 +66,10 @@ def worker(camId):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
         im = np.zeros((3,image.shape[1],image.shape[0]))
-        im[0,:,:] = np.rot90(image.copy())
-        im[1,:,:] = np.rot90(image.copy())
-        im[2,:,:] = np.rot90(image.copy())
+        clone = image.copy()
+        im[0,:,:] = np.rot90(clone)
+        im[1,:,:] = np.rot90(clone)
+        im[2,:,:] = np.rot90(clone)
 
         #print(image.shape)
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
