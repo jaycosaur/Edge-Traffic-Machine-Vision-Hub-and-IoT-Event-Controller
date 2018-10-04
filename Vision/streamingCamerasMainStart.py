@@ -79,6 +79,8 @@ def worker(camId):
         im[1,:,:] = np.rot90(small)
         im[2,:,:] = np.rot90(small)
 
+        print(rgb.shape)
+
         #print(image.shape)
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
 
