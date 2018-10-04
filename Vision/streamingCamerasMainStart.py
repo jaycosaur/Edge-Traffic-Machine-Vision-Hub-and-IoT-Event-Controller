@@ -7,7 +7,25 @@ import urllib.request
 import numpy as np 
 import ctypes
 import uuid
+import pyyolo
+import urllib.request
 from harvesters.core import Harvester
+
+thresh = 0.5
+hier_thresh = 0.2
+
+darknet_path = '../../../Projects/pyyolo/darknet'
+datacfg = 'cfg/coco.data'
+cfgfile = 'cfg/yolov3-tiny.cfg'
+weightfile = '../yolov3-tiny.weights'
+
+TRIGGER_FAR_URL = 'http://192.168.1.100:8000/trigger-far'
+TRIGGER_CLOSE_URL = 'http://192.168.1.100:8000/trigger-close'
+TRIGGER_TRUCK_URL = 'http://192.168.1.100:8000/trigger-truck'
+TRIGGER_FAR_FLASH_URL = 'http://192.168.1.100:8000/trigger-far-flash'
+TRIGGER_CLOSE_FLASH_URL = 'http://192.168.1.100:8000/trigger-close-flash'
+TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
+
 
 CAM_CONFIG = {
     'CAM_1': {
@@ -24,6 +42,7 @@ CAM_CONFIG = {
     },
 }
 
+pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
 h = Harvester()
 h.add_cti_file('/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti')
 h.update_device_info_list()
@@ -55,10 +74,16 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
+        c, h, w = image.shape[0], image.shape[1], image.shape[2]
+        predictions = pyyolo.detect(w, h, c, image, thresh, hier_thresh)
+        for output in predictions:
+            print(output)
+            
         if IS_ROTATE:
             cv2.imshow(CAM_NAME, np.rot90(image.copy()))
         else:
             cv2.imshow(CAM_NAME, image.copy())
+
         cv2.waitKey(1)
         buffer.queue()
         
@@ -70,7 +95,8 @@ def worker(camId):
     cam.destroy()
 
 if __name__ == '__main__':
-    camIds = ['CAM_1','CAM_2']
+   # camIds = ['CAM_1','CAM_2']
+    camIds = ['CAM_2']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
         p.start()
