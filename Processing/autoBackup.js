@@ -53,7 +53,7 @@ class fileBackupQueue {
                     fs.copy(PROCESSED_LOGS_PATH, path.join(bpath,processed.csv))
                 ])
             }
-        ).catch(err=>console.log('oh no!'))  
+        ).catch(err=>console.log(err))  
         // backup csv
     }
 
