@@ -31,7 +31,7 @@ def worker(camId):
 
 
     CAM_NAME = CAM_CONFIG[camId]['name']
-    
+
     try:
         cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
         print ("Camera found")
@@ -41,11 +41,7 @@ def worker(camId):
         exit ()
 
     cam.start_image_acquisition()
-
-
-    payload = cam.get_payload()
-
-
+    
     lastTime = time.time()
     transposeTime = 0
     i = 0
