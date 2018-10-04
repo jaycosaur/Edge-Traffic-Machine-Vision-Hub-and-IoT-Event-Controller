@@ -65,7 +65,7 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        small = cv2.resize(image, dsize=(480, 300), interpolation=cv2.INTER_CUBIC)
+        small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         im = np.zeros((3,small.shape[1],small.shape[0]))
 
         im[0,:,:] = np.rot90(small)
