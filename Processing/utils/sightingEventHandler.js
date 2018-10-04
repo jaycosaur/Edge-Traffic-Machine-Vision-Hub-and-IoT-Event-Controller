@@ -1,7 +1,7 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const chalk = require('chalk');
 
-const header = [
+const header2 = [
     {id: 'time', title: 'WRITTEN_AT'},
     {id: 'timeUNIX', title: 'TIME_UNIX'},
     {id: 'timeISO', title: 'TIME_ISO'},
@@ -11,8 +11,10 @@ const header = [
     {id: 'PLATE', title: 'PLATE'},
     {id: 'PACKAGE_ID', title: 'PACKAGE_ID'},
     {id: 'PATH', title: 'PATH'},
-    {id: 'ID', title: 'ID'},
+    {id: 'ID', title: 'ID'}
 ]
+
+const header = ["time","timeUNIX","timeISO","timeGPS","GPS_COORDS","CAM","PLATE","PACKAGE_ID","PATH","ID"]
  
 class writerClass {
     constructor(attrs){
