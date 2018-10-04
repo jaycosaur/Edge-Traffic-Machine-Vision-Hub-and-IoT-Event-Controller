@@ -27,8 +27,8 @@ while(i<1000):
     buffer = cam.fetch_buffer()
     image = buffer.payload.components[0].data
     print(image)
-    cv2.imshow("Livestream", image.copy())	
-    cv2.waitKey(1)
+    #cv2.imshow("Livestream", image.copy())	
+    #cv2.waitKey(1)
     #print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime), "RES: ", w," x ", h)
     lastTime = time.time()
     i += 1
