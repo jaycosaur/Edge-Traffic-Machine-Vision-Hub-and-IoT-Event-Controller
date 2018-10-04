@@ -89,7 +89,7 @@ module.exports = actionHandler = (action) => {
         // add exif data (waiting on gps)
         const exifDataToWrite = null
         imagemin([action.payload.path], `${config.PROCESSED_STORE_PATH}`, {
-            plugins: [imageminPngquant()]
+            plugins: []
         }).then(async res => {
             console.log("DATAS: ", res)
             const { data, path } = res[0]
