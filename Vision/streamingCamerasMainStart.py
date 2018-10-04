@@ -38,11 +38,8 @@ CAM_CONFIG = {
     },
 }
 
-pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
-
-
-
 def worker(camId):
+    pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
     CAM_NAME = CAM_CONFIG[camId]['name']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
     h = Harvester()
@@ -68,8 +65,10 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        c, h, w = 1, image.shape[0], image.shape[1]
-        predictions = pyyolo.detect(w, h, c, image, thresh, hier_thresh)
+        im = np.zeros((3,image.shape[0],image.shape[1]))
+        im[1,:,:] = image.copy
+        c, h, w = im.shape[0], im.shape[1], im.shape[2]
+        predictions = pyyolo.detect(w, h, c, im, thresh, hier_thresh)
         for output in predictions:
             print(output)
 
