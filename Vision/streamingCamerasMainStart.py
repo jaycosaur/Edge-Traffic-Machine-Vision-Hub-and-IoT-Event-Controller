@@ -42,12 +42,11 @@ CAM_CONFIG = {
 }
 
 pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
-h = Harvester()
-h.add_cti_file('/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti')
-h.update_device_info_list()
-
 
 def worker(camId):
+    h = Harvester()
+    h.add_cti_file('/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti')
+    h.update_device_info_list()
     CAM_NAME = CAM_CONFIG[camId]['name']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
 
