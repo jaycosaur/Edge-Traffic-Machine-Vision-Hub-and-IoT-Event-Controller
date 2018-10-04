@@ -2,7 +2,7 @@ const fs = require('fs-extra')
 const config = require('./../config.json')
 
 const options = {
-  mode: 0o2775
+  mode: 0777
 }
 
 // With async/await:
