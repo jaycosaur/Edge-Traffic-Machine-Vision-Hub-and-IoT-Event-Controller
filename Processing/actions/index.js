@@ -98,7 +98,7 @@ module.exports = actionHandler = (action) => {
                 if (err) throw err;
                 return 'OK'
             })
-        })
+        }).catch(err=>console.log(err))
     }
 
     if(action.type === actionTypes.processedStoreFileUpdated){
