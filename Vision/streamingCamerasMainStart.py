@@ -87,12 +87,13 @@ def worker(camId):
             #print(output)
             #lastSnapshot = snapshot.copy()
             #cv2.imshow("Snapshots", lastSnapshot)
-            if( what == 'car' & camId=="CAM_2" ):
+            if( what == 'car' ):
                 print(output)
                 numberCars += 1
-                urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
-                urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                if ( camId =="CAM_2" ):
+                    urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                    urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                    urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
 
         if IS_ROTATE:
             cv2.imshow(CAM_NAME, np.rot90(small.copy()))
