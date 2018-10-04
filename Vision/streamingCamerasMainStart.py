@@ -14,13 +14,13 @@ CAM_CONFIG = {
         'name': 'QG0170070015',
         'pixel_format': 'MONO8',
         'ref': 'QG0170070015',
-        'rotate': True
+        'rotate': False
     },
     'CAM_2': {
         'name': 'QG0170070016',
         'pixel_format': 'MONO8',
         'ref': 'QG0170070016',
-        'rotate': False
+        'rotate': True
     },
 }
 
