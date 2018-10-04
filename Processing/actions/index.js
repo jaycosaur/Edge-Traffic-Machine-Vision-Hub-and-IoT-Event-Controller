@@ -68,7 +68,11 @@ module.exports = actionHandler = (action) => {
         // name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID } = convertNameToObj(pathComps[pathComps.length-1])
-        move(action.payload.path,`${config.STAGED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,(err)=>console.log(err))
+        move(action.payload.path,`${config.STAGED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,(err)=>{
+            if(err){
+                console.log(err)
+            } 
+        })
         // run through alpr
         /* extractPlateFromImage(imageInt, `${config.RAW_STORE_PATH}${action.payload.path.split("/")[1]}`,((plate, time, id)=>{
             // move to new path with plate appended to name
@@ -87,6 +91,7 @@ module.exports = actionHandler = (action) => {
         imagemin([action.payload.path], `${config.PROCESSED_STORE_PATH}`, {
             plugins: [imageminPngquant()]
         }).then(async res => {
+            console.log("DATAS: ", res)
             const { data, path } = res[0]
             // delete old file
             await fs.unlink(action.payload.path, (err) => {
