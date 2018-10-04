@@ -65,8 +65,9 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        small = cv2.resize(image, dsize=(640, 400), interpolation=cv2.INTER_CUBIC)
+        small = cv2.resize(image, dsize=(480, 300), interpolation=cv2.INTER_CUBIC)
         im = np.zeros((3,small.shape[1],small.shape[0]))
+
         im[0,:,:] = np.rot90(small)
         im[1,:,:] = np.rot90(small)
         im[2,:,:] = np.rot90(small)
@@ -86,7 +87,7 @@ def worker(camId):
             #print(output)
             #lastSnapshot = snapshot.copy()
             #cv2.imshow("Snapshots", lastSnapshot)
-            if( what == 'car' ):
+            if( what == 'car' && camId=="CAM_2" ):
                 print(output)
                 numberCars += 1
                 urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
