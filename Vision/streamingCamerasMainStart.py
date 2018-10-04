@@ -87,7 +87,7 @@ def worker(camId):
             #print(output)
             #lastSnapshot = snapshot.copy()
             #cv2.imshow("Snapshots", lastSnapshot)
-            if( what == 'car' && camId=="CAM_2" ):
+            if( what == 'car' & camId=="CAM_2" ):
                 print(output)
                 numberCars += 1
                 urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
