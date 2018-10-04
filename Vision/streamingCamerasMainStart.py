@@ -31,11 +31,7 @@ def worker(camId):
 
 
     CAM_NAME = CAM_CONFIG[camId]['name']
-    PIXEL_CONFIG = Aravis.PIXEL_FORMAT_MONO_8
-
-    if (CAM_CONFIG[camId]['pixel_format']=="BAYERRG8"):
-        PIXEL_CONFIG = Aravis.PIXEL_FORMAT_BAYER_RG_8
-
+    
     try:
         cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
         print ("Camera found")
