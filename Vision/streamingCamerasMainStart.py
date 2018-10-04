@@ -72,6 +72,7 @@ def worker(camId):
         image = buffer.payload.components[0].data
         small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         clone = small.copy()
+        rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
         im = np.zeros((3,small.shape[1],small.shape[0]))
 
         im[0,:,:] = np.rot90(small)
@@ -96,7 +97,7 @@ def worker(camId):
             if( what == 'car' ):
                 print(output)
                 numberCars += 1
-                cv2.rectangle(clone, (50,50), (100,150), (255, 255, 255), 20)
+                cv2.rectangle(rgb, (50,50), (100,150), (255, 255, 255), 20)
                 if ( camId =="CAM_2" ):
                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
@@ -104,9 +105,9 @@ def worker(camId):
 
 
         if IS_ROTATE:
-            cv2.imshow(WINDOW_NAME, np.rot90(clone))
+            cv2.imshow(WINDOW_NAME, np.rot90(rgb))
         else:
-            cv2.imshow(WINDOW_NAME, clone)
+            cv2.imshow(WINDOW_NAME, rgb)
 
         cv2.waitKey(1)
         buffer.queue()
