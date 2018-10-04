@@ -7,7 +7,7 @@ import urllib.request
 import numpy as np 
 import ctypes
 import uuid
-import pyyolo
+#import pyyolo
 import urllib.request
 from harvesters.core import Harvester
 
