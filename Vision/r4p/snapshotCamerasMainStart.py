@@ -19,47 +19,47 @@ CAM_CONFIG = {
     'CAM_1': {
         'name': 'Daheng Imaging-CAA18080045',
         'pixel_format': 'BAYERRG8',
-        'ref': 'CAM_1'
+        'ref': 'CAM1'
     },
     'CAM_2': {
         'name': 'Daheng Imaging-CAA18080046',
         'pixel_format': 'BAYERRG8',
-        'ref': 'CAM_2'
+        'ref': 'CAM2'
     },
     'CAM_3': {
         'name': 'Daheng Imaging-CAA18080047',
         'pixel_format': 'BAYERRG8',
-        'ref': 'CAM_3'
+        'ref': 'CAM3'
     },
     'CAM_4': {
         'name': 'Daheng Imaging-CAB18080019',
         'pixel_format': 'MONO8',
-        'ref': 'CAM_4'
+        'ref': 'CAM4'
     },
     'CAM_5': {
         'name': 'Daheng Imaging-CAB18080020',
         'pixel_format': 'MONO8',
-        'ref': 'CAM_5'
+        'ref': 'CAM5'
     },
     'CAM_6': {
         'name': 'Daheng Imaging-CAB18080021',
         'pixel_format': 'MONO8',
-        'ref': 'CAM_6'
+        'ref': 'CAM6'
     },
     'CAM_7': {
         'name': 'Daheng Imavision-QV0170030004',
         'pixel_format': 'MONO8',
-        'ref': 'CAM_7'
+        'ref': 'CAM7'
     },
     'CAM_8': {
         'name': 'Daheng Imavision-QV0180080308',
         'pixel_format': 'MONO8',
-        'ref': 'CAM_8'
+        'ref': 'CAM8'
     },
     'CAM_9': {
         'name': 'Daheng Imavision-QV0180080309',
         'pixel_format': 'MONO8',
-        'ref': 'CAM_9'
+        'ref': 'CAM9'
     }
 }
 
