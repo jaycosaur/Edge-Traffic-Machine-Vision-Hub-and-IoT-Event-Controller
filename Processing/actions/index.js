@@ -115,12 +115,12 @@ module.exports = actionHandler = (action) => {
                 const objToWrite = {
                     ID: ID,
                     timeUNIX: UNIX,
-                    timeISO: moment.unix(UNIX).toISOString(),
+                    timeISO: moment.unix(Math.round(UNIX/1000)).toISOString(),
                     timeGPS: time,
                     GPS_COORDS: `${lat}, ${lon}`,
                     CAM,
                     PLATE,
-                    PACKAGE_ID: 0,
+                    PACKAGE_ID: "NO_PACKAGE",
                     PATH: fileName
                 }
                 // append new record to main index collection log csv
