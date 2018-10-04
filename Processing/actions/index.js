@@ -111,7 +111,7 @@ module.exports = actionHandler = (action) => {
         //below goes in exif write callback
         axios.get('http://192.168.1.100:8000/gps-coords')
             .then(function (response) {
-                console.log(response);
+                console.log(response.data);
                 const objToWrite = {
                     id: ID,
                     timeUNIX: UNIX,
