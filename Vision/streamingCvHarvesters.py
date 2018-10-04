@@ -26,7 +26,7 @@ while(i<1000):
     print(i)
     buffer = cam.fetch_buffer()
     image = buffer.payload.components[0].data
-    cv2.imshow("Livestream", np.rot90(image.copy())	
+    cv2.imshow("Livestream", np.rot90(image.copy()))
     cv2.waitKey(1)
     print(image)
     buffer.queue()
