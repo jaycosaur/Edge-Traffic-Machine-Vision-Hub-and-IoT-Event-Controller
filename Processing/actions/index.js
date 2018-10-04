@@ -89,9 +89,8 @@ module.exports = actionHandler = (action) => {
         // add exif data (waiting on gps)
         const exifDataToWrite = null
         imagemin([action.payload.path], `${config.PROCESSED_STORE_PATH}`, {
-            plugins: []
+            plugins: [imageminPngquant({quality: '65-80'})]
         }).then(async res => {
-            console.log("DATAS: ", res)
             const { data, path } = res[0]
             // delete old file
             await fs.unlink(action.payload.path, (err) => {
