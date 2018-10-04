@@ -23,15 +23,13 @@ numberCars = 0
 lastSnapshot = None
 
 while(i<1000):
-    print(i)
     buffer = cam.fetch_buffer()
     image = buffer.payload.components[0].data
     cv2.imshow("Livestream", np.rot90(image.copy()))
     cv2.waitKey(1)
-    print(image)
     buffer.queue()
     
-    #print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime), "RES: ", w," x ", h)
+    print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
     lastTime = time.time()
     i += 1
 
