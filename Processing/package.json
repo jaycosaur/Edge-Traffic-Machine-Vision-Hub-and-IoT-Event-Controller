@@ -11,8 +11,10 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "csv-writer": "^1.2.0",
+    "fs-extra": "^7.0.0",
     "imagemin": "^6.0.0",
     "imagemin-jpegtran": "^5.0.2",
+    "leven": "^2.1.0",
     "moment": "^2.22.2",
     "node-gyp": "^3.8.0",
     "node-watch": "^0.5.8",

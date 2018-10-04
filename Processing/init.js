@@ -9,6 +9,7 @@ TaskRunner.createMenu({
         "viewer",
         "ipConfig",
         "setJumbo",
+        "start-auto-backup",
         "start-post-process",
         "start-streaming",
         "restart-streaming",

@@ -1,4 +1,4 @@
-import urllib.request
+#import urllib.request
 import json
 import gi
 gi.require("Aravis", "0.6") # or whatever version number you have installed
@@ -111,9 +111,7 @@ def GigeStreamer(cam_id):
 def main():
     pool = Pool(processes=2)
     visionCamOne = pool.apply_async(GigeStreamer, [VISION_CAM_1])
-    visionCamTwo = pool.apply_async(GigeStreamer, [VISION_CAM_2])
+    #visionCamTwo = pool.apply_async(GigeStreamer, [VISION_CAM_2])
 
     pool.close()
     pool.join()
-
-:

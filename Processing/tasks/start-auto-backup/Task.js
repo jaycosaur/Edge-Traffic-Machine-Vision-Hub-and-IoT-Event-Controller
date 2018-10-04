@@ -3,12 +3,12 @@ var logger = TaskRunner.logger;
 var Shell = TaskRunner.shell
 
 var Task = TaskRunner.Base.extend({
-    id: 'startStreaming',
-    name: '*DO SECOND* Start Camera Capture and Streaming (PM2 Process)',
+    id: 'startListeners',
+    name: '*DO FIRST* Start Stream Event Listeners and Post Processing Pipeline (PM2 Process)',
     position: 1,
     run: function(cons) {
         //Task has to be asynchronous, otherwise, you won't receive the finish/error event
-        new Shell(['pm2 start ./../Vision/main.py --name "vision-main"'], true).start().then(function() {
+        new Shell(['pm2 start ./index.js --name "processing-main"'], true).start().then(function() {
             cons();
         }, function(err) {
             cons(err);
