@@ -1,6 +1,8 @@
 import cv2
 import numpy as np 
 from harvesters.core import Harvester
+import time
+
 
 h = Harvester()
 #h.add_cti_file('/usr/local/lib/baumer/libbgapi2_gige.cti')
