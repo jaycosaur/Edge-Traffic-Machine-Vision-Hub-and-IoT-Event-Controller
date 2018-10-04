@@ -1,4 +1,5 @@
 {
+    "STORE_PATH": "/home/server/store/",
     "RAW_STORE_PATH": "/home/server/store/raw/",
     "STAGED_STORE_PATH": "/home/server/store/staged/",
     "PROCESSED_STORE_PATH": "/home/server/store/processed/",
