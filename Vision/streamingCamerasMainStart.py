@@ -67,11 +67,11 @@ def worker(camId):
         image = buffer.payload.components[0].data
         im = np.zeros((3,image.shape[0],image.shape[1]))
         im[1,:,:] = image.copy()
-        print(image.shape)
+        #print(image.shape)
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
         #c, h, w = 1, image.shape[0], image.shape[1]
         #im = image.copy()
-        data = im.ravel()#/255.0
+        data = im.ravel()/255.0
         #print(data.shape)
         #data = np.ascontiguousarray(data, dtype=np.float32)
         #print(data.shape)
