@@ -6,6 +6,7 @@ const moment = require('moment');
 const imagemin = require('imagemin');
 const leven = require('leven');
 const logWriter = require('./../utils/sightingEventHandler')
+const fsExtra = require('fs-extra')
 
 const imageminPngquant = require('imagemin-pngquant');
 
@@ -67,7 +68,7 @@ module.exports = actionHandler = (action) => {
         // name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID } = convertNameToObj(pathComps[pathComps.length-1])
-        move(action.payload.path,`${config.STAGED_STORE_PATH}ID_${ID}_CAM_${CAM}_PLATE_${'ERROR'}_UNIX_${UNIX}`)
+        move(action.payload.path,`${config.STAGED_STORE_PATH}ID_${ID}_CAM_${CAM}_PLATE_${'ERROR'}_UNIX_${UNIX}${fileType}`)
         // run through alpr
         /* extractPlateFromImage(imageInt, `${config.RAW_STORE_PATH}${action.payload.path.split("/")[1]}`,((plate, time, id)=>{
             // move to new path with plate appended to name
