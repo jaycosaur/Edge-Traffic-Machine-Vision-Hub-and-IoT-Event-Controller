@@ -28,12 +28,14 @@ TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
 CAM_CONFIG = {
     'CAM_1': {
         'name': 'QG0170070015',
+        'window': 'UPROAD_TRIGGER'
         'pixel_format': 'MONO8',
         'ref': 'QG0170070015',
         'rotate': False
     },
     'CAM_2': {
         'name': 'QG0170070016',
+        'window': 'WIDE_TRIGGER',
         'pixel_format': 'MONO8',
         'ref': 'QG0170070016',
         'rotate': True
@@ -43,6 +45,7 @@ CAM_CONFIG = {
 def worker(camId):
     pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
     CAM_NAME = CAM_CONFIG[camId]['name']
+    WINDOW_NAME = CAM_CONFIG[camId]['window']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
     h = Harvester()
     h.add_cti_file('/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti')
@@ -62,7 +65,7 @@ def worker(camId):
     i = 0
     numberCars = 0
     lastSnapshot = None
-    cv2.namedWindow(CAM_NAME, flags=0)
+    cv2.namedWindow(WINDOW_NAME, flags=0)
 
     while(True):
         buffer = cam.fetch_buffer()
@@ -101,9 +104,9 @@ def worker(camId):
 
 
         if IS_ROTATE:
-            cv2.imshow(CAM_NAME, np.rot90(clone))
+            cv2.imshow(WINDOW_NAME, np.rot90(clone))
         else:
-            cv2.imshow(CAM_NAME, clone)
+            cv2.imshow(WINDOW_NAME, clone)
 
         cv2.waitKey(1)
         buffer.queue()
