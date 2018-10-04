@@ -66,7 +66,7 @@ def worker(camId):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
         im = np.zeros((3,image.shape[0],image.shape[1]))
-        im[1,:,:] = image.copy()
+        im[1,:,:] = np.rot90(image.copy())
         #print(image.shape)
         c, h, w = im.shape[0], im.shape[1], im.shape[2]
         #c, h, w = 1, image.shape[0], image.shape[1]
@@ -78,11 +78,11 @@ def worker(camId):
         predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
         for output in predictions:
             left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
-            print(output)
+            #print(output)
             #lastSnapshot = snapshot.copy()
             #cv2.imshow("Snapshots", lastSnapshot)
             if( what == 'car' ):
-                #print(output)
+                print(output)
                 numberCars += 1
 
         if IS_ROTATE:
