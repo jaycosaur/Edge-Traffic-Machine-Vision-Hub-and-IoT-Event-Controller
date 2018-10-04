@@ -14,7 +14,9 @@ from harvesters.core import Harvester
 thresh = 0.5
 hier_thresh = 0.2
 
-darknet_path = '../../../Projects/pyyolo/darknet'
+
+
+darknet_path = '/home/server/Projects/pyyolo/darknet'
 datacfg = 'cfg/coco.data'
 cfgfile = 'cfg/yolov3-tiny.cfg'
 weightfile = '../yolov3-tiny.weights'
@@ -78,7 +80,7 @@ def worker(camId):
         predictions = pyyolo.detect(w, h, c, image, thresh, hier_thresh)
         for output in predictions:
             print(output)
-            
+
         if IS_ROTATE:
             cv2.imshow(CAM_NAME, np.rot90(image.copy()))
         else:
