@@ -28,14 +28,14 @@ TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
 CAM_CONFIG = {
     'CAM_1': {
         'name': 'QG0170070015',
-        'window': 'UPROAD_TRIGGER',
+        'window': 'UPROAD-TRIGGER',
         'pixel_format': 'MONO8',
         'ref': 'QG0170070015',
         'rotate': False
     },
     'CAM_2': {
         'name': 'QG0170070016',
-        'window': 'WIDE_TRIGGER',
+        'window': 'WIDE-TRIGGER',
         'pixel_format': 'MONO8',
         'ref': 'QG0170070016',
         'rotate': True
