@@ -1,12 +1,9 @@
-import gi
 import sys
 import multiprocessing
 import time
 import cv2
 import urllib.request
 import numpy as np 
-import ctypes
-import uuid
 #import pyyolo
 import urllib.request
 from harvesters.core import Harvester
@@ -93,7 +90,7 @@ def worker(camId):
 
 if __name__ == '__main__':
    # camIds = ['CAM_1','CAM_2']
-    camIds = ['CAM_1']
+    camIds = ['CAM_2']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
         p.start()
