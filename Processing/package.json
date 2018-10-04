@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "chalk": "^2.4.1",
     "csv-writer": "^1.2.0",
     "fs-extra": "^7.0.0",

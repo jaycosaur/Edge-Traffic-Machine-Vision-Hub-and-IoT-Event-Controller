@@ -7,6 +7,7 @@ const imagemin = require('imagemin');
 const leven = require('leven');
 const logWriter = require('./../utils/sightingEventHandler')
 const fsExtra = require('fs-extra')
+const axios = require('axios')
 
 //const imageminPngquant = require('imagemin-jpegtran');
 
@@ -108,19 +109,23 @@ module.exports = actionHandler = (action) => {
             // strip out details and transform to exif tags
             // write exif tags
         //below goes in exif write callback
-        const objToWrite = {
-            id: ID,
-            timeUNIX: UNIX,
-            timeISO: moment.unix(UNIX).toISOString(),
-            timeGPS: null,
-            GPS_COORDS: null,
-            CAM,
-            PLATE,
-            PACKAGE_ID: 0,
-            PATH: fileName
-        }
-        // append new record to main index collection log csv
-        processedRecordLog.write(objToWrite)
+        axios.get('http://0.0.0.0:8000/gps-coords')
+            .then(function (response) {
+                console.log(response);
+                const objToWrite = {
+                    id: ID,
+                    timeUNIX: UNIX,
+                    timeISO: moment.unix(UNIX).toISOString(),
+                    timeGPS: null,
+                    GPS_COORDS: null,
+                    CAM,
+                    PLATE,
+                    PACKAGE_ID: 0,
+                    PATH: fileName
+                }
+                // append new record to main index collection log csv
+                processedRecordLog.write(objToWrite)
+            })
     }
 }
 
