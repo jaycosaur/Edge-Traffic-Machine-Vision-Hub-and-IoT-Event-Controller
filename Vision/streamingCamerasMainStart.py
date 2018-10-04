@@ -50,14 +50,15 @@ def worker(camId):
     i = 0
     numberCars = 0
     lastSnapshot = None
+    cv2.namedWindow(CAM_NAME, flags=0)
 
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
         if IS_ROTATE:
-            cv2.imshow("Livestream", np.rot90(image.copy()))
+            cv2.imshow(CAM_NAME, np.rot90(image.copy()))
         else:
-            cv2.imshow("Livestream", image.copy())
+            cv2.imshow(CAM_NAME, image.copy())
         cv2.waitKey(1)
         buffer.queue()
         
