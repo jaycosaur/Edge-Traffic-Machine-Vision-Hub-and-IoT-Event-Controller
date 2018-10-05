@@ -84,9 +84,9 @@ def worker(camId):
 
     while(True):
         buffer = cam.fetch_buffer()
-        payload = buffer.payload.components[0]
+        payload = buffer.payload.components
         if(payload):
-            image = payload.data
+            image = payload[0].data
             small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
             img = np.rot90(rgb,1)
