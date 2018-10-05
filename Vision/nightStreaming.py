@@ -98,7 +98,7 @@ def worker(camId):
     closeThresh = int(closeThresh*factor )
     extraThresh = int(50*factor )
     leftBound = int(50*factor )
-    rightBound = int(125*factor )
+    rightBound = int(rightBound*factor )
     rightBound2 = int(125*factor )
 
     showLines = False
