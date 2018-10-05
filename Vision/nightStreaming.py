@@ -154,16 +154,15 @@ def worker(camId):
                         if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                        if cX<=truckThresh and cX>=truckThresh:
+                        if cX<=truckThresh-marginOfError and cX>=truckThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
-                        if cX<=closeThresh and cX>=closeThresh:
+                        if cX<=closeThresh-marginOfError and cX>=closeThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             numberCars += 1
             # show the output image
             # cv2.imshow("Image", rgb)
             k = cv2.waitKey(1)
-            print(small.shape)
             h1, w1 = small.shape[1], small.shape[0]
 
             if k==113:    # Esc key to stop
@@ -223,10 +222,10 @@ def worker(camId):
                         if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                        if x1<=truckThresh and x2>=truckThresh:
+                        if x1<=truckThresh-marginOfError and x2>=truckThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
-                        if x1<=closeThresh and x2>=closeThresh:
+                        if x1<=closeThresh-marginOfError and x2>=closeThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             numberCars += 1
                     
