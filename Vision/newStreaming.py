@@ -77,7 +77,7 @@ def worker(camId):
 
     uproadThresh = 290
     truckThresh = 200
-    closeThresh = 140
+    closeThresh = 180
 
     leftBound = 50
     rightBound = 125
