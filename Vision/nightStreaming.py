@@ -150,7 +150,7 @@ def worker(camId):
                     ((cX, cY), radius) = cv2.minEnclosingCircle(c)
                     cv2.circle(small, (int(cX), int(cY)), int(5),
                         (0, 0, 255), 3)
-                    if cY <= rightBound and camId=='CAM_2':
+                    if cY <= rightBound and cY >= leftBound and camId=='CAM_2':
                         if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
@@ -186,6 +186,7 @@ def worker(camId):
                     cv2.putText(small, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
                     cv2.line(small, (0,rightBound), (h1, rightBound), (255,255,255), 1)
+                    cv2.line(small, (0,leftBound), (h1, leftBound), (255,255,255), 1)
 
             if showLines and camId=='CAM_1':
                 cv2.line(small, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
