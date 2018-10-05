@@ -111,7 +111,7 @@ def worker(camId):
 
             img2 = Image(img)
             results = net.detect(img2)
-            k = cv2.waitKey(33)
+            k = cv2.waitKey(0)
             if k==32:    # Esc key to stop
                 if camId=='CAM_2':
                     cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
