@@ -130,7 +130,6 @@ def worker(camId):
                     cv2.putText(rgb, 'Up-Road', (extraThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
                     #cv2.line(rgb, (0,rightBound2), (h1, rightBound2), (255,255,255), 1)
-                break
             elif k==-1:  # normally -1 returned,so don't print it
                 continue
             else:
