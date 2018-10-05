@@ -118,7 +118,7 @@ def worker(camId):
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
 
             img2 = Image(img)
-            results = net.detect(img2)
+            #results = net.detect(img2)
             k = cv2.waitKey(1)
 
             if k==113:    # Esc key to stop
