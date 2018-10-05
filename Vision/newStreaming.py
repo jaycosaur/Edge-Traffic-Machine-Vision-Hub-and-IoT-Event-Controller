@@ -75,15 +75,16 @@ def worker(camId):
         small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         clone = small.copy()
 
-        old = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+        rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
 
-        rgb = np.rot90(old)
+        img = np.rot90(rgb)
+
         #img = rgb.transpose(2,0,1)
-        if IS_ROTATE:
-             img = np.rot90(rgb)
+        #if IS_ROTATE:
+             #img = np.rot90(rgb)
              #rgb = np.rot90(rgb)
-        else:
-            img = rgb
+        #else:
+            #img = rgb
         #print(rgb.shape)
         #c, h, w = img.shape[0], img.shape[1], img.shape[2]
         #c, h, w = img.shape[2], img.shape[1], img.shape[0]
