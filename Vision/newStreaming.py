@@ -142,7 +142,7 @@ def worker(camId):
                     #cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
 
                     #simple trigger
-                    if y2 <= rightBound and camId=='CAM_2':
+                    if False and y2 <= rightBound and camId=='CAM_2':
                         if x1<=uproadThresh and x2>=uproadThresh:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
