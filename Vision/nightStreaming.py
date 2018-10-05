@@ -110,6 +110,8 @@ def worker(camId):
         if(payload):
             image = payload[0].data
             small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
+            small = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
+            
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2GRAY)
             #blurred = cv2.GaussianBlur(rgb, (11, 11), 0)
             thresh = cv2.threshold(rgb, 200, 255, cv2.THRESH_BINARY)[1]
