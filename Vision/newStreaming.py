@@ -77,11 +77,14 @@ def worker(camId):
 
         rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
         #img = rgb.transpose(2,0,1)
-        img = np.rot90(rgb)
-        print(rgb.shape)
-        c, h, w = img.shape[0], img.shape[1], img.shape[2]
+        if IS_ROTATE:
+             img = np.rot90(rgb)
+        else:
+            img = rgb
+        #print(rgb.shape)
+        #c, h, w = img.shape[0], img.shape[1], img.shape[2]
         #c, h, w = img.shape[2], img.shape[1], img.shape[0]
-        data = img.ravel()/255.0
+        #data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
         img2 = Image(img)
         print('here')
