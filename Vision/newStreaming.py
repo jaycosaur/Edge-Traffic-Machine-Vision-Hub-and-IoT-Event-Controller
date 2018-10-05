@@ -112,6 +112,8 @@ def worker(camId):
                 x, y, w, h = bounds
                 x, y = (h1-int(y), int(x))
                 x1,y1,x2,y2 = [int(x-h/2),int(y-w/2),int(x+h/2),int(y+w/2)]
+
+                cv2.line(rgb, (x1,y2), (x2, y2), (255,0,255), 1)
                 type = str(cat.decode("utf-8"))
                 color = baseColor
                 if (type == 'car'):
