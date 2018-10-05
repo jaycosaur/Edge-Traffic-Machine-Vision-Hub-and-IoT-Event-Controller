@@ -75,6 +75,10 @@ def worker(camId):
     phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
+    uproadThresh = 250
+    truckThresh = 175
+    closeThresh = 100
+
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
@@ -86,14 +90,14 @@ def worker(camId):
         img2 = Image(img)
         results = net.detect(img2)
 
-        cv2.line(rgb, (250,0), (250, w1), (255,255,0), 1)
-        cv2.putText(rgb, 'Up-Road', (250, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+        cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
+        cv2.putText(rgb, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-        cv2.line(rgb, (175,0), (175, w1), (255,255,0), 1)
-        cv2.putText(rgb, 'Truck', (175, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+        cv2.line(rgb, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
+        cv2.putText(rgb, 'Truck', (truckThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-        cv2.line(rgb, (100,0), (100, w1), (255,255,0), 1)
-        cv2.putText(rgb, 'Close', (100, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+        cv2.line(rgb, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
+        cv2.putText(rgb, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
         cv2.line(rgb, (0,50), (h1, 50), (255,255,255), 1)
         cv2.line(rgb, (0,150), (h1, 150), (255,255,255), 1)
@@ -122,7 +126,7 @@ def worker(camId):
                 cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
 
                 #simple trigger
-                if x1=<bounds and x2>=bounds:
+                if x1<=closeThresh and x2>=closeThresh:
                     print('Boom!')
                     #urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     #urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
