@@ -178,7 +178,7 @@ def worker(camId):
                     currentTime = time.time()
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
-                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and y2>= and (currentTime-uproadLastTrigger)>triggerDelay:
+                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and y2>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             uproadLastTrigger = currentTime
                         if x1<=truckThresh and x2>=truckThresh and (currentTime-truckLastTrigger)>triggerDelay:
