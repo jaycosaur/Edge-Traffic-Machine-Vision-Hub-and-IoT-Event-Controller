@@ -76,8 +76,8 @@ def worker(camId):
     baseColor = (255,255,255)
 
     uproadThresh = 290
-    truckThresh = 175
-    closeThresh = 100
+    truckThresh = 200
+    closeThresh = 140
 
     leftBound = 50
     rightBound = 125
