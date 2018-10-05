@@ -73,9 +73,9 @@ def worker(camId):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
         small = cv2.resize(image, dsize=(480, 300), interpolation=cv2.INTER_CUBIC)
-        clone = small.copy()
+        #clone = small.copy()
 
-        rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+        rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
         img2 = np.rot90(rgb)
         img = np.rot90(rgb)
 
@@ -91,14 +91,13 @@ def worker(camId):
         #data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
         img2 = Image(img)
-        print('here')
         results = net.detect(img2)
-        print('here2')   
         print(results)
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
-                cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
+                #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
+                cv2.rectangle(rgb, (int(x+w/2),int(y+h/2)),(int(x-w/2),int(y-h/2)),(255,0,0))
                 cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0))
                 numberCars += 1
 
