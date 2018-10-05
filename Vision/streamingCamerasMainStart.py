@@ -72,29 +72,35 @@ def worker(camId):
         image = buffer.payload.components[0].data
         small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         clone = small.copy()
+
         rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+        img = rgb.transpose(2,0,1)
+	    c, h, w = img.shape[0], img.shape[1], img.shape[2]
+        data = img.ravel()/255.0
+        data = np.ascontiguousarray(data, dtype=np.float32)
+        predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
+
         #im = np.zeros((3,small.shape[1],small.shape[0]))
 
         #im[0,:,:] = np.rot90(small)
         #im[1,:,:] = np.rot90(small)
         #im[2,:,:] = np.rot90(small)
 
-        im = rgb
+        #im = rgb
         #print(image.shape)
         #c, h, w = im.shape[0], im.shape[1], im.shape[2]
         
-        im = im.transpose(2,0,1)
+       # im = im.transpose(2,0,1)
 
-        c, h, w = im.shape[0], im.shape[1], im.shape[2]
+        #c, h, w = im.shape[0], im.shape[1], im.shape[2]
 
         #c, h, w = 1, image.shape[0], image.shape[1]
         #im = image.copy()
-        data = im.ravel()/255.0
+        #data = im.ravel()/255.0
         #print(data.shape)
-        data = np.ascontiguousarray(data, dtype=np.float32)
+        #data = np.ascontiguousarray(data, dtype=np.float32)
         #print(data.shape)
 
-        predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
         for output in predictions:
             left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
             #print(output)
