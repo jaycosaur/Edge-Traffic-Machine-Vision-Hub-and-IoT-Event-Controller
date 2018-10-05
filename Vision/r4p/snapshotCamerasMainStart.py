@@ -131,7 +131,7 @@ def worker(camId):
     lastSnapshot = None
     while(True):
         now = datetime.datetime.now()
-        print(now.hour, now.minute)
+        #print(now.hour, now.minute)
         #night-mode
         if False:
             cam.set_exposure_time(10000)
