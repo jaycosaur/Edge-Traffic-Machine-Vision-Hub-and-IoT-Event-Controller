@@ -13,8 +13,8 @@ hier_thresh = 0.2
 
 #darknet_path = '/home/server/Projects/pyyolo/darknet'
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
-cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
-weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
+cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-tiny.cfg'
+weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3-tiny.weights'
 #cfgfile = 'tiny-yolo/yolov2-tiny.cfg'
 #weightfile = 'tiny-yolo/yolov2-tiny.weights'
 
@@ -83,7 +83,7 @@ def worker(camId):
         #c, h, w = img.shape[2], img.shape[1], img.shape[0]
         data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
-        img2 = Image(rgb)
+        img2 = Image(img)
         print('here')
         results = net.detect(img2)
         print('here2')   
