@@ -122,6 +122,9 @@ def worker(camId):
                 if label == 0:
                     continue
                 print(label)
+                labelMask = np.zeros(thresh.shape, dtype="uint8")
+                labelMask[labels == label] = 255
+                mask = cv2.add(mask, labelMask)
                 """ # otherwise, construct the label mask and count the
                 # number of pixels 
                 labelMask = np.zeros(thresh.shape, dtype="uint8")
