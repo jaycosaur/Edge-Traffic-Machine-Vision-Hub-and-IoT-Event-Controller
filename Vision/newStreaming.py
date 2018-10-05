@@ -79,6 +79,8 @@ def worker(camId):
     truckThresh = 200
     closeThresh = 180
 
+    extraThresh = 150
+
     leftBound = 50
     rightBound = 125
 
@@ -131,8 +133,8 @@ def worker(camId):
                     cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
 
                     #simple trigger
-                    if y2 <= rightBound:
-                        if x1<=uproadThresh and x2>=uproadThresh:
+                    if y2 <= rightBound and camId=='CAM_2':
+                        if False and x1<=uproadThresh and x2>=uproadThresh:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
                         if x1<=truckThresh and x2>=truckThresh:
@@ -140,6 +142,11 @@ def worker(camId):
                             numberCars += 1
                         if x1<=closeThresh and x2>=closeThresh:
                             urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                            numberCars += 1
+                    
+                    if y2 <= rightBound and camId=='CAM_1':
+                        if x1<=extraThresh  and x2>=extraThresh :
+                            urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
                     
 
