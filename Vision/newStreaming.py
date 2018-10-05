@@ -79,6 +79,7 @@ def worker(camId):
         #img = rgb.transpose(2,0,1)
         if IS_ROTATE:
              img = np.rot90(rgb)
+             rgb = np.rot90(rgb)
         else:
             img = rgb
         #print(rgb.shape)
