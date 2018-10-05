@@ -142,6 +142,7 @@ def worker(camId):
             cam.get_device().set_string_feature_value("Gain", 0.0)
 
         stream.push_buffer(Aravis.Buffer.new_allocate(payload))
+
         buffer = stream.try_pop_buffer ()
         if(buffer):
             # alt c type definition for bayer-rg-8
@@ -157,9 +158,10 @@ def worker(camId):
             cv2.imwrite(CACHE_PATH+imageName,im.copy())
             print('Camera ', WINDOW_NAME, ' was triggered at ', time.time())
             lastTime = time.time()
-            
+
             stream.push_buffer(buffer)
         cv2.waitKey(1)
+        stream.pop_buffer ()
 
     cam.stop_acquisition ()
 
