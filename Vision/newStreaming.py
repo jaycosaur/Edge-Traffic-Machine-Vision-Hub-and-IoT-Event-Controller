@@ -98,7 +98,7 @@ def worker(camId):
         cv2.line(rgb, (0,50), (h1, 50), (255,255,255), 1)
         cv2.line(rgb, (0,150), (h1, 150), (255,255,255), 1)
 
-        bounds = 175
+        bounds = 100
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
