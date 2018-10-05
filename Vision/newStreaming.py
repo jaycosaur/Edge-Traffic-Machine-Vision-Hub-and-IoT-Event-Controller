@@ -155,13 +155,13 @@ def worker(camId):
 
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
-                        if x1>=uproadThresh-10 and x2<=uproadThresh+10:
+                        if x1>=uproadThresh-30 and x2<=uproadThresh+30:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                        if x1>=truckThresh-10 and x2<=truckThresh+10:
+                        if x1>=truckThresh-30 and x2<=truckThresh+30:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
-                        if x1>=closeThresh-10 and x2<=closeThresh+10:
+                        if x1>=closeThresh-30 and x2<=closeThresh+30:
                             urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                             numberCars += 1
                     
