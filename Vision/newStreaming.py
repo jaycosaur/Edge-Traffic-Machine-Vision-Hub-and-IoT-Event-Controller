@@ -72,25 +72,26 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        small = cv2.resize(image, dsize=(480, 300), interpolation=cv2.INTER_CUBIC)
+        small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         clone = small.copy()
 
         rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
         #img = rgb.transpose(2,0,1)
         if IS_ROTATE:
-             img = rgb
+             img = np.rot90(rgb)
         else:
             img = rgb
-
-        img = rgb
         #print(rgb.shape)
         #c, h, w = img.shape[0], img.shape[1], img.shape[2]
         #c, h, w = img.shape[2], img.shape[1], img.shape[0]
         #data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
         img2 = Image(img)
+        print('here')
         results = net.detect(img2)
+        print('here2')   
         print(results)
+
         for cat, score, bounds in results:
                 x, y, w, h = bounds
                 cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
@@ -136,7 +137,7 @@ def worker(camId):
 
 
         if IS_ROTATE:
-            cv2.imshow(WINDOW_NAME, np.rot90(rgb))
+            cv2.imshow(WINDOW_NAME, np.rot90(rgb)
         else:
             cv2.imshow(WINDOW_NAME, rgb)
 
