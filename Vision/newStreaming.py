@@ -76,7 +76,7 @@ def worker(camId):
     baseColor = (255,255,255)
 
     baseRes = 320
-    scale = 1920/800
+    scale = 800/1920
 
     #as percentages
 
