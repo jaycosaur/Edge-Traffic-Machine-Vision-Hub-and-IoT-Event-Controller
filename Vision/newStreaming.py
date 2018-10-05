@@ -117,11 +117,11 @@ def worker(camId):
 
             if k==113:    # Esc key to stop
                 showLines = True
-            elif k==94:
+            else if k==94:
                 showLines = False
-            elif k==122
+            else if k==122
                 showYolo = True
-            elif k=120
+            else if k=120
                 showYolo = False
 
             if showLines and camId=='CAM_2':
