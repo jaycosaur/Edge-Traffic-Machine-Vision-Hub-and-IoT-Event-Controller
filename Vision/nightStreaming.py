@@ -143,7 +143,7 @@ def worker(camId):
             if len(np.unique(labels))>0:
                 cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-                cnts = contours.sort_contours(cnts)[0]
+                #cnts = contours.sort_contours(cnts)[0]
                 
                 # loop over the contours
                 for (i, c) in enumerate(cnts):
