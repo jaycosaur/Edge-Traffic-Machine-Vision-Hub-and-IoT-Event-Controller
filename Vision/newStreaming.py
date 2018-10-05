@@ -110,7 +110,7 @@ def worker(camId):
 
                 cv2.line(rgb, (0,rightBound), (h1, rightBound), (255,255,255), 1)
 
-            if camId='CAM_1':
+            if camId=='CAM_1':
                 cv2.line(rgb, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
                 cv2.putText(rgb, 'Up-Road', (extraThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
