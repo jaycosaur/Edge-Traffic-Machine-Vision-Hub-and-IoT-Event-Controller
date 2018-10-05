@@ -80,12 +80,13 @@ def worker(camId):
     #as percentages
 
     uproadThresh = 295
-    truckThresh = 200
+    truckThresh = 220
     closeThresh = 180
     extraThresh = 50
     leftBound = 50
     rightBound = 125
     rightBound2 = 125
+    marginOfError = 20
 
     
     factor = baseRes/320
@@ -155,13 +156,13 @@ def worker(camId):
 
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
-                        if x1>=uproadThresh-30 and x2<=uproadThresh+30:
+                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                        if x1>=truckThresh-30 and x2<=truckThresh+30:
+                        if x1>=truckThresh-marginOfError and x2<=truckThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
-                        if x1>=closeThresh-30 and x2<=closeThresh+30:
+                        if x1>=closeThresh-marginOfError and x2<=closeThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                             numberCars += 1
                     
