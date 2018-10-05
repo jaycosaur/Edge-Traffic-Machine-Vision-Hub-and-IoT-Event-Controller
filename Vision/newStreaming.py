@@ -85,6 +85,7 @@ def worker(camId):
     closeThresh = 180
     extraThresh = 50
     leftBound = 50
+    leftBound2 = 70
     rightBound = 125
     rightBound2 = 125
     marginOfError = 20
@@ -95,7 +96,8 @@ def worker(camId):
     truckThresh = int(truckThresh*factor)
     closeThresh = int(closeThresh*factor )
     extraThresh = int(50*factor )
-    leftBound = int(50*factor )
+    leftBound = int(leftBound*factor )
+    leftBound2 = int(leftBound2*factor )
     rightBound = int(125*factor )
     rightBound2 = int(125*factor )
 
@@ -176,7 +178,7 @@ def worker(camId):
                     currentTime = time.time()
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
-                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay:
+                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and y2>= and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             uproadLastTrigger = currentTime
                         if x1<=truckThresh and x2>=truckThresh and (currentTime-truckLastTrigger)>triggerDelay:
