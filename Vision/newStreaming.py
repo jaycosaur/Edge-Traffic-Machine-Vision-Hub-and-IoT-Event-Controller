@@ -75,11 +75,12 @@ def worker(camId):
         small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         clone = small.copy()
 
+        rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
         #img = rgb.transpose(2,0,1)
         if IS_ROTATE:
-            rgb = np.rot90(cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB))
+             img = rgb
         else:
-            rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+            img = rgb
 
         img = rgb
         #print(rgb.shape)
@@ -88,10 +89,7 @@ def worker(camId):
         #data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
         img2 = Image(img)
-        print('here')
         results = net.detect(img2)
-        print('here2')   
-        print(results)
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
