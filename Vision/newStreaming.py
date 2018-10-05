@@ -124,6 +124,9 @@ def worker(camId):
                 showYolo = True
             elif k==120:
                 showYolo = False
+            elif k!=-1:
+                print(k)
+                
 
             if showLines and camId=='CAM_2':
                     cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
