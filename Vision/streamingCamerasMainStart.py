@@ -69,54 +69,60 @@ def worker(camId):
 
     while(True):
         buffer = cam.fetch_buffer()
-        image = buffer.payload.components[0].data
-        small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
-        clone = small.copy()
-        rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
-        im = np.zeros((3,small.shape[1],small.shape[0]))
+        try:
+            image = buffer.payload.components[0].data
+            small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
+            clone = small.copy()
+            rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+            #im = np.zeros((3,small.shape[1],small.shape[0]))
 
-        im[0,:,:] = np.rot90(small)
-        im[1,:,:] = np.rot90(small)
-        im[2,:,:] = np.rot90(small)
+            #im[0,:,:] = np.rot90(small)
+            #im[1,:,:] = np.rot90(small)
+            #im[2,:,:] = np.rot90(small)
 
-        print(rgb.shape)
+            im = rgb.clone()
 
-        #print(image.shape)
-        c, h, w = im.shape[0], im.shape[1], im.shape[2]
+            print(rgb.shape)
 
-        #c, h, w = 1, image.shape[0], image.shape[1]
-        #im = image.copy()
-        data = im.ravel()/255.0
-        #print(data.shape)
-        #data = np.ascontiguousarray(data, dtype=np.float32)
-        #print(data.shape)
-        predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
-        for output in predictions:
-            left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
-            #print(output)
-            #lastSnapshot = snapshot.copy()
-            #cv2.imshow("Snapshots", lastSnapshot)
-            if( what == 'car' ):
-                print(output)
-                numberCars += 1
-                cv2.rectangle(rgb, (50,50), (100,150), (255, 255, 255), 20)
-                if ( camId =="CAM_2" ):
-                    urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                    urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
-                    urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+            #print(image.shape)
+            #c, h, w = im.shape[0], im.shape[1], im.shape[2]
+            
+            c, h, w = im.shape[2], im.shape[1], im.shape[0]
+
+            #c, h, w = 1, image.shape[0], image.shape[1]
+            #im = image.copy()
+            data = im.ravel()/255.0
+            #print(data.shape)
+            #data = np.ascontiguousarray(data, dtype=np.float32)
+            #print(data.shape)
+            
+            predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
+            for output in predictions:
+                left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
+                #print(output)
+                #lastSnapshot = snapshot.copy()
+                #cv2.imshow("Snapshots", lastSnapshot)
+                if( what == 'car' ):
+                    print(output)
+                    numberCars += 1
+                    cv2.rectangle(rgb, (50,50), (100,150), (255, 255, 255), 20)
+                    if ( camId =="CAM_2" ):
+                        urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                        urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                        urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
 
 
-        if IS_ROTATE:
-            cv2.imshow(WINDOW_NAME, np.rot90(rgb))
-        else:
-            cv2.imshow(WINDOW_NAME, rgb)
+            if IS_ROTATE:
+                cv2.imshow(WINDOW_NAME, np.rot90(rgb))
+            else:
+                cv2.imshow(WINDOW_NAME, rgb)
 
-        cv2.waitKey(1)
-        buffer.queue()
-        
-        print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
-        lastTime = time.time()
-        i += 1
+            cv2.waitKey(1)
+            buffer.queue()
+            
+            print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
+            lastTime = time.time()
+            i += 1
 
     cam.stop_image_acquisition()
     cam.destroy()
