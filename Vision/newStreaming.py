@@ -102,7 +102,11 @@ def worker(camId):
 
 
         cv2.line(rgb, (200,0), (200, w1), (255,255,0), 1)
+        cv2.putText(rgb, 'Up-Road', (200, 50), cv2.FONT_HERSHEY_COMPLEX, 1, color)
+
         cv2.line(rgb, (100,0), (100, w1), (255,255,0), 1)
+        cv2.putText(rgb, 'Close', (100, 50), cv2.FONT_HERSHEY_COMPLEX, 1, color)
+
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
