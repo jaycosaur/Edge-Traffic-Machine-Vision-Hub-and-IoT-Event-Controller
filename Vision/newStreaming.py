@@ -90,7 +90,7 @@ def worker(camId):
         payload = buffer.payload.components
         if(payload):
             image = payload[0].data
-            small = cv2.resize(image, dsize=(480, 300), interpolation=cv2.INTER_CUBIC)
+            small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
@@ -153,7 +153,7 @@ def worker(camId):
                             urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                             numberCars += 1
                     
-                    if False and camId=='CAM_1':
+                    if camId=='CAM_1':
                         if y1<=rightBound2   and y2>=rightBound2  :
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
