@@ -80,16 +80,13 @@ def worker(camId):
         #im[2,:,:] = np.rot90(small)
 
         im = rgb
-
-        print(rgb.shape)
-
         #print(image.shape)
         #c, h, w = im.shape[0], im.shape[1], im.shape[2]
         
-        c, h, w = im.shape[2], im.shape[1], im.shape[0]
-
         im = im.transpose(2,0,1)
-        print(im.shape)
+
+        c, h, w = im.shape[0], im.shape[1], im.shape[2]
+
         #c, h, w = 1, image.shape[0], image.shape[1]
         #im = image.copy()
         data = im.ravel()/255.0
