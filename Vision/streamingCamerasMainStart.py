@@ -91,7 +91,7 @@ def worker(camId):
         #im = image.copy()
         data = im.ravel()/255.0
         #print(data.shape)
-        #data = np.ascontiguousarray(data, dtype=np.float32)
+        data = np.ascontiguousarray(data, dtype=np.float32)
         #print(data.shape)
 
         predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
