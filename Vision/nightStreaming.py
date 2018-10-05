@@ -150,7 +150,16 @@ def worker(camId):
                     ((cX, cY), radius) = cv2.minEnclosingCircle(c)
                     cv2.circle(small, (int(cX), int(cY)), int(5),
                         (0, 0, 255), 3)
-            
+                    if cY <= rightBound and camId=='CAM_2':
+                        if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError:
+                            urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                            numberCars += 1
+                        if cX<=truckThresh and cX>=truckThresh:
+                            urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                            numberCars += 1
+                        if cX<=closeThresh and cX>=closeThresh:
+                            urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                            numberCars += 1
             # show the output image
             # cv2.imshow("Image", rgb)
             k = cv2.waitKey(1)
