@@ -121,17 +121,18 @@ def worker(camId):
                 # if this is the background label, ignore it
                 if label == 0:
                     continue
-            
-                # otherwise, construct the label mask and count the
+                print(label)
+                """ # otherwise, construct the label mask and count the
                 # number of pixels 
                 labelMask = np.zeros(thresh.shape, dtype="uint8")
                 labelMask[labels == label] = 255
+
                 numPixels = cv2.countNonZero(labelMask)
             
                 # if the number of pixels in the component is sufficiently
                 # large, then add it to our mask of "large blobs"
                 if numPixels > 300:
-                    mask = cv2.add(mask, labelMask)
+                    mask = cv2.add(mask, labelMask) """
 
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
