@@ -154,6 +154,7 @@ def worker(camId):
             # show the output image
             # cv2.imshow("Image", rgb)
             k = cv2.waitKey(1)
+            c, h1, w1 = small.shape[2], small.shape[1], small.shape[0]
 
             if k==113:    # Esc key to stop
                 showLines = True
