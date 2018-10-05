@@ -113,11 +113,16 @@ def worker(camId):
             results = net.detect(img2)
             k = cv2.waitKey(1)
             showLines = False
+            showYolo = False
 
-            if k==32:    # Esc key to stop
-                showLines = not(showLines)
-            else:
-                print(k)
+            if k==113:    # Esc key to stop
+                showLines = True
+            elif k==94:
+                showLines = False
+            elif k==122
+                showYolo = True
+            elif k=120
+                showYolo = False
 
             if showLines and camId=='CAM_2':
                     cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
@@ -157,8 +162,9 @@ def worker(camId):
                     #x1,y1,x2,y2 = [int(x+w/2),int(y+h/2),int(x-w/2),int(y-h/2)]
                     #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
                     #cv2.line(rgb, (x1,y1), (x1, y2), color, 2)
-                    cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
-                    #cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
+                    if showYolo:
+                        cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
+                        cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
 
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
