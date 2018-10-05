@@ -79,27 +79,12 @@ def worker(camId):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
         small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
-        #clone = small.copy()
-
         rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
         img = np.rot90(rgb,1)
         c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
 
-        #img = rgb.transpose(2,0,1)
-        #if IS_ROTATE:
-             #img = np.rot90(rgb)
-             #rgb = np.rot90(rgb)
-        #else:
-            #img = rgb
-        #print(rgb.shape)
-        #c, h, w = img.shape[0], img.shape[1], img.shape[2]
-        #c, h, w = img.shape[2], img.shape[1], img.shape[0]
-        #data = img.ravel()/255.0
-        #data = np.ascontiguousarray(data, dtype=np.float32)
         img2 = Image(img)
         results = net.detect(img2)
-        #print(results)
-
 
         cv2.line(rgb, (250,0), (250, w1), (255,255,0), 1)
         cv2.putText(rgb, 'Up-Road', (250, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
@@ -110,6 +95,10 @@ def worker(camId):
         cv2.line(rgb, (100,0), (100, w1), (255,255,0), 1)
         cv2.putText(rgb, 'Close', (100, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
+        cv2.line(rgb, (0,50), (h1, 50), (255,255,255), 1)
+        cv2.line(rgb, (0,150), (h1, 150), (255,255,255), 1)
+
+        bounds = 175
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
@@ -131,32 +120,17 @@ def worker(camId):
                 cv2.line(rgb, (x1,y1), (x1, y2), color, 2)
                 #cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
                 cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
-                numberCars += 1
 
-        #predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
+                #simple trigger
+                if x1=<bounds and x2>=bounds:
+                    print('Boom!')
+                    #urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                    #urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                    #urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                    numberCars += 1
+                
 
-        #im = np.zeros((3,small.shape[1],small.shape[0]))
-
-        #im[0,:,:] = np.rot90(small)
-        #im[1,:,:] = np.rot90(small)
-        #im[2,:,:] = np.rot90(small)
-
-        #im = rgb
-        #print(rgb.shape)
-        predictions = []
-        #c, h, w = im.shape[0], im.shape[1], im.shape[2]
-        
-       # im = im.transpose(2,0,1)
-
-        #c, h, w = im.shape[0], im.shape[1], im.shape[2]
-
-        #c, h, w = 1, image.shape[0], image.shape[1]
-        #im = image.copy()
-        #data = im.ravel()/255.0
-        #print(data.shape)
-        #data = np.ascontiguousarray(data, dtype=np.float32)
-        #print(data.shape)
-
+        '''predictions = []
         for output in predictions:
             left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
             #print(output)
@@ -169,8 +143,7 @@ def worker(camId):
                 if ( camId =="CAM_2" ):
                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
-                    urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-
+                    urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()'''
 
         if IS_ROTATE:
             cv2.imshow(WINDOW_NAME, np.rot90(rgb))
