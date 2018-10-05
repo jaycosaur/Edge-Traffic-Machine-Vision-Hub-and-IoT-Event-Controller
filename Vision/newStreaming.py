@@ -72,7 +72,7 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        small = cv2.resize(image, dsize=(480, 300), interpolation=cv2.INTER_CUBIC)
+        small = cv2.resize(image, dsize=(960, 600), interpolation=cv2.INTER_CUBIC)
         #clone = small.copy()
 
         rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
