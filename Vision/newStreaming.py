@@ -98,7 +98,8 @@ def worker(camId):
             img2 = Image(img)
             results = net.detect(img2)
 
-            if camId=='CAM_2':
+            #if camId=='CAM_2':
+
                 #cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                 #cv2.putText(rgb, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
