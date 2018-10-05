@@ -179,11 +179,11 @@ def worker(camId):
                         if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             uproadLastTrigger = currentTime
-                        if x1>=truckThresh-marginOfError and x2<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
+                        if x1<=truckThresh and x2>=truckThresh and (currentTime-truckLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
                             truckLastTrigger = currentTime
-                        if x1>=closeThresh-marginOfError and x2<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
+                        if x1<=closeThresh and x2>=closeThresh and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             closeLastTrigger = currentTime
                     
