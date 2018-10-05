@@ -188,7 +188,7 @@ def worker(camId):
                             closeLastTrigger = currentTime
                     
                     if camId=='CAM_1':
-                        if y1<=rightBound2   and y2>=rightBound2  :
+                        if y1<=rightBound2   and y2>=rightBound2 and False :
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
                     
@@ -224,7 +224,7 @@ def worker(camId):
     cam.destroy()
 
 if __name__ == '__main__':
-    camIds = ['CAM_2']
+    camIds = ['CAM_2', 'CAM_1']
     #camIds = ['CAM_1']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
