@@ -90,7 +90,7 @@ def worker(camId):
         #data = np.ascontiguousarray(data, dtype=np.float32)
         img2 = Image(img)
         results = net.detect(img2)
-
+        print(results)
         for cat, score, bounds in results:
                 x, y, w, h = bounds
                 cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
