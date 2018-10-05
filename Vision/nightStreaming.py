@@ -87,6 +87,7 @@ def worker(camId):
     closeThresh = 170
     extraThresh = 50
     leftBound = 50
+    leftBound2 = 70
     rightBound = 100
     rightBound2 = 125
     marginOfError = 20
@@ -97,7 +98,8 @@ def worker(camId):
     truckThresh = int(truckThresh*factor)
     closeThresh = int(closeThresh*factor )
     extraThresh = int(50*factor )
-    leftBound = int(50*factor )
+    leftBound = int(leftBound*factor )
+    leftBound2 = int(leftBound2*factor )
     rightBound = int(rightBound*factor )
     rightBound2 = int(125*factor )
 
@@ -159,7 +161,7 @@ def worker(camId):
                         cv2.circle(small, (int(cX), int(cY)), int(5),
                             (0, 0, 255), 3)
                     if cY <= rightBound and cY >= leftBound and camId=='CAM_2':
-                        if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay:
+                        if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay and cY>=leftBound2:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             uproadLastTrigger = currentTime
                             numberCars += 1
@@ -196,6 +198,7 @@ def worker(camId):
 
                     cv2.line(small, (0,rightBound), (h1, rightBound), (255,255,255), 1)
                     cv2.line(small, (0,leftBound), (h1, leftBound), (255,255,255), 1)
+                    cv2.line(small, (0,leftBound2), (h1, leftBound2), (255,0,255), 1)
 
             if showLines and camId=='CAM_1':
                 cv2.line(small, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
