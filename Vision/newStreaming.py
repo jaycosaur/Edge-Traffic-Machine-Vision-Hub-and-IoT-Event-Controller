@@ -75,7 +75,7 @@ def worker(camId):
     phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
-    uproadThresh = 290
+    uproadThresh = 295
     truckThresh = 200
     closeThresh = 180
 
@@ -143,7 +143,7 @@ def worker(camId):
 
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
-                        if x1<=uproadThresh and x2>=uproadThresh:
+                        if x1>=uproadThresh-10 and x2<=uproadThresh+10:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
                         if x1<=truckThresh and x2>=truckThresh:
