@@ -77,7 +77,7 @@ def worker(camId):
     phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
-    baseRes = 600
+    baseRes = 400
     scale = 800/1920
 
     #as percentages
@@ -124,7 +124,6 @@ def worker(camId):
                 # if this is the background label, ignore it
                 if label == 0:
                     continue
-                print(label)
                 labelMask = np.zeros(thresh.shape, dtype="uint8")
                 labelMask[labels == label] = 255
                 mask = cv2.add(mask, labelMask)
@@ -155,9 +154,6 @@ def worker(camId):
             # show the output image
             # cv2.imshow("Image", rgb)
 
-            """ img = np.rot90(rgb,1)
-            c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
-
             img2 = Image(img)
             #results = net.detect(img2)
             k = cv2.waitKey(1)
@@ -173,20 +169,20 @@ def worker(camId):
                 
 
             if showLines and camId=='CAM_2':
-                    cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
-                    cv2.putText(rgb, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+                    cv2.line(small, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
+                    cv2.putText(small, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-                    cv2.line(rgb, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
-                    cv2.putText(rgb, 'Truck', (truckThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+                    cv2.line(small, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
+                    cv2.putText(small, 'Truck', (truckThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-                    cv2.line(rgb, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
-                    cv2.putText(rgb, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+                    cv2.line(small, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
+                    cv2.putText(small, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-                    cv2.line(rgb, (0,rightBound), (h1, rightBound), (255,255,255), 1)
+                    cv2.line(small, (0,rightBound), (h1, rightBound), (255,255,255), 1)
 
             if showLines and camId=='CAM_1':
-                cv2.line(rgb, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
-                cv2.putText(rgb, 'Up-Road', (extraThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+                cv2.line(small, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
+                cv2.putText(small, 'Up-Road', (extraThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
                 #cv2.line(rgb, (0,rightBound2), (h1, rightBound2), (255,255,255), 1)
 
@@ -230,7 +226,6 @@ def worker(camId):
                         if y1<=rightBound2   and y2>=rightBound2  :
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                     """
 
             '''predictions = []
             for output in predictions:
