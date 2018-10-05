@@ -128,7 +128,7 @@ def worker(camId):
                 #simple trigger
                 if x1<=uproadThresh and x2>=uproadThresh:
                     print('Boom!')
-                    #urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                    urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     #urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                     #urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                     numberCars += 1
