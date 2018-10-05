@@ -72,7 +72,7 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
-        small = cv2.resize(image, dsize=(480, 300), interpolation=cv2.INTER_CUBIC)
+        small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         #clone = small.copy()
 
         rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
@@ -98,8 +98,8 @@ def worker(camId):
                 #x1,y1,x2,y2 = [int(x-w/2),int(y-h/2),int(x+w/2),int(y+h/2)]
                 x1,y1,x2,y2 = [int(x+w/2),int(y+h/2),int(x-w/2),int(y-h/2)]
                 #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
-                cv2.rectangle(rgb, (x1,y1),(x2,y2),(255,0,0))
-                cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0))
+                #cv2.rectangle(rgb, (x1,y1),(x2,y2),(255,0,0))
+                cv2.putText(rgb, str(cat.decode("utf-8")), (int(y), int(x)), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0))
                 numberCars += 1
 
         #predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
