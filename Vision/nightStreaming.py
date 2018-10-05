@@ -154,10 +154,10 @@ def worker(camId):
                         if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                        if cX<=truckThresh-marginOfError and cX>=truckThresh+marginOfError:
+                        if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
-                        if cX<=closeThresh-marginOfError and cX>=closeThresh+marginOfError:
+                        if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             numberCars += 1
             # show the output image
