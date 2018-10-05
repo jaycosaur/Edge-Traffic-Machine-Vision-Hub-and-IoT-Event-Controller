@@ -77,7 +77,7 @@ def worker(camId):
         img = rgb.transpose(2,0,1)
         c, h, w = img.shape[0], img.shape[1], img.shape[2]
         data = img.ravel()/255.0
-        data = np.ascontiguousarray(data, dtype=np.float32)
+        #data = np.ascontiguousarray(data, dtype=np.float32)
         predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
 
         #im = np.zeros((3,small.shape[1],small.shape[0]))
