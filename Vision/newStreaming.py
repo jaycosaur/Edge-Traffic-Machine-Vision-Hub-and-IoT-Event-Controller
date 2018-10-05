@@ -12,9 +12,9 @@ thresh = 0.5
 hier_thresh = 0.2
 
 #darknet_path = '/home/server/Projects/pyyolo/darknet'
-datacfg = '/home/server/Projects/YOLO3-4Py/cfg/coco.data'
-cfgfile = '/home/server/Projects/YOLO3-4Py/cfg/yolov3.cfg'
-weightfile = '/home/server/Projects/YOLO3-4Py/weights/yolov3.weights'
+datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
+cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
+weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
 #cfgfile = 'tiny-yolo/yolov2-tiny.cfg'
 #weightfile = 'tiny-yolo/yolov2-tiny.weights'
 
