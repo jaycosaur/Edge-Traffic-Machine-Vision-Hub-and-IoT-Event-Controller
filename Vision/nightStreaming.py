@@ -153,9 +153,6 @@ def worker(camId):
             
             # show the output image
             # cv2.imshow("Image", rgb)
-
-            img2 = Image(img)
-            #results = net.detect(img2)
             k = cv2.waitKey(1)
 
             if k==113:    # Esc key to stop
