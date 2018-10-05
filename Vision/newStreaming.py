@@ -102,6 +102,11 @@ def worker(camId):
     showLines = False
     showYolo = False
 
+    triggerDelay = 0.250
+    uproadLastTrigger = time.time()
+    truckLastTrigger = time.time()
+    closeLastTrigger = time.time()
+
     while(True):
         buffer = cam.fetch_buffer()
         payload = buffer.payload.components
@@ -168,17 +173,19 @@ def worker(camId):
                         cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
                         cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
 
+                    currentTime = time.time()
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
-                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError:
+                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                            numberCars += 1
-                        if x1<=truckThresh and x2>=truckThresh:
+                            uproadLastTrigger = currentTime
+                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
-                        if x1<=closeThresh and x2>=closeThresh:
+                            truckLastTrigger = currentTime
+                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
-                            numberCars += 1
+                            closeLastTrigger = currentTime
                     
                     if camId=='CAM_1':
                         if y1<=rightBound2   and y2>=rightBound2  :
