@@ -90,9 +90,9 @@ def worker(camId):
 
     
     factor = baseRes/320
-    uproadThresh = int(295*factor)
-    truckThresh = int(200*factor)
-    closeThresh = int(180*factor )
+    uproadThresh = int(uproadThresh*factor)
+    truckThresh = int(truckThresh*factor)
+    closeThresh = int(closeThresh*factor )
     extraThresh = int(50*factor )
     leftBound = int(50*factor )
     rightBound = int(125*factor )
