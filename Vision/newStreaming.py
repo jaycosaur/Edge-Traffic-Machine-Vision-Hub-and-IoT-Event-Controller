@@ -152,8 +152,8 @@ def worker(camId):
                             urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                             numberCars += 1
                     
-                    if y2 <= rightBound and camId=='CAM_1':
-                        if x1<=extraThresh  and x2>=extraThresh :
+                    if camId=='CAM_1':
+                        if y1<=rightBound2   and y2>=rightBound2  :
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
                     
