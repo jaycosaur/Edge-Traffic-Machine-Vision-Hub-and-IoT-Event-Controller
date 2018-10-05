@@ -146,10 +146,10 @@ def worker(camId):
                         if x1>=uproadThresh-10 and x2<=uproadThresh+10:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                        if x1<=truckThresh and x2>=truckThresh:
+                        if x1>=truckThresh-10 and x2<=truckThresh+10:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
-                        if x1<=closeThresh and x2>=closeThresh:
+                        if x1>=closeThresh-10 and x2<=closeThresh+10:
                             urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                             numberCars += 1
                     
