@@ -7,6 +7,8 @@ import numpy as np
 from pydarknet import Detector, Image
 import urllib.request
 from harvesters.core import Harvester
+from imutils import contours
+from skimage import measure
 
 thresh = 0.5
 hier_thresh = 0.2
@@ -111,10 +113,25 @@ def worker(camId):
             thresh = cv2.erode(thresh, None, iterations=2)
             thresh = cv2.dilate(thresh, None, iterations=4)
 
-
-
-
-
+            labels = measure.label(thresh, neighbors=8, background=0)
+            mask = np.zeros(thresh.shape, dtype="uint8")
+            
+            # loop over the unique components
+            for label in np.unique(labels):
+                # if this is the background label, ignore it
+                if label == 0:
+                    continue
+            
+                # otherwise, construct the label mask and count the
+                # number of pixels 
+                labelMask = np.zeros(thresh.shape, dtype="uint8")
+                labelMask[labels == label] = 255
+                numPixels = cv2.countNonZero(labelMask)
+            
+                # if the number of pixels in the component is sufficiently
+                # large, then add it to our mask of "large blobs"
+                if numPixels > 300:
+                    mask = cv2.add(mask, labelMask)
 
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
@@ -209,7 +226,7 @@ def worker(camId):
                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()'''
 
             if IS_ROTATE:
-                cv2.imshow(WINDOW_NAME, np.rot90(thresh))
+                cv2.imshow(WINDOW_NAME, np.rot90(mask))
             else:
                 cv2.imshow(WINDOW_NAME, rgb)
 
