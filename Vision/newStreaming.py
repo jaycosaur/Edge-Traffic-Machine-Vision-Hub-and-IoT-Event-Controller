@@ -69,6 +69,11 @@ def worker(camId):
     lastSnapshot = None
     cv2.namedWindow(WINDOW_NAME, flags=0)
 
+    carColor = (255,0,0)
+    busColor = (0,255,0)
+    truckColor = (0,0,255)
+    baseColor = (255,255,255)
+
     while(True):
         buffer = cam.fetch_buffer()
         image = buffer.payload.components[0].data
@@ -98,11 +103,19 @@ def worker(camId):
                 x, y, w, h = bounds
                 x, y = (h1-int(y), int(x))
                 x1,y1,x2,y2 = [int(x-h/2),int(y-w/2),int(x+h/2),int(y+w/2)]
-                print(str(cat.decode("utf-8")))
+                type = str(cat.decode("utf-8"))
+                color = baseColor
+                if (type == 'car'):
+                    color = carColor
+                if (type == 'bus'):
+                    color = busColor
+                if (type == 'truck'):
+                    color = truckColor
                 #x1,y1,x2,y2 = [int(x+w/2),int(y+h/2),int(x-w/2),int(y-h/2)]
                 #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
-                cv2.rectangle(rgb, (x1,y1),(x2,y2),(255,0,0))
-                cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0))
+
+                cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
+                cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
                 numberCars += 1
 
         #predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
