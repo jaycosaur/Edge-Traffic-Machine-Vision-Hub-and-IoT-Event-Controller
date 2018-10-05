@@ -75,7 +75,7 @@ def worker(camId):
     phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
-    baseRes = 320
+    baseRes = 480
     scale = 800/1920
 
     #as percentages
@@ -113,7 +113,6 @@ def worker(camId):
             results = net.detect(img2)
 
             if camId=='CAM_2':
-
                 cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                 cv2.putText(rgb, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
