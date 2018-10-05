@@ -90,7 +90,7 @@ def worker(camId):
     leftBound2 = 70
     rightBound = 100
     rightBound2 = 125
-    marginOfError = 20
+    marginOfError = 10
 
     
     factor = baseRes/320
