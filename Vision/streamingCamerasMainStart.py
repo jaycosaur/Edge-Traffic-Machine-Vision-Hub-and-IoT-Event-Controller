@@ -87,7 +87,7 @@ def worker(camId):
         #im[2,:,:] = np.rot90(small)
 
         #im = rgb
-        #print(image.shape)
+        print(rgb.shape)
         #c, h, w = im.shape[0], im.shape[1], im.shape[2]
         
        # im = im.transpose(2,0,1)
