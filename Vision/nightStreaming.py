@@ -152,6 +152,7 @@ def worker(camId):
                 
                 # loop over the contours
                 for (i, c) in enumerate(cnts):
+                    currentTime = time.time()
                     # draw the bright spot on the image
                     (x, y, w, h) = cv2.boundingRect(c)
                     ((cX, cY), radius) = cv2.minEnclosingCircle(c)
