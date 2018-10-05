@@ -97,7 +97,7 @@ def worker(camId):
         for cat, score, bounds in results:
                 x, y, w, h = bounds
                 x, y = (h1-int(y), int(x))
-                x1,y1,x2,y2 = [int(x-w/2),int(y-h/2),int(x+w/2),int(y+h/2)]
+                x1,y1,x2,y2 = [int(x-h/2),int(y-w/2),int(x+h/2),int(y+w/2)]
                 #x1,y1,x2,y2 = [int(x+w/2),int(y+h/2),int(x-w/2),int(y-h/2)]
                 #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
                 cv2.rectangle(rgb, (x1,y1),(x2,y2),(255,0,0))
