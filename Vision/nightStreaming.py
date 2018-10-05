@@ -157,7 +157,7 @@ def worker(camId):
             # show the output image
             # cv2.imshow("Image", rgb)
 
-            img = np.rot90(rgb,1)
+            """ img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
 
             img2 = Image(img)
@@ -232,7 +232,7 @@ def worker(camId):
                         if y1<=rightBound2   and y2>=rightBound2  :
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
-                    
+                     """
 
             '''predictions = []
             for output in predictions:
