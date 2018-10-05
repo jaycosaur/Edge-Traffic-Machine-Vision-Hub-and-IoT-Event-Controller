@@ -109,7 +109,7 @@ def worker(camId):
             image = payload[0].data
             small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2GRAY)
-            blurred = cv2.GaussianBlur(rgb, (11, 11), 0))
+            blurred = cv2.GaussianBlur(rgb, (11, 11), 0)
             thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY)[1]
             thresh = cv2.erode(thresh, None, iterations=2)
             thresh = cv2.dilate(thresh, None, iterations=4)
@@ -149,8 +149,6 @@ def worker(camId):
                 ((cX, cY), radius) = cv2.minEnclosingCircle(c)
                 cv2.circle(rgb, (int(cX), int(cY)), int(radius),
                     (0, 0, 255), 3)
-                cv2.putText(rgb, "#{}".format(i + 1), (x, y - 15),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
             
             # show the output image
             # cv2.imshow("Image", rgb)
