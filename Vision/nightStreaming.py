@@ -149,7 +149,7 @@ def worker(camId):
                     (x, y, w, h) = cv2.boundingRect(c)
                     ((cX, cY), radius) = cv2.minEnclosingCircle(c)
                     cv2.circle(small, (int(cX), int(cY)), int(5),
-                        (255, 255, 255), 3)
+                        (0, 0, 255), 3)
             
             # show the output image
             # cv2.imshow("Image", rgb)
