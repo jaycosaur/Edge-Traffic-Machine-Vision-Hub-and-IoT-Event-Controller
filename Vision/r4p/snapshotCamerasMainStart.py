@@ -157,7 +157,10 @@ def worker(camId):
             cv2.imwrite(CACHE_PATH+imageName,im.copy())
             print('Camera ', WINDOW_NAME, ' was triggered at ', time.time())
             lastTime = time.time()
+            
+            stream.push_buffer(buffer)
         cv2.waitKey(1)
+
     cam.stop_acquisition ()
 
 if __name__ == '__main__':
