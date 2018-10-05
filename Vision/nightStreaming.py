@@ -108,8 +108,9 @@ def worker(camId):
         if(payload):
             image = payload[0].data
             small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
-            rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
-            thresh = cv2.threshold(rgb, 200, 255, cv2.THRESH_BINARY)[1]
+            rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2GRAY
+            blurred = cv2.GaussianBlur(rgb, (11, 11), 0))
+            thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY)[1]
             thresh = cv2.erode(thresh, None, iterations=2)
             thresh = cv2.dilate(thresh, None, iterations=4)
 
@@ -247,9 +248,9 @@ def worker(camId):
                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()'''
 
             if IS_ROTATE:
-                cv2.imshow(WINDOW_NAME, np.rot90(rgb))
+                cv2.imshow(WINDOW_NAME, np.rot90(small))
             else:
-                cv2.imshow(WINDOW_NAME, rgb)
+                cv2.imshow(WINDOW_NAME, small)
 
             cv2.waitKey(1)
             buffer.queue()
