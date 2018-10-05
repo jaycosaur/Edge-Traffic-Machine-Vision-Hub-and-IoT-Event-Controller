@@ -116,10 +116,14 @@ def worker(camId):
         payload = buffer.payload.components
         if(payload):
             image = payload[0].data
-            conver = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
-            small = cv2.cvtColor(conver, cv2.COLOR_BayerRG2RGB)
+            if showLines or showYolo:
+                conver = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
+                small = cv2.cvtColor(conver, cv2.COLOR_BayerRG2RGB)
+                rgb = cv2.cvtColor(conver, cv2.COLOR_BayerRG2GRAY)
+            else:
+                small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
+                rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2GRAY)
 
-            rgb = cv2.cvtColor(conver, cv2.COLOR_BayerRG2GRAY)
             #blurred = cv2.GaussianBlur(rgb, (11, 11), 0)
             thresh = cv2.threshold(rgb, 200, 255, cv2.THRESH_BINARY)[1]
             #thresh = cv2.erode(thresh, None, iterations=2)
