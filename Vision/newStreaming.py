@@ -75,7 +75,7 @@ def worker(camId):
     phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
-    uproadThresh = 250
+    uproadThresh = 290
     truckThresh = 175
     closeThresh = 100
 
@@ -126,7 +126,7 @@ def worker(camId):
                 cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
 
                 #simple trigger
-                if x1<=closeThresh and x2>=closeThresh:
+                if x1<=uproadThresh and x2>=uproadThresh:
                     print('Boom!')
                     #urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     #urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
