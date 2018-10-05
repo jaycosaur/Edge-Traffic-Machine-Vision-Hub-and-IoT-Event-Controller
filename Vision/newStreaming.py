@@ -4,17 +4,17 @@ import time
 import cv2
 import urllib.request
 import numpy as np 
-import pyyolo
+from pydarknet import Detector, Image
 import urllib.request
 from harvesters.core import Harvester
 
 thresh = 0.5
 hier_thresh = 0.2
 
-darknet_path = '/home/server/Projects/pyyolo/darknet'
-datacfg = 'cfg/coco.data'
-cfgfile = 'cfg/yolov3-tiny.cfg'
-weightfile = '../yolov3-tiny.weights'
+#darknet_path = '/home/server/Projects/pyyolo/darknet'
+datacfg = '/home/server/Projects/YOLO3-4Py/cfg/coco.data'
+cfgfile = '/home/server/Projects/YOLO3-4Py/cfg/yolov3.cfg'
+weightfile = '/home/server/Projects/YOLO3-4Py/weights/yolov3.weights'
 #cfgfile = 'tiny-yolo/yolov2-tiny.cfg'
 #weightfile = 'tiny-yolo/yolov2-tiny.weights'
 
@@ -42,8 +42,10 @@ CAM_CONFIG = {
     },
 }
 
-def worker(camId):
-    pyyolo.init(darknet_path, datacfg, cfgfile, weightfile)
+def worker(camId):    
+    net = Detector(bytes(cfgfile, encoding="utf-8"), bytes(weightfile, encoding="utf-8"), 0,
+                   bytes(datacfg, encoding="utf-8"))
+
     CAM_NAME = CAM_CONFIG[camId]['name']
     WINDOW_NAME = CAM_CONFIG[camId]['window']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
@@ -81,7 +83,12 @@ def worker(camId):
         #c, h, w = img.shape[2], img.shape[1], img.shape[0]
         data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
-        predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
+        img2 = Image(img)
+        results = net.detect(img2)
+
+        print(results)
+
+        #predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
 
         #im = np.zeros((3,small.shape[1],small.shape[0]))
 
@@ -90,7 +97,8 @@ def worker(camId):
         #im[2,:,:] = np.rot90(small)
 
         #im = rgb
-        print(rgb.shape)
+        #print(rgb.shape)
+        predictions = []
         #c, h, w = im.shape[0], im.shape[1], im.shape[2]
         
        # im = im.transpose(2,0,1)
@@ -112,7 +120,7 @@ def worker(camId):
             if( what == 'car' ):
                 print(output)
                 numberCars += 1
-                cv2.rectangle(rgb, (50,50), (100,150), (0, 255, 0), 5)
+                cv2.rectangle(rgb, (50,50), (100,150), (255, 255, 255), 20)
                 if ( camId =="CAM_2" ):
                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
