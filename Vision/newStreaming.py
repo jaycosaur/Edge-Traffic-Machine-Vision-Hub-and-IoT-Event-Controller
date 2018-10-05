@@ -96,8 +96,9 @@ def worker(camId):
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
+                x1,y1,x2,y2 = int(x-w/2),int(y-h/2),(int(x+w/2),int(y+h/2)
                 #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
-                cv2.rectangle(rgb, (int(y-h/2),int(x-w/2)),(int(y+h/2),int(x+w/2)),(255,0,0))
+                cv2.rectangle(rgb, (x1,y1),(x2,y2),(255,0,0))
                 cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0))
                 numberCars += 1
 
