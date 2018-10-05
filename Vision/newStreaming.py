@@ -112,8 +112,12 @@ def worker(camId):
             img2 = Image(img)
             results = net.detect(img2)
             k = cv2.waitKey(1)
+            showLines = False
+
             if k==32:    # Esc key to stop
-                if camId=='CAM_2':
+                showLines = !showLines
+
+            if showLines and camId=='CAM_2':
                     cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                     cv2.putText(rgb, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
@@ -125,16 +129,11 @@ def worker(camId):
 
                     cv2.line(rgb, (0,rightBound), (h1, rightBound), (255,255,255), 1)
 
-                if camId=='CAM_1':
-                    cv2.line(rgb, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
-                    cv2.putText(rgb, 'Up-Road', (extraThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+            if showLines and camId=='CAM_1':
+                cv2.line(rgb, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
+                cv2.putText(rgb, 'Up-Road', (extraThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-                    #cv2.line(rgb, (0,rightBound2), (h1, rightBound2), (255,255,255), 1)
-            else:
-                print(k) # else print its value
-
-            
-
+                #cv2.line(rgb, (0,rightBound2), (h1, rightBound2), (255,255,255), 1)
 
             bounds = 100
 
