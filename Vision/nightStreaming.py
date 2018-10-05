@@ -9,6 +9,8 @@ import urllib.request
 from harvesters.core import Harvester
 from imutils import contours
 from skimage import measure
+import imutils
+
 
 thresh = 0.5
 hier_thresh = 0.2
