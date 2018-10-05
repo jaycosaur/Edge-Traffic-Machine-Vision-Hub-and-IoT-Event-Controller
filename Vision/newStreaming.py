@@ -72,6 +72,7 @@ def worker(camId):
     carColor = (255,0,0)
     busColor = (0,255,0)
     truckColor = (0,0,255)
+    phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
     while(True):
@@ -111,6 +112,8 @@ def worker(camId):
                     color = busColor
                 if (type == 'truck'):
                     color = truckColor
+                if (type == 'phone'):
+                    color = phoneColor
                 #x1,y1,x2,y2 = [int(x+w/2),int(y+h/2),int(x-w/2),int(y-h/2)]
                 #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
 
