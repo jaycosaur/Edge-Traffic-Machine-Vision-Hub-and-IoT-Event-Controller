@@ -114,7 +114,7 @@ def worker(camId):
                 cv2.line(rgb, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
                 cv2.putText(rgb, 'Up-Road', (extraThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-                cv2.line(rgb, (0,rightBound2), (h1, rightBound2), (255,255,255), 1)
+                #cv2.line(rgb, (0,rightBound2), (h1, rightBound2), (255,255,255), 1)
 
 
             bounds = 100
@@ -142,7 +142,7 @@ def worker(camId):
 
                     #simple trigger
                     if y2 <= rightBound and camId=='CAM_2':
-                        if False and x1<=uproadThresh and x2>=uproadThresh:
+                        if x1<=uproadThresh and x2>=uproadThresh:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             numberCars += 1
                         if x1<=truckThresh and x2>=truckThresh:
@@ -189,7 +189,7 @@ def worker(camId):
     cam.destroy()
 
 if __name__ == '__main__':
-    camIds = ['CAM_1','CAM_2']
+    camIds = ['CAM_2']
     #camIds = ['CAM_1']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
