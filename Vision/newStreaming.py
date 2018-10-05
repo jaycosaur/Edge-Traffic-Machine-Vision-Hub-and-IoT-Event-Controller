@@ -76,7 +76,7 @@ def worker(camId):
         clone = small.copy()
 
         rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
-
+        img3 = np.rot90(rgb)
         img = np.rot90(rgb)
 
         #img = rgb.transpose(2,0,1)
@@ -98,8 +98,8 @@ def worker(camId):
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
-                cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
-                cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0))
+                cv2.rectangle(img3, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
+                cv2.putText(img3, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0))
                 numberCars += 1
 
         #predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
@@ -142,9 +142,9 @@ def worker(camId):
 
 
         if IS_ROTATE:
-            cv2.imshow(WINDOW_NAME, rgb)
+            cv2.imshow(WINDOW_NAME, img3)
         else:
-            cv2.imshow(WINDOW_NAME, rgb)
+            cv2.imshow(WINDOW_NAME, img3)
 
         cv2.waitKey(1)
         buffer.queue()
