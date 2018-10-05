@@ -159,15 +159,16 @@ def worker(camId):
                         cv2.circle(small, (int(cX), int(cY)), int(5),
                             (0, 0, 255), 3)
                     if cY <= rightBound and cY >= leftBound and camId=='CAM_2':
-                        if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError:
+                        if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                            uproadLastTrigger = currentTime
                             numberCars += 1
-                        if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError:
+                        if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                            numberCars += 1
-                        if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError:
+                            truckLastTrigger = currentTime
+                        if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
-                            numberCars += 1
+                            closeLastTrigger = currentTime
             # show the output image
             # cv2.imshow("Image", rgb)
             k = cv2.waitKey(1)
@@ -204,50 +205,7 @@ def worker(camId):
 
             bounds = 100
             results = []
-            for cat, score, bounds in results:
-                    x, y, w, h = bounds
-                    x, y = (h1-int(y), int(x))
-                    x1,y1,x2,y2 = [int(x-h/2),int(y-w/2),int(x+h/2),int(y+w/2)]
-
-                    type = str(cat.decode("utf-8"))
-                    color = baseColor
-                    if (type == 'car'):
-                        color = carColor
-                    if (type == 'bus'):
-                        color = busColor
-                    if (type == 'truck'):
-                        color = truckColor
-                    if (type == 'phone'):
-                        color = phoneColor
-                    #x1,y1,x2,y2 = [int(x+w/2),int(y+h/2),int(x-w/2),int(y-h/2)]
-                    #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
-                    #cv2.line(rgb, (x1,y1), (x1, y2), color, 2)
-                    if showYolo:
-                        cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
-                        cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
-
-                    #simple trigger
-                    currentTime = time.time()
-
-                    if y2 <= rightBound and camId=='CAM_2':
-                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                            numberCars += 1
-                            uproadLastTrigger = currentTime
-                        if x1<=truckThresh-marginOfError and x2>=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                            numberCars += 1
-                            truckLastTrigger = currentTime
-                        if x1<=closeThresh-marginOfError and x2>=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
-                            numberCars += 1
-                            closeLastTrigger = currentTime
-                    
-                    if camId=='CAM_1':
-                        if y1<=rightBound2   and y2>=rightBound2  :
-                            urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                            numberCars += 1
-
+            
             '''predictions = []
             for output in predictions:
                 left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
