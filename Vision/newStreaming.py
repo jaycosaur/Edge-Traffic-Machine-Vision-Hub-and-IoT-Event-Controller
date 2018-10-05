@@ -84,8 +84,9 @@ def worker(camId):
         data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
         img2 = Image(img)
+        print('here')
         results = net.detect(img2)
-
+        print('here2')   
         print(results)
 
         #predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
