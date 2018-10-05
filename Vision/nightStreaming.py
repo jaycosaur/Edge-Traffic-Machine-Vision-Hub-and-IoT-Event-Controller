@@ -150,8 +150,9 @@ def worker(camId):
                     # draw the bright spot on the image
                     (x, y, w, h) = cv2.boundingRect(c)
                     ((cX, cY), radius) = cv2.minEnclosingCircle(c)
-                    cv2.circle(small, (int(cX), int(cY)), int(5),
-                        (0, 0, 255), 3)
+                    if showYolo:
+                        cv2.circle(small, (int(cX), int(cY)), int(5),
+                            (0, 0, 255), 3)
                     if cY <= rightBound and cY >= leftBound and camId=='CAM_2':
                         if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
