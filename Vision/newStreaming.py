@@ -100,7 +100,7 @@ def worker(camId):
         results = net.detect(img2)
         #print(results)
 
-        cv2.line(rgb, (0,100), (w1, 100), (255,255,0), 10)
+        cv2.line(rgb, (100,0), (100, w1), (255,255,0), 2)
 
         for cat, score, bounds in results:
                 x, y, w, h = bounds
