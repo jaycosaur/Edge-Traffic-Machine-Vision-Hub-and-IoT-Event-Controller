@@ -137,6 +137,23 @@ def worker(camId):
                 if numPixels > 300:
                     mask = cv2.add(mask, labelMask) """
 
+            cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+            cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+            cnts = contours.sort_contours(cnts)[0]
+            
+            # loop over the contours
+            for (i, c) in enumerate(cnts):
+                # draw the bright spot on the image
+                (x, y, w, h) = cv2.boundingRect(c)
+                ((cX, cY), radius) = cv2.minEnclosingCircle(c)
+                cv2.circle(rgb, (int(cX), int(cY)), int(radius),
+                    (0, 0, 255), 3)
+                cv2.putText(rgb, "#{}".format(i + 1), (x, y - 15),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+            
+            # show the output image
+            # cv2.imshow("Image", rgb)
+
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
 
@@ -230,7 +247,7 @@ def worker(camId):
                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()'''
 
             if IS_ROTATE:
-                cv2.imshow(WINDOW_NAME, np.rot90(mask))
+                cv2.imshow(WINDOW_NAME, np.rot90(rgb))
             else:
                 cv2.imshow(WINDOW_NAME, rgb)
 
