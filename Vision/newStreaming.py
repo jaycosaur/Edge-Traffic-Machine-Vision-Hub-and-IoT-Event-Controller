@@ -101,8 +101,11 @@ def worker(camId):
         #print(results)
 
 
-        cv2.line(rgb, (200,0), (200, w1), (255,255,0), 1)
-        cv2.putText(rgb, 'Up-Road', (200, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+        cv2.line(rgb, (250,0), (250, w1), (255,255,0), 1)
+        cv2.putText(rgb, 'Up-Road', (250, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+
+        cv2.line(rgb, (175,0), (175, w1), (255,255,0), 1)
+        cv2.putText(rgb, 'Truck', (175, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
         cv2.line(rgb, (100,0), (100, w1), (255,255,0), 1)
         cv2.putText(rgb, 'Close', (100, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
