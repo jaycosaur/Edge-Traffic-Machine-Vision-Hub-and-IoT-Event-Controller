@@ -42,9 +42,7 @@ CAM_CONFIG = {
     },
 }
 
-def worker(camId):    
-    net = Detector(bytes(cfgfile, encoding="utf-8"), bytes(weightfile, encoding="utf-8"), 0,
-                   bytes(datacfg, encoding="utf-8"))
+def worker(camId):
 
     CAM_NAME = CAM_CONFIG[camId]['name']
     WINDOW_NAME = CAM_CONFIG[camId]['window']
@@ -109,6 +107,13 @@ def worker(camId):
             image = payload[0].data
             small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
+            thresh = cv2.threshold(rgb, 200, 255, cv2.THRESH_BINARY)[1]
+
+
+
+
+
+
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
 
@@ -145,7 +150,7 @@ def worker(camId):
                 #cv2.line(rgb, (0,rightBound2), (h1, rightBound2), (255,255,255), 1)
 
             bounds = 100
-
+            results = []
             for cat, score, bounds in results:
                     x, y, w, h = bounds
                     x, y = (h1-int(y), int(x))
@@ -202,7 +207,7 @@ def worker(camId):
                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()'''
 
             if IS_ROTATE:
-                cv2.imshow(WINDOW_NAME, np.rot90(rgb))
+                cv2.imshow(WINDOW_NAME, np.rot90(thresh))
             else:
                 cv2.imshow(WINDOW_NAME, rgb)
 
