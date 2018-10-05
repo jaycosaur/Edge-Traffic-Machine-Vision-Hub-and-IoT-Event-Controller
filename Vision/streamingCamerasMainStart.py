@@ -95,7 +95,7 @@ def worker(camId):
             #print(data.shape)
             #data = np.ascontiguousarray(data, dtype=np.float32)
             #print(data.shape)
-            
+
             predictions = pyyolo.detect(w, h, c, data, thresh, hier_thresh)
             for output in predictions:
                 left, right, top, bottom, what, prob = output['left'],output['right'],output['top'],output['bottom'],output['class'],output['prob']
@@ -123,6 +123,8 @@ def worker(camId):
             print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
             lastTime = time.time()
             i += 1
+        catch:
+            buffer.queue()
 
     cam.stop_image_acquisition()
     cam.destroy()
