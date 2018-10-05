@@ -75,22 +75,34 @@ def worker(camId):
     phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
+    baseRes = 480
+
+    #as percentages
+
     uproadThresh = 295
     truckThresh = 200
     closeThresh = 180
-
     extraThresh = 50
-
     leftBound = 50
     rightBound = 125
     rightBound2 = 125
+
+    
+    factor = baseRes/320
+    uproadThresh = 295*factor 
+    truckThresh = 200*factor 
+    closeThresh = 180*factor 
+    extraThresh = 50*factor 
+    leftBound = 50*factor 
+    rightBound = 125*factor 
+    rightBound2 = 125*factor 
 
     while(True):
         buffer = cam.fetch_buffer()
         payload = buffer.payload.components
         if(payload):
             image = payload[0].data
-            small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
+            small = cv2.resize(image, dsize=(baseRes, baseRes*10/16), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
