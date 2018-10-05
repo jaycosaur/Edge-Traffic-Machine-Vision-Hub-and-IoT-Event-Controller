@@ -76,6 +76,7 @@ def worker(camId):
         #clone = small.copy()
 
         rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
+        print(rgb.shape)
         img = np.rot90(rgb,1)
 
         #img = rgb.transpose(2,0,1)
