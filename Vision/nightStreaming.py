@@ -87,7 +87,7 @@ def worker(camId):
     closeThresh = 180
     extraThresh = 50
     leftBound = 50
-    rightBound = 125
+    rightBound = 100
     rightBound2 = 125
     marginOfError = 20
 
