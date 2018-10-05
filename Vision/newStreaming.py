@@ -116,6 +116,8 @@ def worker(camId):
 
             if k==32:    # Esc key to stop
                 showLines = not(showLines)
+            else:
+                print(k)
 
             if showLines and camId=='CAM_2':
                     cv2.line(rgb, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
