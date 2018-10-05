@@ -83,7 +83,7 @@ def worker(camId):
         #c, h, w = img.shape[2], img.shape[1], img.shape[0]
         data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
-        img2 = Image(img)
+        img2 = Image(rgb)
         print('here')
         results = net.detect(img2)
         print('here2')   
