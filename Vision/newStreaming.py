@@ -137,7 +137,7 @@ def worker(camId):
 
 
         if IS_ROTATE:
-            cv2.imshow(WINDOW_NAME, np.rot90(rgb)
+            cv2.imshow(WINDOW_NAME, np.rot90(rgb))
         else:
             cv2.imshow(WINDOW_NAME, rgb)
 
