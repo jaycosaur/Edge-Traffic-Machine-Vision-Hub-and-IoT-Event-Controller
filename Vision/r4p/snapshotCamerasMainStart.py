@@ -2,6 +2,7 @@ import gi
 import sys
 import multiprocessing
 import time
+import datetime
 import cv2
 import urllib.request
 import numpy as np 
@@ -90,13 +91,14 @@ def worker(camId):
 
     cam.set_pixel_format (PIXEL_CONFIG)
     cam.get_device().set_string_feature_value("TriggerSource", "Line3")
+    cam.get_device().set_string_feature_value("GainAuto", "Off")
     cam.set_acquisition_mode(Aravis.AcquisitionMode.CONTINUOUS)
     cam.set_trigger('On')
 
     stream = cam.create_stream (None, None)
     cam.get_device().set_string_feature_value("TriggerActivation", 'FallingEdge')
     cam.set_exposure_time(1000)
-    cam.set_gain_auto(Aravis.Auto(2)) #auto gain
+    #cam.set_gain_auto(Aravis.Auto(2)) #auto gain
 
     payload = cam.get_payload()
 
@@ -124,8 +126,21 @@ def worker(camId):
 
     lastTime = time.time()
 
+
+
     lastSnapshot = None
     while(True):
+        now = datetime.datetime.now()
+        print(now.hour, now.minute)
+        #night-mode
+        if False:
+            cam.set_exposure_time(10000)
+            cam.get_device().set_string_feature_value("Gain", 10.0)
+        #day-mode
+        if False:
+            cam.set_exposure_time(500)
+            cam.get_device().set_string_feature_value("Gain", 0.0)
+
         stream.push_buffer(Aravis.Buffer.new_allocate(payload))
         buffer = stream.try_pop_buffer ()
         if(buffer):
