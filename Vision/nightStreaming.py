@@ -114,7 +114,7 @@ def worker(camId):
             blurred = cv2.GaussianBlur(rgb, (11, 11), 0)
             thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY)[1]
             thresh = cv2.erode(thresh, None, iterations=2)
-            thresh = cv2.dilate(thresh, None, iterations=4)
+            #thresh = cv2.dilate(thresh, None, iterations=4)
 
             labels = measure.label(thresh, neighbors=8, background=0)
             mask = np.zeros(thresh.shape, dtype="uint8")
