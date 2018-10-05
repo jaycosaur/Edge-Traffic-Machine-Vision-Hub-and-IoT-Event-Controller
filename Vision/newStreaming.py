@@ -76,6 +76,7 @@ def worker(camId):
     baseColor = (255,255,255)
 
     baseRes = 320
+    scale = 1920/800
 
     #as percentages
 
@@ -103,7 +104,7 @@ def worker(camId):
         payload = buffer.payload.components
         if(payload):
             image = payload[0].data
-            small = cv2.resize(image, dsize=(baseRes, int(baseRes*10/16)), interpolation=cv2.INTER_CUBIC)
+            small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
