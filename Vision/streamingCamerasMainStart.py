@@ -69,7 +69,7 @@ def worker(camId):
 
     while(True):
         buffer = cam.fetch_buffer()
-        try:
+        if(buffer.payload.components[0]):
             image = buffer.payload.components[0].data
             small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
             clone = small.copy()
@@ -123,8 +123,6 @@ def worker(camId):
             print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
             lastTime = time.time()
             i += 1
-        catch:
-            buffer.queue()
 
     cam.stop_image_acquisition()
     cam.destroy()
