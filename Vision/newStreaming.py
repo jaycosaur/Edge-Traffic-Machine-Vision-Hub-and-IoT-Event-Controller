@@ -121,7 +121,7 @@ def worker(camId):
                 showLines = False
             elif k==122:
                 showYolo = True
-            elif k=120:
+            elif k==120:
                 showYolo = False
 
             if showLines and camId=='CAM_2':
