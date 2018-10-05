@@ -104,7 +104,7 @@ def worker(camId):
     showLines = False
     showYolo = False
 
-    triggerDelay = 250
+    triggerDelay = 0.250
     uproadLastTrigger = time.time()
     truckLastTrigger = time.time()
     closeLastTrigger = time.time()
@@ -125,8 +125,6 @@ def worker(camId):
 
             labels = measure.label(thresh, neighbors=8, background=0)
             mask = np.zeros(thresh.shape, dtype="uint8")
-            currentTime = time.time()
-            print(currentTime)
             # loop over the unique components
             for label in np.unique(labels):
                 # if this is the background label, ignore it
