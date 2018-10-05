@@ -75,7 +75,9 @@ def worker(camId):
         small = cv2.resize(image, dsize=(320, 200), interpolation=cv2.INTER_CUBIC)
         clone = small.copy()
 
-        rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+        old = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+
+        rgb = np.rot90(old)
         #img = rgb.transpose(2,0,1)
         if IS_ROTATE:
              img = np.rot90(rgb)
