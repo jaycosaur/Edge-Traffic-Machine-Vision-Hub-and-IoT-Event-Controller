@@ -66,7 +66,7 @@ def worker(camId):
 
     lastTime = time.time()
     transposeTime = 0
-    i = 0
+    frame = 0
     numberCars = 0
     lastSnapshot = None
     cv2.namedWindow(WINDOW_NAME, flags=0)
@@ -232,9 +232,9 @@ def worker(camId):
             cv2.waitKey(1)
             buffer.queue()
             
-            print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
+            print("Count: ", numberCars, " Frame: ", frame, " FPS: ", 1.0/(time.time()-lastTime))
             lastTime = time.time()
-            i += 1
+            frame += 1
 
     cam.stop_image_acquisition()
     cam.destroy()
