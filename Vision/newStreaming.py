@@ -99,6 +99,9 @@ def worker(camId):
     rightBound = int(125*factor )
     rightBound2 = int(125*factor )
 
+    showLines = False
+    showYolo = False
+
     while(True):
         buffer = cam.fetch_buffer()
         payload = buffer.payload.components
@@ -112,8 +115,6 @@ def worker(camId):
             img2 = Image(img)
             results = net.detect(img2)
             k = cv2.waitKey(1)
-            showLines = False
-            showYolo = False
 
             if k==113:    # Esc key to stop
                 showLines = True
