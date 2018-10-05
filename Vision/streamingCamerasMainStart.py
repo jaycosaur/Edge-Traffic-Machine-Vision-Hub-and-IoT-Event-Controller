@@ -74,7 +74,9 @@ def worker(camId):
         clone = small.copy()
 
         rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
+        print(rgb.shape)
         img = rgb.transpose(2,0,1)
+        #print(rgb.shape)
         c, h, w = img.shape[0], img.shape[1], img.shape[2]
         data = img.ravel()/255.0
         #data = np.ascontiguousarray(data, dtype=np.float32)
