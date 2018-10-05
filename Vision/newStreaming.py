@@ -88,21 +88,21 @@ def worker(camId):
     rightBound2 = 125
 
     
-    factor = baseRes/320
-    uproadThresh = 295*factor 
-    truckThresh = 200*factor 
-    closeThresh = 180*factor 
-    extraThresh = 50*factor 
-    leftBound = 50*factor 
-    rightBound = 125*factor 
-    rightBound2 = 125*factor 
+    factor = int(baseRes/320)
+    uproadThresh = int(295*factor)
+    truckThresh = int(200*factor)
+    closeThresh = int(180*factor )
+    extraThresh = int(50*factor )
+    leftBound = int(50*factor )
+    rightBound = int(125*factor )
+    rightBound2 = int(125*factor )
 
     while(True):
         buffer = cam.fetch_buffer()
         payload = buffer.payload.components
         if(payload):
             image = payload[0].data
-            small = cv2.resize(image, dsize=(baseRes, baseRes*10/16), interpolation=cv2.INTER_CUBIC)
+            small = cv2.resize(image, dsize=(baseRes, int(baseRes*10/16)), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
             img = np.rot90(rgb,1)
             c, h1, w1 = rgb.shape[2], rgb.shape[1], rgb.shape[0]
