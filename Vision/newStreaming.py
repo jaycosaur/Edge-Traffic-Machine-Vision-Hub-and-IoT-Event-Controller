@@ -77,7 +77,7 @@ def worker(camId):
 
         rgb = cv2.cvtColor(clone, cv2.COLOR_BayerRG2RGB)
         img2 = np.rot90(rgb)
-        img = np.rot90(rgb,2)
+        img = np.rot90(rgb)
 
         #img = rgb.transpose(2,0,1)
         #if IS_ROTATE:
@@ -142,7 +142,7 @@ def worker(camId):
 
 
         if IS_ROTATE:
-            cv2.imshow(WINDOW_NAME, rgb)
+            cv2.imshow(WINDOW_NAME, np.rot90(rgb))
         else:
             cv2.imshow(WINDOW_NAME, rgb)
 
