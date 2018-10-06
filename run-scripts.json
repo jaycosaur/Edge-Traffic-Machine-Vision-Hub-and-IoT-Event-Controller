@@ -1,20 +1,24 @@
 {
     "apps": [
       {
-        "name": "logging",
-        "script": "./Logging/index.js",
-        "exec_mode": "cluster",
-        "instances": 2,
-        "node_args": "--max_old_space_size=8192"
+        "name": "backup",
+        "script": "./Processing/index.js"
       },
       {
         "name": "processing",
-        "script": "./Processing/index.js",
-        "node_args": "--max_old_space_size=8192"
+        "script": "./Processing/autoBackup.js"
       },
       {
-        "name": "vision",
-        "script": "./Vision/main.py"
+        "name": "snapshots",
+        "cwd": "/home/server/onetaskserver/Vision/r4p",
+        "script": "./Vision/r4p/initSnapshots",
+        "exec_interpreter": "bash"
+      },
+      {
+        "name": "streaming",
+        "cwd": "/home/server/onetaskserver/Vision/r4p",
+        "script": "./Vision/r4p/initStreams",
+        "exec_interpreter": "bash"
       }
     ]
   }
