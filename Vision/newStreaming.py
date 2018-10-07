@@ -104,7 +104,7 @@ def worker(camId):
     showLines = False
     showYolo = False
 
-    triggerDelay = 0.250
+    triggerDelay = 0.100
     uproadLastTrigger = time.time()
     truckLastTrigger = time.time()
     closeLastTrigger = time.time()
