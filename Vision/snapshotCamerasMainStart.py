@@ -131,30 +131,30 @@ def worker(camId):
         return cam.get_device().get_string_feature_value(feature)
     
     def changeCamFloatValue(feature, value):
-        cam.get_device().set_string_feature_value(feature, value)
-        return cam.get_device().get_string_feature_value(feature)
+        cam.get_device().set_float_feature_value(feature, value)
+        return cam.get_device().get_float_feature_value(feature)
 
     def changeCamIntegerValue(feature, value):
-        cam.get_device().set_string_feature_value(feature, value)
-        return cam.get_device().get_string_feature_value(feature)
+        cam.get_device().set_integer_feature_value(feature, value)
+        return cam.get_device().get_integer_feature_value(feature)
 
     lastSnapshot = None
 
     GAIN_AUTO = cam.get_device().get_string_feature_value("GainAuto")
     EXPOSURE_AUTO = cam.get_device().get_string_feature_value("ExposureAuto")
 
-    EXPOSURE_AUTO_MIN = cam.get_device().get_string_feature_value("AutoExposureTimeMin")
-    EXPOSURE_AUTO_MAX = cam.get_device().get_string_feature_value("AutoExposureTimeMax")
-    GAIN_AUTO_MIN = cam.get_device().get_string_feature_value("AutoGainMin")
-    GAIN_AUTO_MAX = cam.get_device().get_string_feature_value("AutoGainMax")
+    EXPOSURE_AUTO_MIN = cam.get_device().get_float_feature_value("AutoExposureTimeMin")
+    EXPOSURE_AUTO_MAX = cam.get_device().get_float_feature_value("AutoExposureTimeMax")
+    GAIN_AUTO_MIN = cam.get_device().get_float_feature_value("AutoGainMin")
+    GAIN_AUTO_MAX = cam.get_device().get_float_feature_value("AutoGainMax")
 
-    TRIGGER_DELAY = cam.get_device().get_string_feature_value("TriggerDelay")
-    EXPECTED_GRAY = cam.get_device().get_string_feature_value("ExpectedGrayValue")
+    TRIGGER_DELAY = cam.get_device().get_float_feature_value("TriggerDelay")
+    EXPECTED_GRAY = cam.get_device().get_integer_feature_value("ExpectedGrayValue")
     
 
     UNIT = 10
 
-    print(dir(cam.get_device()))
+    #print(dir(cam.get_device()))
 
     while(True):
         now = datetime.datetime.now()
@@ -221,6 +221,10 @@ def worker(camId):
             elif k==97: """
             cv2.putText(img, "Gain Auto: "+GAIN_AUTO, (100, 100), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
             cv2.putText(img, "Exposure Auto: "+EXPOSURE_AUTO, (100, 200), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "EXPOSURE_AUTO_MIN: "+EXPOSURE_AUTO_MIN, (100, 300), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "EXPOSURE_AUTO_MAX:" +EXPOSURE_AUTO_MAX, (100, 400), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "GAIN_AUTO_MIN: "+GAIN_AUTO_MIN, (100, 500), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "GAIN_AUTO_MIN: "+GAIN_AUTO_MAX, (100, 600), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
