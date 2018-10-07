@@ -182,6 +182,7 @@ def worker(camId):
                         if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             closeLastTrigger = currentTime
+                            
             # show the output image
             # cv2.imshow("Image", rgb)
             k = cv2.waitKey(1)
