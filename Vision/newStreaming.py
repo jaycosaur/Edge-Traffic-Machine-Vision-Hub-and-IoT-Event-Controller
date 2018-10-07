@@ -151,6 +151,7 @@ def worker(camId):
 
                     cv2.line(rgb, (0,rightBound), (h1, rightBound), (255,255,255), 1)
                     cv2.line(rgb, (0,leftBound2), (h1, leftBound2), (255,255,255), 1)
+                    cv2.line(rgb, (0,leftBound), (h1, leftBound), (255,255,255), 1)
 
             if showLines and camId=='CAM_1':
                 cv2.line(rgb, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
@@ -205,12 +206,12 @@ def worker(camId):
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             uproadLastTrigger = currentTime
                         #if x1<=truckThresh and x2>=truckThresh and (currentTime-truckLastTrigger)>triggerDelay:
-                        if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
+                        if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             numberCars += 1
                             truckLastTrigger = currentTime
                         #if x1<=closeThresh and x2>=closeThresh and (currentTime-closeLastTrigger)>triggerDelay:
-                        if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and (currentTime-closeLastTrigger)>triggerDelay:
+                        if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             closeLastTrigger = currentTime
                     
