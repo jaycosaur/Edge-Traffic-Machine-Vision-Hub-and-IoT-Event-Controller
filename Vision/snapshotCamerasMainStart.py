@@ -126,9 +126,34 @@ def worker(camId):
 
     lastTime = time.time()
 
+    def changeCamStringValue(feature, value):
+        cam.get_device().set_string_feature_value(feature, value)
+        return cam.get_device().get_string_feature_value(feature)
+    
+    def changeCamFloatValue(feature, value):
+        cam.get_device().set_string_feature_value(feature, value)
+        return cam.get_device().get_string_feature_value(feature)
 
+    def changeCamIntegerValue(feature, value):
+        cam.get_device().set_string_feature_value(feature, value)
+        return cam.get_device().get_string_feature_value(feature)
 
     lastSnapshot = None
+
+    GAIN_AUTO = cam.get_device().get_string_feature_value("GainAuto")
+    EXPOSURE_AUTO = cam.get_device().get_string_feature_value("ExposureAuto")
+
+    EXPOSURE_AUTO_MIN = cam.get_device().get_string_feature_value("AutoExposureTimeMin")
+    EXPOSURE_AUTO_MAX = cam.get_device().get_string_feature_value("AutoExposureTimeMax")
+    GAIN_AUTO_MIN = cam.get_device().get_string_feature_value("AutoGainMin")
+    GAIN_AUTO_MAX = cam.get_device().get_string_feature_value("AutoGainMax")
+
+    TRIGGER_DELAY = cam.get_device().get_string_feature_value("TriggerDelay")
+    EXPECTED_GRAY = cam.get_device().get_string_feature_value("ExpectedGrayValue")
+    
+
+    UNIT = 10
+
     while(True):
         now = datetime.datetime.now()
         #print(now.hour, now.minute)
@@ -145,13 +170,55 @@ def worker(camId):
 
         #buffer = stream.try_pop_buffer ()
         buffer = stream.pop_buffer ()
+
+        
         if(buffer):
             # alt c type definition for bayer-rg-8
             b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
             im = np.ctypeslib.as_array(b, (height, width))
             rgb = cv2.cvtColor(im, cv2.COLOR_BayerRG2RGB)
             img = rgb.copy() 
-            cv2.putText(img, cam.get_device().get_string_feature_value("GainAuto"), (100, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+            k = cv2.waitKey(1)
+            print(k)
+
+            if k==0:
+                GAIN_AUTO=changeCamStringValue('GainAuto', 'Continuous')
+            if k==1:
+                GAIN_AUTO=changeCamStringValue('GainAuto', 'Off')
+            if k==2:
+               EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Continuous')
+            if k==3:
+               EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Off')
+            if k=='o':
+               EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN+UNIT)
+            if k=='l':
+               EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN-UNIT)
+            if k=='i':
+               EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX+UNIT)
+            if k=='k':
+               EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX-UNIT)
+            if k=='y':
+               GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN+UNIT)
+            if k=='h':
+               GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN-UNIT)
+            if k=='u':
+               GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX+UNIT)
+            if k=='j':
+               GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX-UNIT)
+            if k=='t':
+               TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY+UNIT)
+            if k=='g':
+               TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY-UNIT)
+            if k=='r':
+               EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY+UNIT)
+            if k=='f':
+               EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY-UNIT)
+
+            """ if k==113:    # Esc key to stop
+                showLines = True
+            elif k==97: """
+
+            cv2.putText(img, "Gain Auto: "+GAIN_AUTO, (100, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
