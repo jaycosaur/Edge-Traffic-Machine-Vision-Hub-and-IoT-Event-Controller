@@ -209,7 +209,7 @@ def worker(camId):
                             numberCars += 1
                             truckLastTrigger = currentTime
                         #if x1<=closeThresh and x2>=closeThresh and (currentTime-closeLastTrigger)>triggerDelay:
-                        if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
+                        if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             closeLastTrigger = currentTime
                     
