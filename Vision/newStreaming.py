@@ -75,7 +75,7 @@ def worker(camId):
     phoneColor = (0,255,255)
     baseColor = (255,255,255)
 
-    baseRes = 400
+    baseRes = 600
     scale = 800/1920
 
     #as percentages
