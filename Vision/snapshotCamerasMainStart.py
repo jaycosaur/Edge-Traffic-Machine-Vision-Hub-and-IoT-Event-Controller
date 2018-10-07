@@ -154,7 +154,7 @@ def worker(camId):
 
     UNIT = 10
 
-    print(dir(cam.get_device())
+    print(dir(cam.get_device()))
 
     while(True):
         now = datetime.datetime.now()
