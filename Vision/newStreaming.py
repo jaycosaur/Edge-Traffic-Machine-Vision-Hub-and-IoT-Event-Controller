@@ -80,9 +80,9 @@ def worker(camId):
 
     #as percentages
 
-    uproadThresh = 295
-    truckThresh = 220
-    closeThresh = 180
+    uproadThresh = 305
+    truckThresh = 230
+    closeThresh = 190
     extraThresh = 50
     leftBound = 50
     leftBound2 = 70
