@@ -179,7 +179,7 @@ def worker(camId):
                     #x1,y1,x2,y2 = [int(x+w/2),int(y+h/2),int(x-w/2),int(y-h/2)]
                     #cv2.rectangle(rgb, (int(x-w/2),int(y-h/2)),(int(x+w/2),int(y+h/2)),(255,0,0))
                     #cv2.line(rgb, (x1,y1), (x1, y2), color, 2)
-                    if showYolo:
+                    if showYolo and h>5:
                         #cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
                         #cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
                         cv2.circle(rgb, (int(x), int(y)), int(2),
@@ -201,7 +201,7 @@ def worker(camId):
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             closeLastTrigger = currentTime """
 
-                    if y <= rightBound and camId=='CAM_2':
+                    if y <= rightBound and camId=='CAM_2' and h>5:
                         if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             uproadLastTrigger = currentTime
