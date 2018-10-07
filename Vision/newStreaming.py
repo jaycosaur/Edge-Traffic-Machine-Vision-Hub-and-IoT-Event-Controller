@@ -140,9 +140,13 @@ def worker(camId):
                     cv2.putText(rgb, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
                     cv2.line(rgb, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
+                    cv2.line(rgb, (truckThresh+marginOfError,0), (truckThresh+marginOfError, w1), (255,0,0), 1)
+                    cv2.line(rgb, (truckThresh-marginOfError,0), (truckThresh-marginOfError, w1), (255,0,0), 1)
                     cv2.putText(rgb, 'Truck', (truckThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
                     cv2.line(rgb, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
+                    cv2.line(rgb, (closeThresh+marginOfError,0), (closeThresh+marginOfError, w1), (255,0,0), 1)
+                    cv2.line(rgb, (closeThresh-marginOfError,0), (closeThresh-marginOfError, w1), (255,0,0), 1)
                     cv2.putText(rgb, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
                     cv2.line(rgb, (0,rightBound), (h1, rightBound), (255,255,255), 1)
