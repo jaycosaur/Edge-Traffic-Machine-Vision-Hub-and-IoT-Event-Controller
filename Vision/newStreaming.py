@@ -150,6 +150,7 @@ def worker(camId):
                     cv2.putText(rgb, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
                     cv2.line(rgb, (0,rightBound), (h1, rightBound), (255,255,255), 1)
+                    cv2.line(rgb, (0,leftBound2), (h1, leftBound2), (255,255,255), 1)
 
             if showLines and camId=='CAM_1':
                 cv2.line(rgb, (extraThresh,0), (extraThresh, w1), (255,255,0), 1)
