@@ -15,6 +15,8 @@ import imutils
 thresh = 0.5
 hier_thresh = 0.2
 
+LOG = True
+
 #darknet_path = '/home/server/Projects/pyyolo/darknet'
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
 cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-tiny.cfg'
@@ -114,6 +116,8 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         payload = buffer.payload.components
+        if LOG:
+            print(payload)
         if(payload):
             image = payload[0].data
             if showLines or showYolo:
@@ -131,6 +135,9 @@ def worker(camId):
 
             labels = measure.label(thresh, neighbors=8, background=0)
             mask = np.zeros(thresh.shape, dtype="uint8")
+
+            if LOG:
+                print(labels)
             # loop over the unique components
             for label in np.unique(labels):
                 # if this is the background label, ignore it
