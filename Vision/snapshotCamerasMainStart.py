@@ -218,7 +218,8 @@ def worker(camId):
                 showLines = True
             elif k==97: """
 
-            cv2.putText(img, "Gain Auto: "+GAIN_AUTO, (100, 50), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,0))
+            cv2.putText(img, "Gain Auto: "+GAIN_AUTO, (100, 100), cv2.FONT_HERSHEY_COMPLEX, 4, (255,0,0))
+            cv2.putText(img, "Exposure Auto: "+EXPOSURE_AUTO, (100, 200), cv2.FONT_HERSHEY_COMPLEX, 4, (255,0,0))
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
