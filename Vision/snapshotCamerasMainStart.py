@@ -150,7 +150,10 @@ def worker(camId):
             b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
             im = np.ctypeslib.as_array(b, (height, width))
             rgb = cv2.cvtColor(im, cv2.COLOR_BayerRG2RGB)
-            cv2.imshow(WINDOW_NAME, rgb.copy())	#remove .copy() before production
+            img = rgb.copy() 
+            cv2.putText(img, cam.get_device().get_string_feature_value("GainAuto"), (100, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+
+            cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
             uid = uuid.uuid4()
 
