@@ -174,6 +174,8 @@ def worker(camId):
                     if showYolo:
                         cv2.rectangle(rgb, (x1,y1),(x2,y2),color)
                         cv2.putText(rgb, str(cat.decode("utf-8")), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, color)
+                        cv2.circle(rgb, (int(x), int(y)), int(5),
+                            (0, 0, 255), 3)
 
                     currentTime = time.time()
                     #simple trigger
