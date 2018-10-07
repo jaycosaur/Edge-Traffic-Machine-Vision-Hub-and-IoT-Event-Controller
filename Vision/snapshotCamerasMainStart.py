@@ -142,6 +142,8 @@ def worker(camId):
 
     GAIN_AUTO = cam.get_device().get_string_feature_value("GainAuto")
     EXPOSURE_AUTO = cam.get_device().get_string_feature_value("ExposureAuto")
+    GAIN = cam.get_device().get_float_feature_value("Gain")
+    EXPOSURE = cam.get_device().get_float_feature_value("ExposureTime")
 
     EXPOSURE_AUTO_MIN = cam.get_device().get_float_feature_value("AutoExposureTimeMin")
     EXPOSURE_AUTO_MAX = cam.get_device().get_float_feature_value("AutoExposureTimeMax")
@@ -150,9 +152,12 @@ def worker(camId):
 
     TRIGGER_DELAY = cam.get_device().get_float_feature_value("TriggerDelay")
     EXPECTED_GRAY = cam.get_device().get_integer_feature_value("ExpectedGrayValue")
+
+    SHOW_VALUES = False
     
 
     UNIT = 10
+    UNIT_MULTI = 1
 
     #print(dir(cam.get_device()))
 
@@ -175,40 +180,69 @@ def worker(camId):
 
         k = cv2.waitKey(1)
         print(k)
+        if k==113: #q
+            SHOW_VALUES=True
+        if k==97: #a
+            SHOW_VALUES=False
         if k==49: #1
             GAIN_AUTO=changeCamStringValue('GainAuto', 'Continuous')
+            GAIN = cam.get_device().get_float_feature_value("Gain")
         if k==50: #2
             GAIN_AUTO=changeCamStringValue('GainAuto', 'Off')
+            GAIN = cam.get_device().get_float_feature_value("Gain")
         if k==51: #3
             EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Continuous')
+            EXPOSURE = cam.get_device().get_float_feature_value("ExposureTime")
         if k==32: #4
             EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Off')
-        if k=='111': #o
+            EXPOSURE = cam.get_device().get_float_feature_value("ExposureTime")
+        if k==111: #o
             EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN+UNIT)
-        if k=='108': #l
+        if k==108: #l
             EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN-UNIT)
-        if k=='105': #i
+        if k==105: #i
             EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX+UNIT)
-        if k=='107': #k
+        if k==107: #k
             EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX-UNIT)
-        if k=='121': #y
+        if k==121: #y
             GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN+UNIT)
-        if k=='104': #h
+        if k==104: #h
             GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN-UNIT)
-        if k=='117': #u
+        if k==117: #u
             GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX+UNIT)
-        if k=='`06': #j
+        if k==106: #j
             GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX-UNIT)
-        if k=='116': #t
+        if k==116: #t
             TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY+UNIT)
-        if k=='103': #g
+        if k==103: #g
             TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY-UNIT)
-        if k=='114': #r
+        if k==114: #r
             EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY+UNIT)
-        if k=='102': #f
+        if k==102: #f
             EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY-UNIT)
 
-        
+        if k==118: #v
+            GAIN=changeCamFloatValue('Gain', GAIN+UNIT)
+        if k==98: #b
+            GAIN=changeCamFloatValue('Gain', GAIN-UNIT)
+        if k==110: #n
+            EXPOSURE=changeCamFloatValue('ExposureTime', EXPOSURE+UNIT)
+        if k==109: #m
+            EXPOSURE=changeCamFloatValue('ExposureTime', EXPOSURE-UNIT)
+
+        if k==119: #w
+            UNIT = UNIT + 10**UNIT_MULTI
+        if k==115: #s
+            UNIT = UNIT - 10**UNIT_MULTI
+        if k==120: #x
+            UNIT = 10
+        if k==119: #e
+            UNIT_MULTI = UNIT_MULTI + 1
+        if k==115: #d
+            UNIT_MULTI = UNIT_MULTI - 1
+        if k==99: #c
+            UNIT_MULTI = 1
+
         if(buffer):
             # alt c type definition for bayer-rg-8
             b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
@@ -219,14 +253,21 @@ def worker(camId):
             """ if k==113:    # Esc key to stop
                 showLines = True
             elif k==97: """
-            cv2.putText(img, "GAIN AUTO: "+str(GAIN_AUTO), (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPOSURE AUTO: "+str(EXPOSURE_AUTO), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPOSURE AUTO MIN: "+str(EXPOSURE_AUTO_MIN), (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPOSURE AUTO MAX:" +str(EXPOSURE_AUTO_MAX), (100, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MIN), (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MAX), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "TRIGGER DELAY: "+str(TRIGGER_DELAY), (100, 400), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            if SHOW_VALUES:
+                cv2.putText(img, "GAIN AUTO: "+str(GAIN_AUTO), (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "EXPOSURE AUTO: "+str(EXPOSURE_AUTO), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "EXPOSURE AUTO MIN: "+str(EXPOSURE_AUTO_MIN), (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "EXPOSURE AUTO MAX:" +str(EXPOSURE_AUTO_MAX), (100, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MIN), (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MAX), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "TRIGGER DELAY: "+str(TRIGGER_DELAY), (100, 400), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+
+                cv2.putText(img, "EXPOSURE: "+str(TRIGGER_DELAY), (100, 400), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "GAIN: "+str(EXPECTED_GRAY), (100, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+
+                cv2.putText(img, "UNIT: "+str(UNIT), (100, 550), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+                cv2.putText(img, "UNIT MULTIPLIER: "+str(UNIT_MULTI), (100, 600), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
