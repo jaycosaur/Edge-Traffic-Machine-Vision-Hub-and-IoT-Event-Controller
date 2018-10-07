@@ -69,7 +69,7 @@ module.exports = actionHandler = (action) => {
         // name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID } = convertNameToObj(pathComps[pathComps.length-1])
-        move(action.payload.path,`${config.STAGED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,(err)=>{
+        move(action.payload.path,`${config.PROCESSED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,(err)=>{
             if(err){
                 console.log(err)
             } 
