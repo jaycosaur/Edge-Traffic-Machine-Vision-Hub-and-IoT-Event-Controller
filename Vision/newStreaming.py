@@ -25,6 +25,8 @@ TRIGGER_FAR_FLASH_URL = 'http://192.168.1.100:8000/trigger-far-flash'
 TRIGGER_CLOSE_FLASH_URL = 'http://192.168.1.100:8000/trigger-close-flash'
 TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
 
+LOG = True
+
 CAM_CONFIG = {
     'CAM_1': {
         'name': 'QG0170070015',
@@ -112,8 +114,12 @@ def worker(camId):
     while(True):
         buffer = cam.fetch_buffer()
         payload = buffer.payload.components
+        if LOG:
+            print(payload)
         if(payload):
             image = payload[0].data
+            if LOG:
+                print(image)
             small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
             rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2RGB)
             img = np.rot90(rgb,1)
@@ -121,6 +127,8 @@ def worker(camId):
 
             img2 = Image(img)
             results = net.detect(img2)
+            if LOG:
+                print(results)
             k = cv2.waitKey(1)
 
             if k==113:    # Esc key to stop
@@ -204,15 +212,21 @@ def worker(camId):
                     if y <= rightBound and camId=='CAM_2' and h>5:
                         if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                            if LOG:
+                                print('FAR TRIG')
                             uproadLastTrigger = currentTime
                         #if x1<=truckThresh and x2>=truckThresh and (currentTime-truckLastTrigger)>triggerDelay:
                         if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                            if LOG:
+                                print('TRUCK TRIG')
                             numberCars += 1
                             truckLastTrigger = currentTime
                         #if x1<=closeThresh and x2>=closeThresh and (currentTime-closeLastTrigger)>triggerDelay:
                         if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                            if LOG:
+                                print('CLOSE TRIG')
                             closeLastTrigger = currentTime
                     
                     if camId=='CAM_1':
