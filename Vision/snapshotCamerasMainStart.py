@@ -219,14 +219,14 @@ def worker(camId):
             """ if k==113:    # Esc key to stop
                 showLines = True
             elif k==97: """
-            cv2.putText(img, "GAIN AUTO: "+str(GAIN_AUTO), (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPOSURE AUTO: "+str(EXPOSURE_AUTO), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPOSURE AUTO MIN: "+str(EXPOSURE_AUTO_MIN), (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPOSURE AUTO MAX:" +str(EXPOSURE_AUTO_MAX), (100, 250), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MIN), (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MAX), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "TRIGGER DELAY: "+str(TRIGGER_DELAY), (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "GAIN AUTO: "+str(GAIN_AUTO), (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "EXPOSURE AUTO: "+str(EXPOSURE_AUTO), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "EXPOSURE AUTO MIN: "+str(EXPOSURE_AUTO_MIN), (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "EXPOSURE AUTO MAX:" +str(EXPOSURE_AUTO_MAX), (100, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MIN), (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MAX), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "TRIGGER DELAY: "+str(TRIGGER_DELAY), (100, 400), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 550), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
