@@ -275,7 +275,7 @@ def worker(camId):
 
             #name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
             imageName = "ID="+str(uid)+"_CAM="+CAM_CONFIG[camId]['ref']+"_UNIX="+str(round(time.time()*1000))+".png"
-            cv2.imwrite(CACHE_PATH+imageName,im.copy(),[int(cv2.IMWRITE_PNG_COMPRESSION), 9])
+            cv2.imwrite(CACHE_PATH+imageName,im.copy(),[int(cv2.IMWRITE_PNG_COMPRESSION), 0])
             print('Camera ', WINDOW_NAME, ' was triggered at ', time.time())
             lastTime = time.time()
             #stream.push_buffer(buffer)
