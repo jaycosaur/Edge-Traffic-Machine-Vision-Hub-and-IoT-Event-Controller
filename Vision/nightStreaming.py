@@ -247,8 +247,11 @@ def worker(camId):
             buffer.queue()
             
             print("Count: ", numberCars, " Frame: ", frame, " FPS: ", 1.0/(time.time()-lastTime))
+            print('getting time')
             lastTime = time.time()
+            print('setting time')
             frame += 1
+            print('setting frame')
 
     cam.stop_image_acquisition()
     cam.destroy()
