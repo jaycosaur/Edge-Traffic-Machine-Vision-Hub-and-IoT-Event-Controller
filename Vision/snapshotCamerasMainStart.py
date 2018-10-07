@@ -217,7 +217,7 @@ def worker(camId):
             """ if k==113:    # Esc key to stop
                 showLines = True
             elif k==97: """
-
+            cv2.rectangle(img,(0,0),(250,250),(0,0,0),1)
             cv2.putText(img, "Gain Auto: "+GAIN_AUTO, (100, 100), cv2.FONT_HERSHEY_COMPLEX, 4, (255,0,0))
             cv2.putText(img, "Exposure Auto: "+EXPOSURE_AUTO, (100, 200), cv2.FONT_HERSHEY_COMPLEX, 4, (255,0,0))
 
