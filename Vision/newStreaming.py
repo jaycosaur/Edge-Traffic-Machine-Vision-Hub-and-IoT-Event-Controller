@@ -179,7 +179,7 @@ def worker(camId):
 
                     currentTime = time.time()
                     #simple trigger
-                    if y2 <= rightBound and camId=='CAM_2':
+                    """ if y2 <= rightBound and camId=='CAM_2':
                         if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and y2>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             uproadLastTrigger = currentTime
@@ -190,6 +190,20 @@ def worker(camId):
                             truckLastTrigger = currentTime
                         if x1<=closeThresh and x2>=closeThresh and (currentTime-closeLastTrigger)>triggerDelay:
                         #if x1>=closeThresh-marginOfError and x2<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
+                            urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                            closeLastTrigger = currentTime """
+
+                    if y <= rightBound and camId=='CAM_2':
+                        if x>=uproadThresh-marginOfError and x<=uproadThresh+marginOfError and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
+                            urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                            uproadLastTrigger = currentTime
+                        #if x1<=truckThresh and x2>=truckThresh and (currentTime-truckLastTrigger)>triggerDelay:
+                        if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
+                            urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                            numberCars += 1
+                            truckLastTrigger = currentTime
+                        #if x1<=closeThresh and x2>=closeThresh and (currentTime-closeLastTrigger)>triggerDelay:
+                        if x>=closeThresh-marginOfError and x<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                             closeLastTrigger = currentTime
                     
