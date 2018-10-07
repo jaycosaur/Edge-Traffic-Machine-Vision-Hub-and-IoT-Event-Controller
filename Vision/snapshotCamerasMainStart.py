@@ -179,7 +179,7 @@ def worker(camId):
         buffer = stream.pop_buffer ()
 
         k = cv2.waitKey(1)
-        print(k)
+        #print(k)
         if k==113: #q
             SHOW_VALUES=True
         if k==97: #a
