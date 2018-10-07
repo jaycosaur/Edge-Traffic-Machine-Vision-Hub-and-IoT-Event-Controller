@@ -171,16 +171,8 @@ def worker(camId):
         #buffer = stream.try_pop_buffer ()
         buffer = stream.pop_buffer ()
 
-        
-        if(buffer):
-            # alt c type definition for bayer-rg-8
-            b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
-            im = np.ctypeslib.as_array(b, (height, width))
-            rgb = cv2.cvtColor(im, cv2.COLOR_BayerRG2RGB)
-            img = rgb.copy() 
-            k = cv2.waitKey(1)
+        k = cv2.waitKey(1)
             print(k)
-
             if k==0:
                 GAIN_AUTO=changeCamStringValue('GainAuto', 'Continuous')
             if k==1:
@@ -213,6 +205,14 @@ def worker(camId):
                EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY+UNIT)
             if k=='f':
                EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY-UNIT)
+
+        
+        if(buffer):
+            # alt c type definition for bayer-rg-8
+            b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
+            im = np.ctypeslib.as_array(b, (height, width))
+            rgb = cv2.cvtColor(im, cv2.COLOR_BayerRG2RGB)
+            img = rgb.copy()
 
             """ if k==113:    # Esc key to stop
                 showLines = True
