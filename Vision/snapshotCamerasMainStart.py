@@ -219,12 +219,12 @@ def worker(camId):
             """ if k==113:    # Esc key to stop
                 showLines = True
             elif k==97: """
-            cv2.putText(img, "Gain Auto: "+GAIN_AUTO, (100, 100), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
-            cv2.putText(img, "Exposure Auto: "+EXPOSURE_AUTO, (100, 200), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
-            cv2.putText(img, "EXPOSURE_AUTO_MIN: "+EXPOSURE_AUTO_MIN, (100, 300), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
-            cv2.putText(img, "EXPOSURE_AUTO_MAX:" +EXPOSURE_AUTO_MAX, (100, 400), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
-            cv2.putText(img, "GAIN_AUTO_MIN: "+GAIN_AUTO_MIN, (100, 500), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
-            cv2.putText(img, "GAIN_AUTO_MIN: "+GAIN_AUTO_MAX, (100, 600), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "Gain Auto: "+str(GAIN_AUTO), (100, 100), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "Exposure Auto: "+str(EXPOSURE_AUTO), (100, 200), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "EXPOSURE_AUTO_MIN: "+str(EXPOSURE_AUTO_MIN), (100, 300), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "EXPOSURE_AUTO_MAX:" +str(EXPOSURE_AUTO_MAX), (100, 400), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "GAIN_AUTO_MIN: "+str(GAIN_AUTO_MIN), (100, 500), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
+            cv2.putText(img, "GAIN_AUTO_MIN: "+str(GAIN_AUTO_MAX), (100, 600), cv2.FONT_HERSHEY_COMPLEX, 4, (255,255,255))
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
