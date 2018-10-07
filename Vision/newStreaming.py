@@ -194,20 +194,6 @@ def worker(camId):
                             (0, 255, 0), 3)
 
                     currentTime = time.time()
-                    #simple trigger
-                    """ if y2 <= rightBound and camId=='CAM_2':
-                        if x1>=uproadThresh-marginOfError and x2<=uproadThresh+marginOfError and y2>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                            uproadLastTrigger = currentTime
-                        if x1<=truckThresh and x2>=truckThresh and (currentTime-truckLastTrigger)>triggerDelay:
-                        #if x1>=truckThresh-marginOfError and x2<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                            numberCars += 1
-                            truckLastTrigger = currentTime
-                        if x1<=closeThresh and x2>=closeThresh and (currentTime-closeLastTrigger)>triggerDelay:
-                        #if x1>=closeThresh-marginOfError and x2<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
-                            closeLastTrigger = currentTime """
 
                     if y <= rightBound and camId=='CAM_2' and h>5:
                         if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
@@ -266,7 +252,7 @@ def worker(camId):
     cam.destroy()
 
 if __name__ == '__main__':
-    camIds = ['CAM_2']
+    camIds = ['CAM_2', 'CAM_1']
     #camIds = ['CAM_1']
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
