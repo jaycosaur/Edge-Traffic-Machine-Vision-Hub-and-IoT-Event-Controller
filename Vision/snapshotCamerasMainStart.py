@@ -172,39 +172,39 @@ def worker(camId):
         buffer = stream.pop_buffer ()
 
         k = cv2.waitKey(1)
-            print(k)
-            if k==0:
-                GAIN_AUTO=changeCamStringValue('GainAuto', 'Continuous')
-            if k==1:
-                GAIN_AUTO=changeCamStringValue('GainAuto', 'Off')
-            if k==2:
-               EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Continuous')
-            if k==3:
-               EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Off')
-            if k=='o':
-               EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN+UNIT)
-            if k=='l':
-               EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN-UNIT)
-            if k=='i':
-               EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX+UNIT)
-            if k=='k':
-               EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX-UNIT)
-            if k=='y':
-               GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN+UNIT)
-            if k=='h':
-               GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN-UNIT)
-            if k=='u':
-               GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX+UNIT)
-            if k=='j':
-               GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX-UNIT)
-            if k=='t':
-               TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY+UNIT)
-            if k=='g':
-               TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY-UNIT)
-            if k=='r':
-               EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY+UNIT)
-            if k=='f':
-               EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY-UNIT)
+        print(k)
+        if k==0:
+            GAIN_AUTO=changeCamStringValue('GainAuto', 'Continuous')
+        if k==1:
+            GAIN_AUTO=changeCamStringValue('GainAuto', 'Off')
+        if k==2:
+            EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Continuous')
+        if k==3:
+            EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Off')
+        if k=='o':
+            EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN+UNIT)
+        if k=='l':
+            EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN-UNIT)
+        if k=='i':
+            EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX+UNIT)
+        if k=='k':
+            EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX-UNIT)
+        if k=='y':
+            GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN+UNIT)
+        if k=='h':
+            GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN-UNIT)
+        if k=='u':
+            GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX+UNIT)
+        if k=='j':
+            GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX-UNIT)
+        if k=='t':
+            TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY+UNIT)
+        if k=='g':
+            TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY-UNIT)
+        if k=='r':
+            EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY+UNIT)
+        if k=='f':
+            EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY-UNIT)
 
         
         if(buffer):
