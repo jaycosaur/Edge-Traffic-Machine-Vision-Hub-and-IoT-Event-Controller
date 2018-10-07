@@ -175,37 +175,37 @@ def worker(camId):
 
         k = cv2.waitKey(1)
         print(k)
-        if k==49:
+        if k==49: #1
             GAIN_AUTO=changeCamStringValue('GainAuto', 'Continuous')
-        if k==50:
+        if k==50: #2
             GAIN_AUTO=changeCamStringValue('GainAuto', 'Off')
-        if k==2:
+        if k==51: #3
             EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Continuous')
-        if k==3:
+        if k==32: #4
             EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Off')
-        if k=='o':
+        if k=='111': #o
             EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN+UNIT)
-        if k=='l':
+        if k=='108': #l
             EXPOSURE_AUTO_MIN=changeCamFloatValue('AutoExposureTimeMin', EXPOSURE_AUTO_MIN-UNIT)
-        if k=='i':
+        if k=='105': #i
             EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX+UNIT)
-        if k=='k':
+        if k=='107': #k
             EXPOSURE_AUTO_MAX=changeCamFloatValue('AutoExposureTimeMax', EXPOSURE_AUTO_MAX-UNIT)
-        if k=='y':
+        if k=='121': #y
             GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN+UNIT)
-        if k=='h':
+        if k=='104': #h
             GAIN_AUTO_MIN=changeCamFloatValue('AutoGainMin', GAIN_AUTO_MIN-UNIT)
-        if k=='u':
+        if k=='117': #u
             GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX+UNIT)
-        if k=='j':
+        if k=='`06': #j
             GAIN_AUTO_MAX=changeCamFloatValue('AutoGainMax', GAIN_AUTO_MAX-UNIT)
-        if k=='t':
+        if k=='116': #t
             TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY+UNIT)
-        if k=='g':
+        if k=='103': #g
             TRIGGER_DELAY=changeCamFloatValue('TriggerDelay', TRIGGER_DELAY-UNIT)
-        if k=='r':
+        if k=='114': #r
             EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY+UNIT)
-        if k=='f':
+        if k=='102': #f
             EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY-UNIT)
 
         
@@ -226,7 +226,7 @@ def worker(camId):
             cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MIN), (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
             cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MAX), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
             cv2.putText(img, "TRIGGER DELAY: "+str(TRIGGER_DELAY), (100, 400), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
-            cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 550), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,255,255),2,cv2.LINE_AA)
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
