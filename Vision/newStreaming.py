@@ -195,7 +195,7 @@ def worker(camId):
 
                     currentTime = time.time()
 
-                    if y <= rightBound and camId=='CAM_2' and h>5:
+                    if y <= rightBound and camId=='CAM_2' and h>10 and w>10:
                         if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
                             urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                             if LOG:
