@@ -4,6 +4,8 @@ const fs = require('fs');
 const chalk = require('chalk');
 const moment = require('moment');
 const imagemin = require('imagemin');
+const imageminPngquant = require('imagemin-pngquant');
+
 const leven = require('leven');
 const logWriter = require('./../utils/sightingEventHandler')
 const fsExtra = require('fs-extra')
