@@ -173,9 +173,9 @@ def worker(camId):
 
         k = cv2.waitKey(1)
         print(k)
-        if k==0:
+        if k==49:
             GAIN_AUTO=changeCamStringValue('GainAuto', 'Continuous')
-        if k==1:
+        if k==50:
             GAIN_AUTO=changeCamStringValue('GainAuto', 'Off')
         if k==2:
             EXPOSURE_AUTO=changeCamStringValue('ExposureAuto', 'Continuous')
@@ -218,7 +218,7 @@ def worker(camId):
                 showLines = True
             elif k==97: """
 
-            cv2.putText(img, "Gain Auto: "+GAIN_AUTO, (100, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+            cv2.putText(img, "Gain Auto: ", (100, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,0))
 
             cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
             #gen uid for image
