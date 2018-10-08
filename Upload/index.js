@@ -53,10 +53,10 @@ const main = async () => {
         throw new Error('No metafile found at this location. Exiting.')
     }
     
-    process.stdout.write(chalk.yellow('Checking path contains image store ... '))
+    process.stdout.write(chalk.yellow('Checking path contains image ... '))
 
     try {
-        fs.accessSync(path.join(FULL_PATH,CONFIG.STORE_NAME))
+        fs.accessSync(path.join(FULL_PATH))
         log(chalk.green('Store found \u2714'))
     } catch (err) {
         log(chalk.red('Store not found! \u2715'))
@@ -68,7 +68,7 @@ const main = async () => {
 
     const numberOfFilesInMetaData = metaData.length
 
-    await fs.readdirSync(path.join(FULL_PATH,CONFIG.STORE_NAME)).forEach(file => {
+    await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInMetaData += 1
     })
 
