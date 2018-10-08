@@ -64,9 +64,9 @@ const main = async () => {
 
     process.stdout.write(chalk.yellow('Checking number of images metadata logs ... '))
 
-    const metaData =  csv().fromFile(CONFIG.META_FILE_NAME) 
+    const metaData =  csv().fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
-    const numberOfFilesInMetaData = metaData.length
+    let numberOfFilesInMetaData = metaData.length
 
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInMetaData += 1
@@ -76,7 +76,7 @@ const main = async () => {
 
     process.stdout.write(chalk.yellow('Checking number of images in store ... '))
     let numberOfFilesInStore = 0
-    await fs.readdirSync(path.join(FULL_PATH,CONFIG.STORE_NAME)).forEach(file => {
+    await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInStore += 1
     })
     log(chalk.magenta("Number of images in store: ", numberOfFilesInStore))
