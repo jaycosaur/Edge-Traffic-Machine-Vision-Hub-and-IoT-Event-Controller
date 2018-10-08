@@ -6,12 +6,17 @@ const path = require('path');
 const fs = require('fs');
 const csv=require('csvtojson')
 const CONFIG  =require('./config.json')
+const axios = require('axios')
 
+const projectId = "onetask-tfnsw-web"
+const bucketName = "onetask-sydney-tfnsw"
 // Creates a client
-const storage = new Storage();
+
+const storage = new Storage({
+    projectId: projectId
+});
 
 const log = console.log
-
 const PATH_TO_FILES = process.argv[2]
 
 const insertRecordIntoDatabase = (record) => {
@@ -43,6 +48,10 @@ const main = async () => {
     })
 
     log(hasMetaFile?chalk.green('Metafile exists \u2714'):chalk.red('Metafile not found!  \u2715'))
+
+    if (!hasMetaFile){
+        throw new Error('No metafile found at this location. Exiting.')
+    }
     
     process.stdout.write(chalk.yellow('Checking path contains image store ... '))
 

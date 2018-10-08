@@ -84,7 +84,6 @@ def worker(camId):
     try:
         cam = Aravis.Camera.new(CAM_NAME)
         print ("Camera found")
-
     except:
         print ("Camera Not Found")
         exit ()
@@ -117,6 +116,7 @@ def worker(camId):
     print ("Trigger Activation  : %s" %(cam.get_device().get_string_feature_value("TriggerActivation")))
     print ("Acquisition Mode  : %s" %(cam.get_acquisition_mode()))
     print ("Pixel Formats  : %s" %(cam.get_available_pixel_formats_as_display_names()))
+
     cv2.namedWindow(WINDOW_NAME, flags=0)
 
     for i in range(0,5):
@@ -154,16 +154,11 @@ def worker(camId):
     EXPECTED_GRAY = cam.get_device().get_integer_feature_value("ExpectedGrayValue")
 
     SHOW_VALUES = False
-    
-
     UNIT = 10
     UNIT_MULTI = 1
 
-    #print(dir(cam.get_device()))
-
     while(True):
         now = datetime.datetime.now()
-        #print(now.hour, now.minute)
         #night-mode
         if False:
             cam.set_exposure_time(10000)
@@ -174,12 +169,9 @@ def worker(camId):
             cam.get_device().set_string_feature_value("Gain", 0.0)
 
         stream.push_buffer(Aravis.Buffer.new_allocate(payload))
-
-        #buffer = stream.try_pop_buffer ()
         buffer = stream.pop_buffer ()
 
         k = cv2.waitKey(1)
-        #print(k)
         if k==113: #q
             SHOW_VALUES=True
         if k==97: #a
@@ -220,7 +212,6 @@ def worker(camId):
             EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY+UNIT)
         if k==102: #f
             EXPECTED_GRAY=changeCamFloatValue('ExpectedGrayValue', EXPECTED_GRAY-UNIT)
-
         if k==118: #v
             GAIN=changeCamFloatValue('Gain', GAIN+UNIT)
         if k==98: #b
@@ -229,7 +220,6 @@ def worker(camId):
             EXPOSURE=changeCamFloatValue('ExposureTime', EXPOSURE+UNIT)
         if k==109: #m
             EXPOSURE=changeCamFloatValue('ExposureTime', EXPOSURE-UNIT)
-
         if k==119: #w
             UNIT = UNIT + 10**UNIT_MULTI
         if k==115: #s
@@ -244,15 +234,11 @@ def worker(camId):
             UNIT_MULTI = 1
 
         if(buffer):
-            # alt c type definition for bayer-rg-8
             b = ctypes.cast(buffer.data,ctypes.POINTER(ctypes.c_uint8))
             im = np.ctypeslib.as_array(b, (height, width))
             rgb = cv2.cvtColor(im, cv2.COLOR_BayerRG2RGB)
             img = rgb.copy()
 
-            """ if k==113:    # Esc key to stop
-                showLines = True
-            elif k==97: """
             if SHOW_VALUES:
                 cv2.putText(img, "GAIN AUTO: "+str(GAIN_AUTO), (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "EXPOSURE AUTO: "+str(EXPOSURE_AUTO), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
@@ -262,23 +248,18 @@ def worker(camId):
                 cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MAX), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "TRIGGER DELAY: "+str(TRIGGER_DELAY), (100, 400), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
-
                 cv2.putText(img, "EXPOSURE: "+str(TRIGGER_DELAY), (100, 500), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "GAIN: "+str(EXPECTED_GRAY), (100, 550), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
-
                 cv2.putText(img, "UNIT: "+str(UNIT), (100, 600), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "UNIT MULTIPLIER: "+str(UNIT_MULTI), (100, 650), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
 
-            cv2.imshow(WINDOW_NAME, img)	#remove .copy() before production
-            #gen uid for image
+            cv2.imshow(WINDOW_NAME, img)
             uid = uuid.uuid4()
-
             #name will be ID_XXXX_CAM_XXXX_UNIX_XXXX
             imageName = "ID="+str(uid)+"_CAM="+CAM_CONFIG[camId]['ref']+"_UNIX="+str(round(time.time()*1000))+".png"
-            cv2.imwrite(CACHE_PATH+imageName,im.copy()) #,[int(cv2.IMWRITE_PNG_COMPRESSION), 5]
+            cv2.imwrite(CACHE_PATH+imageName,im.copy())
             print('Camera ', WINDOW_NAME, ' was triggered at ', time.time())
             lastTime = time.time()
-            #stream.push_buffer(buffer)
         cv2.waitKey(1)
 
     cam.stop_acquisition ()
