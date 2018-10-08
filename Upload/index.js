@@ -1,5 +1,7 @@
 // Imports the Google Cloud client library
 const { Storage } = require('@google-cloud/storage');
+const Firestore = require('@google-cloud/firestore');
+
 const chalk = require('chalk')
 const moment = require('moment')
 const path = require('path');
@@ -12,9 +14,14 @@ const projectId = "onetask-tfnsw-web"
 const bucketName = "onetask-sydney-tfnsw"
 // Creates a client
 
+const firestore = new Firestore({
+    projectId: projectId,
+  });
 const storage = new Storage({
     projectId: projectId
 });
+
+
 
 const log = console.log
 const PATH_TO_FILES = process.argv[2]
@@ -66,8 +73,6 @@ const main = async () => {
 
     const metaData =  await csv().fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
-    console.log(metaData)
-
     let numberOfFilesInMetaData = metaData.length
 
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
@@ -75,6 +80,16 @@ const main = async () => {
     })
 
     log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
+
+    const document = firestore.doc('posts/intro-to-firestore');
+
+    // Enter new data into the document.
+    await document.set({
+            title: 'Welcome to Firestore',
+            body: 'Hello World',
+        }).then(() => {
+            // Document created successfully.
+        });
 
     process.stdout.write(chalk.yellow('Checking number of images in store ... '))
     let numberOfFilesInStore = 0
