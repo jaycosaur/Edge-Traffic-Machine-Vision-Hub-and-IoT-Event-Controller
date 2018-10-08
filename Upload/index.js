@@ -64,7 +64,7 @@ const main = async () => {
 
     process.stdout.write(chalk.yellow('Checking number of images metadata logs ... '))
 
-    const metaData =  csv().fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
+    const metaData =  await csv().fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
     console.log(metaData)
 
