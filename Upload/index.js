@@ -66,6 +66,8 @@ const main = async () => {
 
     const metaData =  csv().fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
+    console.log(metaData)
+
     let numberOfFilesInMetaData = metaData.length
 
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
