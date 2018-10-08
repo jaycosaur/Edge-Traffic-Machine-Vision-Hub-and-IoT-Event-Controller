@@ -32,7 +32,7 @@ const main = async () => {
         process.exit()
     }
     
-    const FULL_PATH = path.join(process.cwd(), PATH_TO_FILES)
+    const FULL_PATH = PATH_TO_FILES //path.join(process.cwd(), PATH_TO_FILES)
     
     log(chalk.green.bold('Welcome to the One Task Uploader'))
     
