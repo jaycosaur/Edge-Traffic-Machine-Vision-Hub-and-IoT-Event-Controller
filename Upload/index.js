@@ -87,12 +87,12 @@ const main = async () => {
     // remove duplicates
     const store = {}
 
-    const metaDataClean = metaData.forEach(el=>{
+    await metaData.forEach(el=>{
         store[el.ID] = el
     })
 
-    console.log(metaDataClean)
-    console.log(Object.keys(metaDataClean))
+    console.log(store)
+    console.log(Object.keys(store))
 
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInMetaData += 1
