@@ -155,7 +155,7 @@ def yoloWorker(camId):
             buffer = shared #get buffer from multiprocess queue
             print(buffer)
             print('5')
-            payload = shared
+            payload = shared['buffer']
             print('6')
 
             if LOG:
