@@ -125,11 +125,11 @@ def yoloWorker(camId):
 
         IS_CAM_OK = True
         
-        def fetchBuffer(queue, camera, *buf): 
+        def fetchBuffer(queue, camera, buf): 
             print('Queue!')
             print('Queue3!')
             frame = camera.fetch_buffer()
-            buf = frame
+            buf['buffer'] = frame
             q = queue.get()
             q['buffer'] = frame
             #queue.put(q)
@@ -137,7 +137,7 @@ def yoloWorker(camId):
 
         while(IS_CAM_OK):
 
-            dict = {
+            buf = {
                 "buffer": None
             }
 
@@ -145,7 +145,7 @@ def yoloWorker(camId):
             
             queue = multiprocessing.Queue()
             queue.put(dict)
-            p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam, &buf))
+            p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam, buf))
             print('1')
             p.start()
             print('2')
