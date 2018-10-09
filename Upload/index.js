@@ -82,7 +82,6 @@ const main = async () => {
         headers: ["time","timeUNIX","timeISO","timeGPS","GPS_COORDS","CAM","PLATE","PACKAGE_ID","PATH","ID"]
     }).fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
-    let numberOfFilesInMetaData = metaData.length
 
     // remove duplicates
     const store = {}
@@ -96,12 +95,14 @@ const main = async () => {
         numberOfFilesInMetaData += 1
     })
 
-    log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
 
     // const document = firestore.doc('posts/intro-to-firestore');
     // const batch = firestore.batch()
 
     const storeArray = Object.keys(store).map(key=>store[key])
+
+    let numberOfFilesInMetaData = storeArray.length
+    log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
 
     /* await storeArray.forEach(el=>{
         let ref = firestore.doc(`records/${el.ID}`)
