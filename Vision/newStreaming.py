@@ -125,28 +125,22 @@ def yoloWorker(camId):
 
         IS_CAM_OK = True
         
-        def fetchBuffer(queue, camera): 
+        def fetchBuffer(shared, camera): 
             frame = camera.fetch_buffer()
             buf['buffer'] = frame
             print(frame.payload.components)
             q = queue.get()
             print('In Process: ', q)
-            q['buffer'] = frame.payload.components[0].data
-            queue.put(q)
-            print('Queue4!')
+            shared['buffer'] = frame.payload.components[0].data
 
         while(IS_CAM_OK):
-
-            buf = {
-                "buffer": None
-            }
             dict = {
                 "buffer": None
             }
-            
-            queue = multiprocessing.Queue()
-            queue.put(dict)
-            p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam))
+            manager = multiprocessing.Manager()
+            shared = manager.dict()
+
+            p = multiprocessing.Process(target=fetchBuffer, args=(shared, cam))
             p.start()
 
             # Wait for 5 seconds or until process finishes
@@ -162,7 +156,7 @@ def yoloWorker(camId):
                 #sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
 
             print('4')
-            buffer = queue.get() #get buffer from multiprocess queue
+            buffer = shared #get buffer from multiprocess queue
             print(buffer)
             print('5')
             payload = buffer.payload.components
