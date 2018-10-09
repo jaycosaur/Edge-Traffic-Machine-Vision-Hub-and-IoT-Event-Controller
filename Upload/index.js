@@ -84,7 +84,15 @@ const main = async () => {
 
     let numberOfFilesInMetaData = metaData.length
 
-    console.log(metaData)
+    // remove duplicates
+
+    const metaDataClean = metaData.reduce((arr,i)=>({
+        ...arr,
+        [i.ID]: {...i}
+    }),{})
+
+    console.log(metaDataClean)
+    console.log(Object.keys(metaDataClean))
 
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInMetaData += 1
@@ -93,6 +101,8 @@ const main = async () => {
     log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
 
     const document = firestore.doc('posts/intro-to-firestore');
+
+    //const batch = firestore.batch()
 
     // Enter new data into the document.
     await document.set({
