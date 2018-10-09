@@ -91,8 +91,7 @@ const main = async () => {
         store[el.ID] = el
     })
 
-    console.log(store)
-    console.log(Object.keys(store))
+    // console.log(store)
 
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInMetaData += 1
@@ -100,17 +99,24 @@ const main = async () => {
 
     log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
 
-    const document = firestore.doc('posts/intro-to-firestore');
+    // const document = firestore.doc('posts/intro-to-firestore');
 
-    //const batch = firestore.batch()
+    const batch = firestore.batch()
 
-    // Enter new data into the document.
+    store.forEach(el=>{
+        let ref = firestore.doc(`records/${el.ID}`)
+        batch.set(ref, el)
+    })
+
+    await batch.commit()
+
+    /* // Enter new data into the document.
     await document.set({
             title: 'Welcome to Firestore',
             body: 'Hello World',
         }).then(() => {
             // Document created successfully.
-        });
+        }); */
 
     process.stdout.write(chalk.yellow('Checking number of images in store ... '))
     let numberOfFilesInStore = 0
