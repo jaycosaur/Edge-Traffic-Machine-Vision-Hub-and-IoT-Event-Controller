@@ -190,7 +190,7 @@ const main = async () => {
                 errorQueue.push({ file: image, err })
             })
         const timeRemaining = calculateTimeRemainingInMS(moment(),when,currentRecordIndex/numberOfImages)
-        console.log(`${currentRecordIndex} out of ${len(numberOfImages)} ( ${Math.round(100*(currentRecordIndex/numberOfImages))}%) | ${errorQueue.length} Error Images | Started: ${when.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${when.add(timeRemaining, 'ms').format('LLLL')}`)
+        console.log(`${currentRecordIndex} out of ${numberOfImages} ( ${Math.round(100*(currentRecordIndex/numberOfImages))}%) | ${errorQueue.length} Error Images | Started: ${when.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${when.add(timeRemaining, 'ms').format('LLLL')}`)
     }
 }
 
