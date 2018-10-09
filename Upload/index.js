@@ -129,8 +129,8 @@ const main = async () => {
     }
 
     if (numberOfFilesInMetaData !== numberOfFilesInStore){
-        log(chalk.green("Number of images in store does not match number in metadata. Exited."))
-        process.exit()
+        log(chalk.bgYellow("Number of images in store does not match number in metadata. Exited."))
+        //process.exit()
     }
 
     const imagesInStore = filesInStore.map(file=>file.contains('.png'))
