@@ -131,7 +131,7 @@ def yoloWorker(camId):
             frame = camera.fetch_buffer()
             buf['buffer'] = frame
             q = queue.get()
-            q['buffer'] = frame.buffer.payload.components[0].data
+            q['buffer'] = frame.payload.components[0].data
             print(q)
             queue.put(q)
             print('Queue4!')
