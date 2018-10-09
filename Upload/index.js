@@ -20,7 +20,8 @@ const firestore = new Firestore({
   });
 
 const storage = new Storage({
-    projectId: projectId
+    projectId: projectId,
+    keyFilename: '/keys/OneTaskTfNSWWeb-14ae9ec35097.json',
 });
 
 firestore.settings({
