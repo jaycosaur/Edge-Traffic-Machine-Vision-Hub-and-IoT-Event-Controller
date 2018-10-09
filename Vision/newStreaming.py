@@ -127,10 +127,6 @@ def yoloWorker(camId):
         
         def fetchBuffer(shared, camera): 
             frame = camera.fetch_buffer()
-            buf['buffer'] = frame
-            print(frame.payload.components)
-            q = queue.get()
-            print('In Process: ', q)
             shared['buffer'] = frame.payload.components[0].data
 
         while(IS_CAM_OK):
