@@ -99,7 +99,7 @@ const main = async () => {
     log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
 
     // const document = firestore.doc('posts/intro-to-firestore');
-    const batch = firestore.batch()
+    // const batch = firestore.batch()
 
     const storeArray = Object.keys(store).map(key=>store[key])
 
@@ -117,16 +117,23 @@ const main = async () => {
         return Math.round(now.diff(start)*(1/progress))
     }
 
+    let batch = firestore.batch()
+
     for (const record of storeArray) {
         recordIndex +=1
         let ref = firestore.doc(`records/${record.ID}`)
-        const res = await ref.set(record)
-        let uploadSTime = uploadStartTime.clone()
+        batch.set(ref, record)
+        //const res = await ref.set(record)
         if(res){
             //errorqueue.push(record)
         }
-        const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStartTime,recordIndex/numberOfFilesInMetaData)
-        console.log(`${recordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(recordIndex/numberOfFilesInMetaData))}%) | ${errorqueue.length} Error Records | Started: ${uploadStartTime.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadSTime.add(timeRemaining, 'ms').format('LLLL')}`)
+        if(recordIndex%500==0){
+            let uploadSTime = uploadStartTime.clone()
+            await batch.commit()
+            const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStartTime,recordIndex/numberOfFilesInMetaData)
+            console.log(`${recordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(recordIndex/numberOfFilesInMetaData))}%) | ${errorqueue.length} Error Records | Started: ${uploadStartTime.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadSTime.add(timeRemaining, 'ms').format('LLLL')}`)
+            batch = firestore.batch()
+        }
     }
 
     console.log(errorQueue)
