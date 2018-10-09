@@ -95,8 +95,8 @@ const main = async () => {
     // const batch = firestore.batch()
 
     const storeArray = Object.keys(store).map(key=>store[key])
-
     let numberOfFilesInMetaData = storeArray.length
+
     log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
 
     /* await storeArray.forEach(el=>{
@@ -134,8 +134,21 @@ const main = async () => {
     }
 
     const imagesInStore = filesInStore.filter(file=>file.includes('.png'))
+    const imagesInStoreNames = imagesInStore.map(i=>i.split('.')[0])
 
     // create sightings and check that files are present if not remove and log!
+
+    const storeWithImages = storeArray.map(record => {
+        return {
+            ...record,
+            hasImage: imagesInStore.filter(i=>record.PATH)>0
+        }
+    })
+
+    console.log(storeWithImages.filter(i=>i.hasImage).length)
+    console.log(storeWithImages.filter(i=>!i.hasImage).length)
+
+    process.exit()
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Adding Records to Database ...'))
