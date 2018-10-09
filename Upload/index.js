@@ -110,7 +110,7 @@ const main = async () => {
     const sampleFile = 'ID=ffff5841-3efb-4c3c-9fb3-1ce6f96b6641_CAM=CAM1_PLATE=ERROR_UNIX=1538953112302.png'
 
     await storage.bucket(bucketName)
-        .upload(sampleFile, {
+        .upload(path.join(FULL_PATH,sampleFile), {
             // Support for HTTP requests made with `Accept-Encoding: gzip`
             gzip: true,
             metadata: {
