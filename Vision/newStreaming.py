@@ -126,6 +126,7 @@ def yoloWorker(camId):
         IS_CAM_OK = True
         
         def fetchBuffer(queue, camera): 
+            print('Queue!')
             ret = queue.get()
             ret['buffer'] = camera.fetch_buffer()
             queue.put(ret)
