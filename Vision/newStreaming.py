@@ -299,7 +299,7 @@ def openCvWorker(camId):
     rightBound = 80
     rightBound2 = 125
     marginOfError = 10
-    grayThresh = 180
+    grayThresh = 150
 
     
     factor = baseRes/320
