@@ -144,7 +144,7 @@ def yoloWorker(camId):
             
             queue = multiprocessing.Queue()
             queue.put(dict)
-            p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam, buf))
+            p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam))
             p.start()
 
             # Wait for 5 seconds or until process finishes
