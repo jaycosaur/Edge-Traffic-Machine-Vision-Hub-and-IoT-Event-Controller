@@ -90,12 +90,6 @@ const main = async () => {
         store[el.ID] = el
     })
 
-    // console.log(store)
-    await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
-        numberOfFilesInMetaData += 1
-    })
-
-
     // const document = firestore.doc('posts/intro-to-firestore');
     // const batch = firestore.batch()
 
