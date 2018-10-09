@@ -290,7 +290,7 @@ def openCvWorker(camId):
 
     #as percentages
 
-    uproadThresh = 220 
+    uproadThresh = 230 
     truckThresh = 155
     closeThresh = 90
     extraThresh = 50
