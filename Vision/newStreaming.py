@@ -183,7 +183,7 @@ def yoloWorker(camId):
             if LOG:
                 print(shared['buffer'])
 
-            if(IS_CAM_OK and frame.payload):
+            if(IS_CAM_OK and frame.payload.components):
                 image = frame.payload.components[0].data
                 if LOG:
                     print(image)
@@ -351,7 +351,7 @@ def openCvWorker(camId):
                 sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
             if LOG:
                 print(payload)
-            if(IS_CAM_OK and buffer.payload):
+            if(IS_CAM_OK and buffer.payload.components):
                 image = buffer.payload.components[0].data
                 if showLines or showYolo:
                     conver = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
