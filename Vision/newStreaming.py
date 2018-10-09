@@ -340,7 +340,7 @@ def openCvWorker(camId):
 
         IS_CAM_OK = True
 
-        while(IS_CAM_OK)
+        while IS_CAM_OK:
             try:
                 with timeout(seconds=3, error_message='FETCH_ERROR'):
                     buffer = cam.fetch_buffer()
