@@ -443,8 +443,8 @@ def openCvWorker(camId):
 if __name__ == '__main__':
     camIds = ['CAM_2']
     for i in camIds:
-        if MODE = "DAY":
+        if MODE == "DAY":
             p = multiprocessing.Process(target=yoloWorker, args=(i,))
-        if MODE = "NIGHT":
+        if MODE == "NIGHT":
             p = multiprocessing.Process(target=openCvWorker, args=(i,))
         p.start()
