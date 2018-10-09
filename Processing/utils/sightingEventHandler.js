@@ -9,7 +9,6 @@ const header = [
     {id: 'GPS_COORDS', title: 'GPS_COORDS'},
     {id: 'CAM', title: 'CAMERA_ID'},
     {id: 'PLATE', title: 'PLATE'},
-    {id: 'PACKAGE_ID', title: 'PACKAGE_ID'},
     {id: 'PATH', title: 'PATH'},
     {id: 'ID', title: 'ID'}
 ]

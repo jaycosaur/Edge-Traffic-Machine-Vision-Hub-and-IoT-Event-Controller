@@ -5,7 +5,7 @@
     "PROCESSED_STORE_PATH": "/home/server/store/processed/",
     "EVENT_LOGS_PATH": "/home/server/store/events.csv",
     "PROCESSED_LOGS_PATH": "/home/server/store/processed.csv",
-    "BACKUP_LOCATIONS": ["/media/server/Seagate Expansion Drive/store/"],
+    "BACKUP_LOCATIONS": ["/media/server/ONETASK-ONE/","/media/server/ONETASK-TWO/"],
     "AUTO_BACKUP_BUFFER": "50",
     "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/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"
 }
