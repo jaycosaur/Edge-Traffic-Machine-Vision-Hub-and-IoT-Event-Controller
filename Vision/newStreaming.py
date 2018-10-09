@@ -243,7 +243,6 @@ def yoloWorker(camId):
                     cv2.imshow(WINDOW_NAME, rgb)
 
                 cv2.waitKey(1)
-                buffer.queue()
                 print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
                 lastTime = time.time()
                 i += 1
