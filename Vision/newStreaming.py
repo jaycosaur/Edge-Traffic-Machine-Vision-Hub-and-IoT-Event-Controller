@@ -155,6 +155,7 @@ def yoloWorker(camId):
 
             print('4')
             buffer = queue.get() #get buffer from multiprocess queue
+            print(buffer)
             print('5')
             payload = buffer.payload.components
             print('6')
