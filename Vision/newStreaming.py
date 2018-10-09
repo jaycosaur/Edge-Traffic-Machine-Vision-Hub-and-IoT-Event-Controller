@@ -29,7 +29,7 @@ CTI_FILE = '/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti'
 TIMEOUT_DELAY = 5
 triggerDelay = 0.250
 
-LOG = True
+LOG = False
 
 CAM_CONFIG = {
     'CAM_1': {
@@ -310,9 +310,7 @@ def openCvWorker(camId):
     closeLastTrigger = time.time()
 
     while(True):
-        print('Fetching Buffer!')
         buffer = cam.fetch_buffer()
-        print('Fetched Buffer!')
         payload = buffer.payload.components
         if LOG:
             print(payload)
@@ -406,11 +404,8 @@ def openCvWorker(camId):
             cv2.waitKey(1)
             buffer.queue()
             print("Count: ", numberCars, " Frame: ", frame, " FPS: ", 1.0/(time.time()-lastTime))
-            print('getting time')
             lastTime = time.time()
-            print('setting time')
             frame += 1
-            print('setting frame')
 
     cam.stop_image_acquisition()
     cam.destroy()
