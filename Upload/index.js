@@ -92,7 +92,6 @@ const main = async () => {
     })
 
     // console.log(store)
-
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInMetaData += 1
     })
@@ -100,10 +99,11 @@ const main = async () => {
     log(chalk.magenta("Number of images in metadata logs: ", numberOfFilesInMetaData))
 
     // const document = firestore.doc('posts/intro-to-firestore');
-
     const batch = firestore.batch()
 
-    store.forEach(el=>{
+    const storeArray = Object.keys(store).map(key=>store[key])
+
+    await storeArray.forEach(el=>{
         let ref = firestore.doc(`records/${el.ID}`)
         batch.set(ref, el)
     })
