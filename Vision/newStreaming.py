@@ -6,7 +6,7 @@ import urllib.request
 import json
 import numpy as np 
 from pydarknet import Detector, Image
-lfrom harvesters.core import Harvester
+from harvesters.core import Harvester
 
 thresh = 0.5
 hier_thresh = 0.2
