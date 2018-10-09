@@ -296,7 +296,7 @@ def openCvWorker(camId):
     extraThresh = 50
     leftBound = 50
     leftBound2 = 60
-    rightBound = 65
+    rightBound = 100
     rightBound2 = 125
     marginOfError = 10
 
