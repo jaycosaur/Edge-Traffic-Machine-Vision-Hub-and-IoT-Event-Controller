@@ -124,6 +124,8 @@ def yoloWorker(camId):
         closeLastTrigger = time.time()
 
         IS_CAM_OK = True
+
+        IS_MULTI = False
         
         def fetchBuffer(shared, camera): 
             frame = camera.fetch_buffer()
@@ -131,32 +133,36 @@ def yoloWorker(camId):
             frame.queue()
 
         while(IS_CAM_OK):
-            dict = {
-                "buffer": None
-            }
-            manager = multiprocessing.Manager()
-            shared = manager.dict()
+            if IS_MULTI:
+                dict = {
+                    "buffer": None
+                }
+                manager = multiprocessing.Manager()
+                shared = manager.dict()
 
-            p = multiprocessing.Process(target=fetchBuffer, args=(shared, cam))
-            p.start()
+                p = multiprocessing.Process(target=fetchBuffer, args=(shared, cam))
+                p.start()
 
-            # Wait for 5 seconds or until process finishes
-            p.join(TIMEOUT_DELAY)
+                # Wait for 5 seconds or until process finishes
+                p.join(TIMEOUT_DELAY)
 
-            print('3')
-            # If thread is still active
-            if p.is_alive():
-                print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
-                p.terminate()
-                p.join()
-                IS_CAM_OK = False
-                #sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
+                print('3')
+                # If thread is still active
+                if p.is_alive():
+                    print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
+                    p.terminate()
+                    p.join()
+                    IS_CAM_OK = False
+                    #sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
+            
+            frame = camera.fetch_buffer()
+
 
             if LOG:
                 print(shared['buffer'])
 
-            if(IS_CAM_OK):
-                image = shared['buffer']
+            if(IS_CAM_OK and frame.payload):
+                image = frame.payload.components[0].data
                 if LOG:
                     print(image)
                 small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
@@ -234,6 +240,7 @@ def yoloWorker(camId):
                     cv2.imshow(WINDOW_NAME, np.rot90(rgb))
                 else:
                     cv2.imshow(WINDOW_NAME, rgb)
+                frame.queue()
                 cv2.waitKey(1)
                 print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
                 lastTime = time.time()
