@@ -139,8 +139,6 @@ const main = async () => {
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Adding Records to Database ...'))
-
-    throw new Error('break')
     
     // Adding records to Firestore DB before commencing image uploads
    /*  let recordIndex = 0
