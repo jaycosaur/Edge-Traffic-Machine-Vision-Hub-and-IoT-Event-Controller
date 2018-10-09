@@ -162,7 +162,7 @@ def yoloWorker(camId):
                 print(payload)
 
             if(payload):
-                image = payload[0].data
+                image = payload
                 if LOG:
                     print(image)
                 small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
