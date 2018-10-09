@@ -128,7 +128,9 @@ def yoloWorker(camId):
         def fetchBuffer(queue, camera): 
             print('Queue!')
             print('Queue3!')
-            queue.put(camera.fetch_buffer())
+            frame = camera.fetch_buffer()
+            print(frame)
+            queue.put(frame)
             print('Queue4!')
 
         while(IS_CAM_OK):
@@ -154,7 +156,7 @@ def yoloWorker(camId):
                 sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
 
             print('4')
-            buffer = queue.get() #get buffer from multiprocess queue
+            buffer = queue.get()['buffer'] #get buffer from multiprocess queue
             print(buffer)
             print('5')
             payload = buffer.payload.components
