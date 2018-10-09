@@ -124,9 +124,6 @@ const main = async () => {
         let ref = firestore.doc(`records/${record.ID}`)
         batch.set(ref, record)
         //const res = await ref.set(record)
-        if(res){
-            //errorqueue.push(record)
-        }
         if(recordIndex%500==0){
             let uploadSTime = uploadStartTime.clone()
             await batch.commit()
