@@ -16,10 +16,16 @@ const bucketName = "onetask-sydney-tfnsw"
 
 const firestore = new Firestore({
     projectId: projectId,
+    keyFilename: '/keys/OneTaskTfNSWWeb-14ae9ec35097.json',
   });
+
 const storage = new Storage({
     projectId: projectId
 });
+
+firestore.settings({
+    timestampsInSnapshots: true
+})
 
 
 
