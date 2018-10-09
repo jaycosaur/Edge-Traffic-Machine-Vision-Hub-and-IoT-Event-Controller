@@ -132,8 +132,8 @@ const main = async () => {
         log(chalk.bgYellow("Number of images in store does not match number in metadata. Exited."))
         //process.exit()
     }
-    
-    const imagesInStore = filesInStore.map(file=>file.includes('.png'))
+
+    const imagesInStore = filesInStore.filter(file=>file.includes('.png'))
 
     // create sightings and check that files are present if not remove and log!
 
