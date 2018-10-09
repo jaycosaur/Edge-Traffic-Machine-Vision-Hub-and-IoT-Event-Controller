@@ -141,7 +141,7 @@ const main = async () => {
     const storeWithImages = storeArray.map(record => {
         return {
             ...record,
-            hasImage: imagesInStore.filter(i=>record.PATH)>0
+            hasImage: imagesInStore.includes(record.PATH)
         }
     })
 
