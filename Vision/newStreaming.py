@@ -127,7 +127,7 @@ def yoloWorker(camId):
         
         def fetchBuffer(shared, camera): 
             frame = camera.fetch_buffer()
-            shared['buffer'] = frame
+            shared['buffer'] = frame.payload.components[0].data
 
         while(IS_CAM_OK):
             dict = {
@@ -155,7 +155,7 @@ def yoloWorker(camId):
             buffer = shared #get buffer from multiprocess queue
             print(buffer)
             print('5')
-            payload = buffer.payload.components
+            payload = shared
             print('6')
 
             if LOG:
