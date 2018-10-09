@@ -122,8 +122,7 @@ const main = async () => {
         let ref = firestore.doc(`records/${record.ID}`)
         const res = await ref.set(record)
         if(res){
-            errorqueue.push(record)
-            console.log(res)
+            //errorqueue.push(record)
         }
         const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStartTime,recordIndex/numberOfFilesInMetaData)
         console.log(`${recordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(recordIndex/numberOfFilesInMetaData))}%) | ${errorqueue.length} Error Records | Started: ${uploadStartTime.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadStartTime.add(timeRemaining, 'ms').format('LLLL')}`)
