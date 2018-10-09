@@ -128,6 +128,8 @@ const main = async () => {
         }
     }
 
+    await batch.commit()
+
     console.log(errorQueue)
 
     //await batch.commit()
