@@ -215,18 +215,18 @@ def yoloWorker(camId):
                         currentTime = time.time()
                         if y <= rightBound and camId=='CAM_2' and h>10 and w>10:
                             if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
-                                #urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                                urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                                 if LOG:
                                     print('FAR TRIG')
                                 uproadLastTrigger = currentTime
                             if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
-                                #urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                                urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                                 if LOG:
                                     print('TRUCK TRIG')
                                 numberCars += 1
                                 truckLastTrigger = currentTime
                             if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
-                                #urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                                urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                                 if LOG:
                                     print('CLOSE TRIG')
                                 closeLastTrigger = currentTime
@@ -370,7 +370,7 @@ def openCvWorker(camId):
                             urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                             truckLastTrigger = currentTime
                         if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                            urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                             closeLastTrigger = currentTime
 
             # show the output image
@@ -420,5 +420,5 @@ def openCvWorker(camId):
 if __name__ == '__main__':
     camIds = ['CAM_2']
     for i in camIds:
-        p = multiprocessing.Process(target=yoloWorker, args=(i,))
+        p = multiprocessing.Process(target=openCvWorker, args=(i,))
         p.start()
