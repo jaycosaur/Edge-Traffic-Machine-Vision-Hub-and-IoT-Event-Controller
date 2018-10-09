@@ -140,7 +140,8 @@ def yoloWorker(camId):
                 "buffer": None
             }
             
-            queue = multiprocessing.Queue(dict)
+            queue = multiprocessing.Queue()
+            queue.put(dict)
             p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam))
             print('1')
             p.start()
