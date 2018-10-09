@@ -108,53 +108,12 @@ const main = async () => {
         return Math.round(now.diff(start)*(1/progress))
     }
 
-    const sampleFile = 'ID=ffff5841-3efb-4c3c-9fb3-1ce6f96b6641_CAM=CAM1_PLATE=ERROR_UNIX=1538953112302.png'
-
-    await storage.bucket(bucketName)
-        .upload(path.join(FULL_PATH,sampleFile), {
-            // Support for HTTP requests made with `Accept-Encoding: gzip`
-            gzip: true,
-            metadata: {
-            // Enable long-lived HTTP caching headers
-            // Use only if the contents of the file will never change
-            // (If the contents will change, use cacheControl: 'no-cache')
-            cacheControl: 'public, max-age=31536000',
-            },
-        })
-        .then((v) => {
-            console.log(v)
-            console.log(`${sampleFile} uploaded to ${bucketName}.`);
-        })
-    
-    throw new Error('break')
-
-    // Adding records to Firestore DB before commencing image upload
-
-    let recordIndex = 0
-    let errorqueue = []
-    let uploadStartTime = moment()
-
-    let batch = firestore.batch()
-
-    for (const record of storeArray) {
-        recordIndex +=1
-        let ref = firestore.doc(`records/${record.ID}`)
-        batch.set(ref, record)
-        //const res = await ref.set(record)
-        if(recordIndex%500==0){
-            let uploadSTime = uploadStartTime.clone()
-            await batch.commit()
-            const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStartTime,recordIndex/numberOfFilesInMetaData)
-            console.log(`${recordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(recordIndex/numberOfFilesInMetaData))}%) | ${errorqueue.length} Error Records | Started: ${uploadStartTime.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadSTime.add(timeRemaining, 'ms').format('LLLL')}`)
-            batch = firestore.batch()
-        }
-    }
-
-    await batch.commit()
-
     process.stdout.write(chalk.yellow('Checking number of images in store ... '))
     let numberOfFilesInStore = 0
+    const filesInStore = []
+
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
+        filesInStore.push(file)
         numberOfFilesInStore += 1
     })
     log(chalk.magenta("Number of images in store: ", numberOfFilesInStore))
@@ -174,34 +133,66 @@ const main = async () => {
         process.exit()
     }
 
+    const imagesInStore = filesInStore.map(file=>file.contains('.png'))
 
-    //log(chalk.bgYellow.black('Starting upload process ...'))
-    
+    // create sightings and check that files are present if not remove and log!
+
     log(chalk.bgGreen.black('Starting upload process ...'))
+    log(chalk.bgGreen.black('Adding Records to Database ...'))
 
-    const arrayOfItemsToInsert = [
-        {
-            meta: {id:12345678},
-            file: "123456"
+    throw new Error('break')
+    
+    // Adding records to Firestore DB before commencing image uploads
+   /*  let recordIndex = 0
+    let errorqueue = []
+    let uploadStartTime = moment()
+
+    let batch = firestore.batch()
+
+    for (const record of storeArray) {
+        recordIndex +=1
+        let ref = firestore.doc(`records/${record.ID}`)
+        batch.set(ref, record)
+        //const res = await ref.set(record)
+        if(recordIndex%500==0){
+            let uploadSTime = uploadStartTime.clone()
+            await batch.commit()
+            const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStartTime,recordIndex/numberOfFilesInMetaData)
+            console.log(`${recordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(recordIndex/numberOfFilesInMetaData))}%) | ${errorqueue.length} Error Records | Started: ${uploadStartTime.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadSTime.add(timeRemaining, 'ms').format('LLLL')}`)
+            batch = firestore.batch()
         }
-    ]
+    }
+    await batch.commit() */
+
+
+    log(chalk.bgGreen.black('Completed Record Additions.'))
+    log(chalk.bgGreen.black('Adding Sightings to Database ...'))
+    log(chalk.bgGreen.black('Completed Sighting Additions.'))
+    log(chalk.bgGreen.black(`Uploading files to Google Cloud Storage Bucket: ${bucketName}`))
 
     let currentRecordIndex = 0
+    let errorQueue = []
+    let uploadStart = moment()
+    const numberOfImages = imagesInStore.length
 
-    const errorQueue = []
-
-    const uploadStart = moment()
-
-    
-
-    for (const record of arrayOfItemsToInsert) {
+    for (const image of imagesInStore) {
         currentRecordIndex +=1
-        const res = await insertRecordIntoDatabase(record)
-        if(res){
-            errorQueue.push(record)
-        }
-        const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStart,currentRecordIndex/numberOfFilesInMetaData)
-        console.log(`${currentRecordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(currentRecordIndex/numberOfFilesInMetaData))}%) | ${errorQueue.length} Error Records | Started: ${uploadStart.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadStart.add(timeRemaining, 'ms').format('LLLL')}`)
+        const when = uploadStart.clone()
+        await storage.bucket(bucketName)
+            .upload(path.join(FULL_PATH,image), {
+                // Support for HTTP requests made with `Accept-Encoding: gzip`
+                gzip: true,
+                metadata: {
+                // Enable long-lived HTTP caching headers
+                // Use only if the contents of the file will never change
+                // (If the contents will change, use cacheControl: 'no-cache')
+                cacheControl: 'public, max-age=31536000',
+                },
+            }).catch(err=>{
+                errorQueue.push({ file: image, err })
+            })
+        const timeRemaining = calculateTimeRemainingInMS(moment(),when,currentRecordIndex/numberOfImages)
+        console.log(`${currentRecordIndex} out of ${len(numberOfImages)} ( ${Math.round(100*(currentRecordIndex/numberOfImages))}%) | ${errorQueue.length} Error Images | Started: ${when.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${when.add(timeRemaining, 'ms').format('LLLL')}`)
     }
 }
 
