@@ -129,7 +129,7 @@ const main = async () => {
     }
 
     if (numberOfFilesInMetaData !== numberOfFilesInStore){
-        log(chalk.bgYellow("Number of images in store does not match number in metadata. Exited."))
+        log(chalk.bgYellow("Number of images in store does not match number in metadata."))
         //process.exit()
     }
 
