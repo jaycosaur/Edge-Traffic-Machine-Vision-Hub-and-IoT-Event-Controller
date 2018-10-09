@@ -161,7 +161,7 @@ def yoloWorker(camId):
             if LOG:
                 print(payload)
 
-            if(payload):
+            if(payload != None):
                 image = payload
                 if LOG:
                     print(image)
