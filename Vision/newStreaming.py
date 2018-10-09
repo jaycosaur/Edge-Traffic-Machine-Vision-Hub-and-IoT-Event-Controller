@@ -125,14 +125,11 @@ def yoloWorker(camId):
 
         IS_CAM_OK = True
         
-        def fetchBuffer(queue, camera, buf): 
-            print('Queue!')
-            print('Queue3!')
+        def fetchBuffer(queue, camera): 
             frame = camera.fetch_buffer()
             buf['buffer'] = frame
             q = queue.get()
             q['buffer'] = frame.payload.components[0].data
-            print(q)
             queue.put(q)
             print('Queue4!')
 
@@ -148,16 +145,12 @@ def yoloWorker(camId):
             queue = multiprocessing.Queue()
             queue.put(dict)
             p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam, buf))
-            print('1')
             p.start()
-            print('2')
 
             # Wait for 5 seconds or until process finishes
             p.join(TIMEOUT_DELAY)
 
             print('3')
-            print(buf)
-
             # If thread is still active
             if p.is_alive():
                 print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
