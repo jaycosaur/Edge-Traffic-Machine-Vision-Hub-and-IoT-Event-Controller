@@ -16,6 +16,7 @@ import signal
 thresh = 0.5
 hier_thresh = 0.2
 
+MODE = "NIGHT" # "DAY" "NIGHT"
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
 cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
 weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
@@ -442,5 +443,8 @@ def openCvWorker(camId):
 if __name__ == '__main__':
     camIds = ['CAM_2']
     for i in camIds:
-        p = multiprocessing.Process(target=openCvWorker, args=(i,))
+        if MODE = "DAY":
+            p = multiprocessing.Process(target=yoloWorker, args=(i,))
+        if MODE = "NIGHT":
+            p = multiprocessing.Process(target=openCvWorker, args=(i,))
         p.start()

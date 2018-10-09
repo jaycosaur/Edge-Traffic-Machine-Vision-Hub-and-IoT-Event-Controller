@@ -16,6 +16,7 @@ thresh = 0.5
 hier_thresh = 0.2
 
 LOG = True
+MODE = "NIGHT" #"NIGHT" "DAY"
 
 #darknet_path = '/home/server/Projects/pyyolo/darknet'
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
@@ -259,6 +260,7 @@ def worker(camId):
 if __name__ == '__main__':
     camIds = ['CAM_2']
     #camIds = ['CAM_1']
+
     for i in camIds:
         p = multiprocessing.Process(target=worker, args=(i,))
         p.start()
