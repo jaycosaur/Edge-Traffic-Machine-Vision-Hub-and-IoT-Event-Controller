@@ -248,8 +248,8 @@ def worker(camId):
                 cv2.putText(img, "GAIN AUTO MIN: "+str(GAIN_AUTO_MAX), (100, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "TRIGGER DELAY: "+str(TRIGGER_DELAY), (100, 400), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "EXPECTED GRAY: "+str(EXPECTED_GRAY), (100, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
-                cv2.putText(img, "EXPOSURE: "+str(TRIGGER_DELAY), (100, 500), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
-                cv2.putText(img, "GAIN: "+str(EXPECTED_GRAY), (100, 550), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
+                cv2.putText(img, "EXPOSURE: "+str(EXPOSURE), (100, 500), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
+                cv2.putText(img, "GAIN: "+str(GAIN), (100, 550), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "UNIT: "+str(UNIT), (100, 600), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
                 cv2.putText(img, "UNIT MULTIPLIER: "+str(UNIT_MULTI), (100, 650), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (255,0,0),2,cv2.LINE_AA)
 

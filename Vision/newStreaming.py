@@ -292,7 +292,7 @@ def openCvWorker(camId):
 
     uproadThresh = 220 
     truckThresh = 160
-    closeThresh = 100
+    closeThresh = 90
     extraThresh = 50
     leftBound = 50
     leftBound2 = 60
