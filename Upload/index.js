@@ -85,11 +85,11 @@ const main = async () => {
     let numberOfFilesInMetaData = metaData.length
 
     // remove duplicates
+    const store = {}
 
-    const metaDataClean = metaData.reduce((arr,i)=>({
-        ...arr,
-        [i.ID]: {...i}
-    }),{})
+    const metaDataClean = metaData.forEach(el=>{
+        store[el.ID] = el
+    })
 
     console.log(metaDataClean)
     console.log(Object.keys(metaDataClean))
