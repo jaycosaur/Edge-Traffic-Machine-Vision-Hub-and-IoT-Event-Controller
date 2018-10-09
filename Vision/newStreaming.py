@@ -136,10 +136,14 @@ def yoloWorker(camId):
             queue = multiprocessing.Queue()
             queue.put(bufferDict)
             p = multiprocessing.Process(target=fetchBuffer, args=(queue, cam))
+            print('1')
             p.start()
+            print('2')
 
             # Wait for 5 seconds or until process finishes
             p.join(TIMEOUT_DELAY)
+
+            print('3')
 
             # If thread is still active
             if p.is_alive():
@@ -149,6 +153,7 @@ def yoloWorker(camId):
                 IS_CAM_OK = False
                 sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
 
+            print('4')
             buffer = queue.get()['buffer'] #get buffer from multiprocess queue
             payload = buffer.payload.components
 
