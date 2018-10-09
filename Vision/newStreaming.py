@@ -361,7 +361,6 @@ def openCvWorker(camId):
                     rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2GRAY)
                 
                 thresh = cv2.threshold(rgb,  grayThresh, 255, cv2.THRESH_BINARY)[1]
-
                 labels = measure.label(thresh, neighbors=8, background=0)
                 mask = np.zeros(thresh.shape, dtype="uint8")
 
@@ -380,8 +379,6 @@ def openCvWorker(camId):
                 if len(np.unique(labels))>0:
                     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-                    #cnts = contours.sort_contours(cnts)[0]
-                    
                     # loop over the contours
                     for (i, c) in enumerate(cnts):
                         currentTime = time.time()
@@ -404,7 +401,6 @@ def openCvWorker(camId):
                                 closeLastTrigger = currentTime
 
                 # show the output image
-                # cv2.imshow("Image", rgb)
                 k = cv2.waitKey(1)
                 h1, w1 = small.shape[1], small.shape[0]
 
@@ -417,17 +413,13 @@ def openCvWorker(camId):
                 elif k==120:
                     showYolo = False
                     
-
                 if showLines and camId=='CAM_2':
                         cv2.line(small, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.putText(small, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
-
                         cv2.line(small, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
                         cv2.putText(small, 'Truck', (truckThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
-
                         cv2.line(small, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
                         cv2.putText(small, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
-
                         cv2.line(small, (0,rightBound), (h1, rightBound), (255,255,255), 1)
                         cv2.line(small, (0,leftBound), (h1, leftBound), (255,255,255), 1)
                         cv2.line(small, (0,leftBound2), (h1, leftBound2), (255,0,255), 1)
