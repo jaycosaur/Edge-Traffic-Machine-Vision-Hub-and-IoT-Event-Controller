@@ -152,18 +152,11 @@ def yoloWorker(camId):
                 IS_CAM_OK = False
                 #sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
 
-            print('4')
-            buffer = shared #get buffer from multiprocess queue
-            print(buffer)
-            print('5')
-            payload = shared['buffer']
-            print('6')
-
             if LOG:
-                print(payload)
+                print(shared['buffer'])
 
             if(IS_CAM_OK):
-                image = payload
+                image = shared['buffer']
                 if LOG:
                     print(image)
                 small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
@@ -241,7 +234,6 @@ def yoloWorker(camId):
                     cv2.imshow(WINDOW_NAME, np.rot90(rgb))
                 else:
                     cv2.imshow(WINDOW_NAME, rgb)
-
                 cv2.waitKey(1)
                 print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
                 lastTime = time.time()
