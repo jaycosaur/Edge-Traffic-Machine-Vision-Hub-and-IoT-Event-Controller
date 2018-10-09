@@ -171,7 +171,7 @@ def yoloWorker(camId):
                     IS_CAM_OK = False
 
             try:
-                with timeout(seconds=3, 'FETCH_ERROR'):
+                with timeout(seconds=3, error_message='FETCH_ERROR'):
                     frame = cam.fetch_buffer()
             except:
                 IS_CAM_OK = False
