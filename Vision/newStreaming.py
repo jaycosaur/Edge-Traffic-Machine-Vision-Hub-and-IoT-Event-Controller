@@ -16,7 +16,7 @@ import signal
 thresh = 0.5
 hier_thresh = 0.2
 
-MODE = "NIGHT" # "DAY" "NIGHT"
+MODE = "DAY" # "DAY" "NIGHT"
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
 cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
 weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
