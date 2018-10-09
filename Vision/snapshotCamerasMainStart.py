@@ -119,8 +119,8 @@ def worker(camId):
 
     cv2.namedWindow(WINDOW_NAME, flags=0)
 
-    for i in range(0,5):
-        stream.push_buffer (Aravis.Buffer.new_allocate (payload))
+    #for i in range(0,5):
+        #stream.push_buffer (Aravis.Buffer.new_allocate (payload))
 
     cam.start_acquisition()
 
