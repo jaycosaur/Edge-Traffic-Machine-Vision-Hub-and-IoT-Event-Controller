@@ -10,6 +10,7 @@ from harvesters.core import Harvester
 from skimage import measure
 from imutils import contours
 import imutils
+import signal
 
 
 thresh = 0.5
@@ -51,6 +52,18 @@ CAM_CONFIG = {
         'rotate': True
     },
 }
+
+class timeout:
+    def __init__(self, seconds=1, error_message='Timeout'):
+        self.seconds = seconds
+        self.error_message = error_message
+    def handle_timeout(self, signum, frame):
+        raise TimeoutError(self.error_message)
+    def __enter__(self):
+        signal.signal(signal.SIGALRM, self.handle_timeout)
+        signal.alarm(self.seconds)
+    def __exit__(self, type, value, traceback):
+        signal.alarm(0)
 
 def sendMessageToSlack(message, color):
     body = {'text': message, "color": color,}  
@@ -153,13 +166,17 @@ def yoloWorker(camId):
                 print('3')
                 # If thread is still active
                 if p.is_alive():
-                    print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
                     p.terminate()
                     p.join()
                     IS_CAM_OK = False
-                    #sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
-            
-            frame = cam.fetch_buffer()
+
+            try:
+                with timeout(seconds=3, 'FETCH_ERROR'):
+                    frame = cam.fetch_buffer()
+            except:
+                IS_CAM_OK = False
+                print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
+                sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
 
 
             if LOG:
