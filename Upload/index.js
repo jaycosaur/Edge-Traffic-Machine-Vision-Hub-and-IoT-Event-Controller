@@ -103,12 +103,30 @@ const main = async () => {
 
     const storeArray = Object.keys(store).map(key=>store[key])
 
-    await storeArray.forEach(el=>{
+    /* await storeArray.forEach(el=>{
         let ref = firestore.doc(`records/${el.ID}`)
         batch.set(ref, el)
-    })
+    }) */
 
-    await batch.commit()
+    //const batch = firestore.batch()
+    let recordIndex = 0
+    let errorQueue = []
+    let uploadStart = moment()
+
+    for (const record of storeArray) {
+        recordIndex +=1
+        let ref = firestore.doc(`records/${el.ID}`)
+        const res = await ref.set(record)
+        if(res){
+            errorQueue.push(record)
+        }
+        const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStart,currentRecordIndex/numberOfFilesInMetaData)
+        console.log(`${currentRecordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(currentRecordIndex/numberOfFilesInMetaData))}%) | ${errorQueue.length} Error Records | Started: ${uploadStart.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadStart.add(timeRemaining, 'ms').format('LLLL')}`)
+    }
+
+    console.log(errorQueue)
+
+    //await batch.commit()
 
     /* // Enter new data into the document.
     await document.set({
