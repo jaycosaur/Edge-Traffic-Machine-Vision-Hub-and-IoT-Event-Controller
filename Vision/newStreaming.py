@@ -129,7 +129,6 @@ def yoloWorker(camId):
             print('Queue!')
             print('Queue3!')
             frame = camera.fetch_buffer()
-            print(frame)
             queue.put(frame)
             print('Queue4!')
 
