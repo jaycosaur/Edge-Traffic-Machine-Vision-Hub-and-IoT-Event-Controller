@@ -131,7 +131,7 @@ def yoloWorker(camId):
         extraThresh = int(50*factor )
         leftBound = int(leftBound*factor )
         leftBound2 = int(leftBound2*factor )
-        rightBound = int(125*factor )
+        rightBound = int(rightBound*factor )
         rightBound2 = int(125*factor )
 
         showLines = False
