@@ -77,9 +77,14 @@ const main = async () => {
 
     process.stdout.write(chalk.yellow('Checking number of images metadata logs ... '))
 
-    const metaData =  await csv().fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
+    const metaData =  await csv({
+        noheader: true,
+        headers: ["time","timeUNIX","timeISO","timeGPS","GPS_COORDS","CAM","PLATE","PACKAGE_ID","PATH","ID"]
+    }).fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
     let numberOfFilesInMetaData = metaData.length
+
+    console.log(metaData)
 
     await fs.readdirSync(path.join(FULL_PATH)).forEach(file => {
         numberOfFilesInMetaData += 1
