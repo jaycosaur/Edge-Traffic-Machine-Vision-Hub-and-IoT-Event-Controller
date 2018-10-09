@@ -103,14 +103,35 @@ const main = async () => {
         batch.set(ref, el)
     }) */
 
-    //const batch = firestore.batch()
-    let recordIndex = 0
-    let errorqueue = []
-    const uploadStartTime = moment()
-
     const calculateTimeRemainingInMS = (now, start, progress) => {
         return Math.round(now.diff(start)*(1/progress))
     }
+
+    const sampleFile = 'ID=ffff5841-3efb-4c3c-9fb3-1ce6f96b6641_CAM=CAM1_PLATE=ERROR_UNIX=1538953112302.png'
+
+    await storage.bucket(bucketName)
+        .upload(sampleFile, {
+            // Support for HTTP requests made with `Accept-Encoding: gzip`
+            gzip: true,
+            metadata: {
+            // Enable long-lived HTTP caching headers
+            // Use only if the contents of the file will never change
+            // (If the contents will change, use cacheControl: 'no-cache')
+            cacheControl: 'public, max-age=31536000',
+            },
+        })
+        .then((v) => {
+            console.log(v)
+            console.log(`${sampleFile} uploaded to ${bucketName}.`);
+        })
+    
+    throw new Error('break')
+
+    // Adding records to Firestore DB before commencing image upload
+
+    let recordIndex = 0
+    let errorqueue = []
+    let uploadStartTime = moment()
 
     let batch = firestore.batch()
 
@@ -129,18 +150,6 @@ const main = async () => {
     }
 
     await batch.commit()
-
-    console.log(errorQueue)
-
-    //await batch.commit()
-
-    /* // Enter new data into the document.
-    await document.set({
-            title: 'Welcome to Firestore',
-            body: 'Hello World',
-        }).then(() => {
-            // Document created successfully.
-        }); */
 
     process.stdout.write(chalk.yellow('Checking number of images in store ... '))
     let numberOfFilesInStore = 0
