@@ -121,7 +121,7 @@ const main = async () => {
         recordIndex +=1
         let ref = firestore.doc(`records/${record.ID}`)
         const res = await ref.set(record)
-        let uploadSTime = uploadStartTime
+        let uploadSTime = {...uploadStartTime}
         if(res){
             //errorqueue.push(record)
         }
