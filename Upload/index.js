@@ -113,6 +113,10 @@ const main = async () => {
     let errorqueue = []
     let uploadStartTime = moment()
 
+    const calculateTimeRemainingInMS = (now, start, progress) => {
+        return Math.round(now.diff(start)*(1/progress))
+    }
+
     for (const record of storeArray) {
         recordIndex +=1
         let ref = firestore.doc(`records/${record.ID}`)
@@ -176,9 +180,7 @@ const main = async () => {
 
     const uploadStart = moment()
 
-    const calculateTimeRemainingInMS = (now, start, progress) => {
-        return Math.round(now.diff(start)*(1/progress))
-    }
+    
 
     for (const record of arrayOfItemsToInsert) {
         currentRecordIndex +=1
