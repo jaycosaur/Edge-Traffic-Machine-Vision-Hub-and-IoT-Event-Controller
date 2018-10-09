@@ -117,7 +117,7 @@ def yoloWorker(camId):
             #as percentages to do
             uproadThresh = 235
             truckThresh = 165
-            closeThresh = 145
+            closeThresh = 140
             extraThresh = 50
             leftBound = 50
             leftBound2 = 60
