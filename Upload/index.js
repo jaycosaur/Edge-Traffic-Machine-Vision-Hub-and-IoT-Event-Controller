@@ -115,7 +115,7 @@ const main = async () => {
 
     for (const record of storeArray) {
         recordIndex +=1
-        let ref = firestore.doc(`records/${el.ID}`)
+        let ref = firestore.doc(`records/${record.ID}`)
         const res = await ref.set(record)
         if(res){
             errorqueue.push(record)
