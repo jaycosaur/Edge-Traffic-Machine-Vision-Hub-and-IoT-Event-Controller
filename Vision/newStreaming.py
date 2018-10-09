@@ -272,171 +272,179 @@ def yoloWorker(camId):
         cam.destroy()
 
 def openCvWorker(camId):
-    CAM_NAME = CAM_CONFIG[camId]['name']
-    WINDOW_NAME = CAM_CONFIG[camId]['window']
-    IS_ROTATE = CAM_CONFIG[camId]['rotate']
-
-    h = Harvester()
-    h.add_cti_file(CTI_FILE)
-    h.update_device_info_list()
-    try:
-        cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
-        print ("Camera found")
-
-    except:
-        print ("Camera Not Found")
-        exit ()
-
-    cam.start_image_acquisition()
-
-    lastTime = time.time()
-    transposeTime = 0
-    frame = 0
-    numberCars = 0
-    lastSnapshot = None
-    cv2.namedWindow(WINDOW_NAME, flags=0)
-
-    carColor = (255,0,0)
-    busColor = (0,255,0)
-    truckColor = (0,0,255)
-    phoneColor = (0,255,255)
-    baseColor = (255,255,255)
-
-    baseRes = 300
-    scale = 800/1920
-
-    #as percentages
-
-    uproadThresh = 230 
-    truckThresh = 155
-    closeThresh = 90
-    extraThresh = 50
-    leftBound = 50
-    leftBound2 = 60
-    rightBound = 80
-    rightBound2 = 125
-    marginOfError = 10
-    grayThresh = 150
-
-    
-    factor = baseRes/320
-    uproadThresh = int(uproadThresh*factor)
-    truckThresh = int(truckThresh*factor)
-    closeThresh = int(closeThresh*factor )
-    extraThresh = int(50*factor )
-    leftBound = int(leftBound*factor )
-    leftBound2 = int(leftBound2*factor )
-    rightBound = int(rightBound*factor )
-    rightBound2 = int(125*factor )
-
-    showLines = False
-    showYolo = False
-
-    triggerDelay = 0.500
-    uproadLastTrigger = time.time()
-    truckLastTrigger = time.time()
-    closeLastTrigger = time.time()
-
     while(True):
-        buffer = cam.fetch_buffer()
-        payload = buffer.payload.components
-        if LOG:
-            print(payload)
-        if(payload):
-            image = payload[0].data
-            if showLines or showYolo:
-                conver = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
-                small = cv2.cvtColor(conver, cv2.COLOR_BayerRG2RGB)
-                rgb = cv2.cvtColor(conver, cv2.COLOR_BayerRG2GRAY)
-            else:
-                small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
-                rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2GRAY)
-            
-            thresh = cv2.threshold(rgb,  grayThresh, 255, cv2.THRESH_BINARY)[1]
+        CAM_NAME = CAM_CONFIG[camId]['name']
+        WINDOW_NAME = CAM_CONFIG[camId]['window']
+        IS_ROTATE = CAM_CONFIG[camId]['rotate']
 
-            labels = measure.label(thresh, neighbors=8, background=0)
-            mask = np.zeros(thresh.shape, dtype="uint8")
+        h = Harvester()
+        h.add_cti_file(CTI_FILE)
+        h.update_device_info_list()
+        try:
+            cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
+            print ("Camera found")
 
+        except:
+            print ("Camera Not Found")
+            exit ()
+
+        cam.start_image_acquisition()
+
+        lastTime = time.time()
+        transposeTime = 0
+        frame = 0
+        numberCars = 0
+        lastSnapshot = None
+        cv2.namedWindow(WINDOW_NAME, flags=0)
+
+        carColor = (255,0,0)
+        busColor = (0,255,0)
+        truckColor = (0,0,255)
+        phoneColor = (0,255,255)
+        baseColor = (255,255,255)
+
+        baseRes = 300
+        scale = 800/1920
+
+        #as percentages
+
+        uproadThresh = 230 
+        truckThresh = 155
+        closeThresh = 90
+        extraThresh = 50
+        leftBound = 50
+        leftBound2 = 60
+        rightBound = 80
+        rightBound2 = 125
+        marginOfError = 10
+        grayThresh = 150
+
+        
+        factor = baseRes/320
+        uproadThresh = int(uproadThresh*factor)
+        truckThresh = int(truckThresh*factor)
+        closeThresh = int(closeThresh*factor )
+        extraThresh = int(50*factor )
+        leftBound = int(leftBound*factor )
+        leftBound2 = int(leftBound2*factor )
+        rightBound = int(rightBound*factor )
+        rightBound2 = int(125*factor )
+
+        showLines = False
+        showYolo = False
+
+        triggerDelay = 0.500
+        uproadLastTrigger = time.time()
+        truckLastTrigger = time.time()
+        closeLastTrigger = time.time()
+
+        IS_CAM_OK = True
+
+        while(IS_CAM_OK)
+            try:
+                with timeout(seconds=3, error_message='FETCH_ERROR'):
+                    buffer = cam.fetch_buffer()
+            except:
+                IS_CAM_OK = False
+                print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
+                sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
             if LOG:
-                print(labels)
-
-            # loop over the unique components
-            for label in np.unique(labels):
-                # if this is the background label, ignore it
-                if label == 0:
-                    continue
-                labelMask = np.zeros(thresh.shape, dtype="uint8")
-                labelMask[labels == label] = 255
-                mask = cv2.add(mask, labelMask)
-
-            if len(np.unique(labels))>0:
-                cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-                #cnts = contours.sort_contours(cnts)[0]
+                print(payload)
+            if(IS_CAM_OK and buffer.payload):
+                image = buffer.payload.components[0].data
+                if showLines or showYolo:
+                    conver = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
+                    small = cv2.cvtColor(conver, cv2.COLOR_BayerRG2RGB)
+                    rgb = cv2.cvtColor(conver, cv2.COLOR_BayerRG2GRAY)
+                else:
+                    small = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
+                    rgb = cv2.cvtColor(small, cv2.COLOR_BayerRG2GRAY)
                 
-                # loop over the contours
-                for (i, c) in enumerate(cnts):
-                    currentTime = time.time()
-                    # draw the bright spot on the image
-                    (x, y, w, h) = cv2.boundingRect(c)
-                    ((cX, cY), radius) = cv2.minEnclosingCircle(c)
-                    if showYolo:
-                        cv2.circle(small, (int(cX), int(cY)), int(5),
-                            (0, 0, 255), 3)
-                    if cY <= rightBound and cY >= leftBound and camId=='CAM_2':
-                        if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay and cY>=leftBound2:
-                            urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                            uproadLastTrigger = currentTime
-                            numberCars += 1
-                        if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                            truckLastTrigger = currentTime
-                        if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
-                            urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
-                            closeLastTrigger = currentTime
+                thresh = cv2.threshold(rgb,  grayThresh, 255, cv2.THRESH_BINARY)[1]
 
-            # show the output image
-            # cv2.imshow("Image", rgb)
-            k = cv2.waitKey(1)
-            h1, w1 = small.shape[1], small.shape[0]
+                labels = measure.label(thresh, neighbors=8, background=0)
+                mask = np.zeros(thresh.shape, dtype="uint8")
 
-            if k==113:    # Esc key to stop
-                showLines = True
-            elif k==97:
-                showLines = False
-            elif k==122:
-                showYolo = True
-            elif k==120:
-                showYolo = False
-                
+                if LOG:
+                    print(labels)
 
-            if showLines and camId=='CAM_2':
-                    cv2.line(small, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
-                    cv2.putText(small, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+                # loop over the unique components
+                for label in np.unique(labels):
+                    # if this is the background label, ignore it
+                    if label == 0:
+                        continue
+                    labelMask = np.zeros(thresh.shape, dtype="uint8")
+                    labelMask[labels == label] = 255
+                    mask = cv2.add(mask, labelMask)
 
-                    cv2.line(small, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
-                    cv2.putText(small, 'Truck', (truckThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+                if len(np.unique(labels))>0:
+                    cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+                    #cnts = contours.sort_contours(cnts)[0]
+                    
+                    # loop over the contours
+                    for (i, c) in enumerate(cnts):
+                        currentTime = time.time()
+                        # draw the bright spot on the image
+                        (x, y, w, h) = cv2.boundingRect(c)
+                        ((cX, cY), radius) = cv2.minEnclosingCircle(c)
+                        if showYolo:
+                            cv2.circle(small, (int(cX), int(cY)), int(5),
+                                (0, 0, 255), 3)
+                        if cY <= rightBound and cY >= leftBound and camId=='CAM_2':
+                            if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay and cY>=leftBound2:
+                                urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                                uproadLastTrigger = currentTime
+                                numberCars += 1
+                            if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
+                                urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                                truckLastTrigger = currentTime
+                            if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
+                                urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                                closeLastTrigger = currentTime
 
-                    cv2.line(small, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
-                    cv2.putText(small, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+                # show the output image
+                # cv2.imshow("Image", rgb)
+                k = cv2.waitKey(1)
+                h1, w1 = small.shape[1], small.shape[0]
 
-                    cv2.line(small, (0,rightBound), (h1, rightBound), (255,255,255), 1)
-                    cv2.line(small, (0,leftBound), (h1, leftBound), (255,255,255), 1)
-                    cv2.line(small, (0,leftBound2), (h1, leftBound2), (255,0,255), 1)
+                if k==113:    # Esc key to stop
+                    showLines = True
+                elif k==97:
+                    showLines = False
+                elif k==122:
+                    showYolo = True
+                elif k==120:
+                    showYolo = False
+                    
 
-            if IS_ROTATE:
-                cv2.imshow(WINDOW_NAME, np.rot90(small))
-            else:
-                cv2.imshow(WINDOW_NAME, small)
+                if showLines and camId=='CAM_2':
+                        cv2.line(small, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
+                        cv2.putText(small, 'Up-Road', (uproadThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-            cv2.waitKey(1)
-            buffer.queue()
-            print("Count: ", numberCars, " Frame: ", frame, " FPS: ", 1.0/(time.time()-lastTime))
-            lastTime = time.time()
-            frame += 1
+                        cv2.line(small, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
+                        cv2.putText(small, 'Truck', (truckThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
 
-    cam.stop_image_acquisition()
-    cam.destroy()
+                        cv2.line(small, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
+                        cv2.putText(small, 'Close', (closeThresh, 50), cv2.FONT_HERSHEY_COMPLEX, 0.2, (255,255,0))
+
+                        cv2.line(small, (0,rightBound), (h1, rightBound), (255,255,255), 1)
+                        cv2.line(small, (0,leftBound), (h1, leftBound), (255,255,255), 1)
+                        cv2.line(small, (0,leftBound2), (h1, leftBound2), (255,0,255), 1)
+
+                if IS_ROTATE:
+                    cv2.imshow(WINDOW_NAME, np.rot90(small))
+                else:
+                    cv2.imshow(WINDOW_NAME, small)
+
+                cv2.waitKey(1)
+                buffer.queue()
+                print("Count: ", numberCars, " Frame: ", frame, " FPS: ", 1.0/(time.time()-lastTime))
+                lastTime = time.time()
+                frame += 1
+
+        cam.stop_image_acquisition()
+        cam.destroy()
 
 # main event
 if __name__ == '__main__':
