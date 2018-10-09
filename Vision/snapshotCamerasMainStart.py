@@ -122,7 +122,7 @@ def worker(camId):
     for i in range(0,5):
         stream.push_buffer (Aravis.Buffer.new_allocate (payload))
 
-    #cam.start_acquisition()
+    cam.start_acquisition()
 
     lastTime = time.time()
 
@@ -168,8 +168,7 @@ def worker(camId):
             cam.set_exposure_time(500)
             cam.get_device().set_string_feature_value("Gain", 0.0)
 
-        #stream.push_buffer(Aravis.Buffer.new_allocate(payload))
-        cam.start_acquisition()
+        stream.push_buffer(Aravis.Buffer.new_allocate(payload))
         buffer = stream.pop_buffer ()
 
         k = cv2.waitKey(1)
@@ -262,10 +261,9 @@ def worker(camId):
             print('Camera ', WINDOW_NAME, ' was triggered at ', time.time())
             lastTime = time.time()
         #stream.push_buffer(buffer)
-        cam.stop_acquisition ()
         cv2.waitKey(1)
 
-    #cam.stop_acquisition ()
+    cam.stop_acquisition ()
 
 if __name__ == '__main__':
     camIds = ['CAM_1','CAM_2','CAM_3', 'CAM_4', 'CAM_5','CAM_6', 'CAM_7','CAM_8','CAM_9']
