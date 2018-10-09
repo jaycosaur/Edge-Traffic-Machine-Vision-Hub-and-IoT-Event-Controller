@@ -110,7 +110,7 @@ const main = async () => {
 
     //const batch = firestore.batch()
     let recordIndex = 0
-    let errorQueue = []
+    let errorqueue = []
     let uploadStart = moment()
 
     for (const record of storeArray) {
@@ -118,7 +118,7 @@ const main = async () => {
         let ref = firestore.doc(`records/${el.ID}`)
         const res = await ref.set(record)
         if(res){
-            errorQueue.push(record)
+            errorqueue.push(record)
         }
         const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStart,currentRecordIndex/numberOfFilesInMetaData)
         console.log(`${currentRecordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(currentRecordIndex/numberOfFilesInMetaData))}%) | ${errorQueue.length} Error Records | Started: ${uploadStart.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadStart.add(timeRemaining, 'ms').format('LLLL')}`)
