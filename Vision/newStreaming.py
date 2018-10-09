@@ -96,15 +96,15 @@ def yoloWorker(camId):
         baseRes = 400
         scale = 800/1920
         #as percentages to do
-        uproadThresh = 295
-        truckThresh = 230
-        closeThresh = 180
+        uproadThresh = 240
+        truckThresh = 170
+        closeThresh = 145
         extraThresh = 50
         leftBound = 50
-        leftBound2 = 70
-        rightBound = 125
+        leftBound2 = 60
+        rightBound = 90
         rightBound2 = 125
-        marginOfError = 20
+        marginOfError = 15
         # rescaling
         factor = baseRes/320
         uproadThresh = int(uproadThresh*factor)
@@ -417,7 +417,7 @@ def openCvWorker(camId):
 
 # main event
 if __name__ == '__main__':
-    camIds = ['CAM_2','CAM_1']
+    camIds = ['CAM_2']
     for i in camIds:
         p = multiprocessing.Process(target=yoloWorker, args=(i,))
         p.start()
