@@ -155,7 +155,7 @@ def yoloWorker(camId):
                     IS_CAM_OK = False
                     #sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
             
-            frame = camera.fetch_buffer()
+            frame = cam.fetch_buffer()
 
 
             if LOG:
