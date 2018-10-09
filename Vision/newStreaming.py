@@ -140,8 +140,6 @@ def yoloWorker(camId):
             buf = {
                 "buffer": None
             }
-
-            buf = None
             
             queue = multiprocessing.Queue()
             queue.put(dict)
