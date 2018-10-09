@@ -128,8 +128,11 @@ def yoloWorker(camId):
         def fetchBuffer(queue, camera): 
             print('Queue!')
             ret = queue.get()
+            print('Queue2!')
             ret['buffer'] = camera.fetch_buffer()
+            print('Queue3!')
             queue.put(ret)
+            print('Queue4!')
 
         while(IS_CAM_OK):
             bufferDict = { 'buffer': None }
