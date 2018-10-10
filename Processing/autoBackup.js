@@ -41,11 +41,14 @@ class fileBackupQueue {
             this.lastBackedUp = moment()
         })
     }
-
+    /* return Promise.all(this.backupPath.map(bpath => {
+        return Promise.all(
+            this.backupStack.map(file=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
+        ) */
     backupFiles() {
-        return Promise.all(this.backupPath.map(bpath => {
+        return Promise.all( this.backupStack.map(file => {
             return Promise.all(
-                this.backupStack.map(file=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
+                this.backupPath.map(bpath=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
             )
         })).then(
             res => {
@@ -57,6 +60,7 @@ class fileBackupQueue {
             }
         ).then(()=>{
             if (DELETE_ON_BACKUP){
+                console.log('CLEARING HD BUFFERS')
                 return Promise.all(this.backupStack.map(file=>fs.remove(path.join(this.watchPath,file))))
             } else {
                 return null
