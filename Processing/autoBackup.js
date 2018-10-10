@@ -11,6 +11,8 @@ const BACKUP_BUFFER = config.AUTO_BACKUP_BUFFER
 const EVENT_LOGS_PATH = config.EVENT_LOGS_PATH
 const PROCESSED_LOGS_PATH = config.PROCESSED_LOGS_PATH
 
+const DELETE_ON_BACKUP = true
+
 console.log(chalk.bgGreen.bold.black("STARTING AUTO BACKUP SCRIPTS ..."))
 console.log(chalk.bgGreen.black(`Now watching '${WATCH_PATH}' for Auto Backup to ${BACKUP_LOCATIONS.join(", ")} | Buffer length: ${BACKUP_BUFFER}`))
 
@@ -53,7 +55,13 @@ class fileBackupQueue {
                     fs.copy(PROCESSED_LOGS_PATH, path.join(bpath,'processed.csv'))
                 ])))
             }
-        ).catch(err=>console.log(err))
+        ).then(()=>{
+            if (DELETE_ON_BACKUP){
+                return Promise.all(this.backupStack.map(file=>fs.remove(path.join(this.watchPath,file))))
+            } else {
+                return null
+            }
+        }).catch(err=>console.log(err))
     }
 
     add(item) {
