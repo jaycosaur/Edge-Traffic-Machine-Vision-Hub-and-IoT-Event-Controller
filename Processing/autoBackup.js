@@ -68,7 +68,7 @@ class fileBackupQueue {
         this.stack = [...this.stack, item]
         const message = `${this.isBackingUp?"Is Backing up! ":""}Current buffer at: ${this.stack.length} item ( ${Math.round(100*(this.stack.length/this.bufferLength))} %) | Last Backup: ${this.lastBackedUp?moment(this.lastBackedUp).format('LLL'):"never!"}`
         console.log(this.isBackingUp?chalk.bold.yellow(message):message)
-        if (this.stack.length >= this.bufferLength){
+        if (this.stack.length >= this.bufferLength && !this.isBackingUp){
             this.initBackup()
         }
     }
