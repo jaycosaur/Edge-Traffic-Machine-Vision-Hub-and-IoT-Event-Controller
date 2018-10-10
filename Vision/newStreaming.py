@@ -241,12 +241,12 @@ def yoloWorker(camId):
                                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                                     if LOG:
                                         print('FAR TRIG')
+                                    numberCars += 1
                                     uproadLastTrigger = currentTime
                                 if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
                                     urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                                     if LOG:
                                         print('TRUCK TRIG')
-                                    numberCars += 1
                                     truckLastTrigger = currentTime
                                 if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
                                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
