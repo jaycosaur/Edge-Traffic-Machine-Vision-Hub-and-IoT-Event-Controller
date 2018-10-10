@@ -116,8 +116,8 @@ def yoloWorker(camId):
             scale = 800/1920
             #as percentages to do
             uproadThresh = 235
-            truckThresh = 165
-            closeThresh = 130
+            truckThresh = 155
+            closeThresh = 110
             extraThresh = 50
             leftBound = 50
             leftBound2 = 60
