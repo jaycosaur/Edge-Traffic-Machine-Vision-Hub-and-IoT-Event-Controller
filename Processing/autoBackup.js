@@ -59,6 +59,7 @@ class fileBackupQueue {
                 for (const bpath of this.backupPath){
                     try {
                         await fs.copy(path.join(this.watchPath,file), path.join(bpath,file))
+                        console.log(chalk.bold.green(file + ' complete!'))
                     } catch (err) {
                         console.log(chalk.bold.red(err))
                     }
