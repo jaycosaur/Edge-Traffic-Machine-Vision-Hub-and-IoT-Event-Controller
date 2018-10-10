@@ -44,13 +44,28 @@ class fileBackupQueue {
     /* return Promise.all(this.backupPath.map(bpath => {
         return Promise.all(
             this.backupStack.map(file=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
-        ) */
-    backupFiles() {
+        ) 
+        
         return Promise.all( this.backupStack.map(file => {
             return Promise.all(
                 this.backupPath.map(bpath=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
             )
-        })).then(
+        }))
+          
+        */
+    backupFiles() {
+        return new Promise(async (resolve, reject)=>{
+            for (const file of this.backupStack) {
+                for (const bpath of this.backupPath){
+                    try {
+                        await fs.copy(path.join(this.watchPath,file), path.join(bpath,file))
+                    } catch (err) {
+                        console.log(chalk.bold.red(err))
+                    }
+                }
+            }
+            resolve()
+        }).then(
             res => {
                 //backup log files
                 return Promise.all(this.backupPath.map(bpath => ([
