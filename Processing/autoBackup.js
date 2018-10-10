@@ -45,7 +45,7 @@ class fileBackupQueue {
     backupFiles() {
         return Promise.all(this.backupPath.map(bpath => {
             return Promise.all(
-                this.backupStack.map(file=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file))).catch(()=>null)
+                this.backupStack.map(file=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
             )
         })).then(
             res => {
