@@ -153,7 +153,7 @@ const main = async () => {
     log(chalk.bgGreen.black('Adding Records to Database ...'))
     
     // Adding records to Firestore DB before commencing image uploads
-   /*  let recordIndex = 0
+    let recordIndex = 0
     let errorqueue = []
     let uploadStartTime = moment()
 
@@ -172,10 +172,11 @@ const main = async () => {
             batch = firestore.batch()
         }
     }
-    await batch.commit() */
+    await batch.commit()
 
 
     log(chalk.bgGreen.black('Completed Record Additions.'))
+    process.exit()
     log(chalk.bgGreen.black('Adding Sightings to Database ...'))
     log(chalk.bgGreen.black('Completed Sighting Additions.'))
     log(chalk.bgGreen.black(`Uploading files to Google Cloud Storage Bucket: ${bucketName}`))
