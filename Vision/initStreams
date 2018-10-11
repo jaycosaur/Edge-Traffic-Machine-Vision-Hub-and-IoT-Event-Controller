@@ -2,4 +2,4 @@
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.2/lib64
 
-python3 newStreaming.py
+python3 streamingCameraStart.py

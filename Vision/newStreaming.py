@@ -296,13 +296,13 @@ def openCvWorker(camId):
                 exit ()
 
             cam.start_image_acquisition()
+            cv2.namedWindow(WINDOW_NAME, flags=0)
 
             lastTime = time.time()
             transposeTime = 0
             frame = 0
             numberCars = 0
             lastSnapshot = None
-            cv2.namedWindow(WINDOW_NAME, flags=0)
 
             carColor = (255,0,0)
             busColor = (0,255,0)
