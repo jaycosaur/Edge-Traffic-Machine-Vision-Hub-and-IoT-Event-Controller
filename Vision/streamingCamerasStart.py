@@ -182,7 +182,13 @@ def mainWorker(camId):
             uproadLastTrigger = time.time()
             truckLastTrigger = time.time()
             closeLastTrigger = time.time()
+            uproadTruckDelay = 0.0
 
+            def setUproadTruckDelay():
+                nonlocal uproadTruckDelay, uproadLastTrigger, truckLastTrigger
+                if truckLastTrigger > uproadLastTrigger and truckLastTrigger-uproadLastTrigger>5:
+                    uproadTruckDelay = truckLastTrigger-uproadLastTrigger
+                    
             while(IS_CAM_OK):
                 try:
                     with timeout(seconds=3, error_message='FETCH_ERROR'):
@@ -274,6 +280,7 @@ def mainWorker(camId):
                                         numberCars += 1
                                     if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                                        setUproadTruckDelay()
                                         truckLastTrigger = currentTime
                                     if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
@@ -315,7 +322,7 @@ def mainWorker(camId):
                     frame.queue()
                     cv2.waitKey(1)
                     if frameCount%10==0:
-                        print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "cars:", numberCars, "frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",truckLastTrigger-uproadLastTrigger)
+                        print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "cars:", numberCars, "frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",uproadTruckDelay)
                     lastTime = time.time()
                     frameCount += 1
 
