@@ -347,6 +347,8 @@ def mainWorker(camId):
         except Exception as e:
             print ("Critical Script error! Trying again in 5 seconds ...")
             print(e)
+            cam.stop_image_acquisition()
+            cam.destroy()
             time.sleep(5) #sleep for 10 seconds and then retry!
 
 # main event
