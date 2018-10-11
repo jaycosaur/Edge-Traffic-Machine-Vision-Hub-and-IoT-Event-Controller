@@ -315,7 +315,7 @@ def mainWorker(camId):
                     frame.queue()
                     cv2.waitKey(1)
                     if frameCount%10==0:
-                        print("CURRENT MODE: ", MODE," CLOSE_TRIGGER: ", CLOSE_TRIGGER_METHOD, " Vehicle Count: ", numberCars, " Frame: ", frameCount, " FPS: ", int(1.0/(time.time()-lastTime)))
+                        print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "cars:", numberCars, "frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",truckLastTrigger-uproadLastTrigger)
                     lastTime = time.time()
                     frameCount += 1
 
