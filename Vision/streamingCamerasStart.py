@@ -209,7 +209,7 @@ def mainWorker(camId):
                     elif user_input_key==115: #s
                         MODE="NIGHT"
                         setThresolds(MODE, factor)
-
+                    print(4)
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
 
@@ -218,7 +218,7 @@ def mainWorker(camId):
                     if MODE=="NIGHT":
                         frameGray = cv2.cvtColor(frameColorised, cv2.COLOR_BayerRG2GRAY)
                         h1, w1 = frameColorised.shape[1], frameColorised.shape[0]
-                    
+                    print(5)
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_2' and MODE=="DAY":
                         cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
@@ -241,7 +241,7 @@ def mainWorker(camId):
                         cv2.line(frameColorised, (0,rightBound), (h1, rightBound), (255,255,255), 1)
                         cv2.line(frameColorised, (0,leftBound), (h1, leftBound), (255,255,255), 1)
                         cv2.line(frameColorised, (0,leftBound2), (h1, leftBound2), (255,0,255), 1)
-
+                    print(6)
                     # PROCESSING SPECIFIC
                     if MODE=="NIGHT":
                         thresh = cv2.threshold(frameGray,  grayThresh, 255, cv2.THRESH_BINARY)[1]
