@@ -197,6 +197,7 @@ const main = async () => {
                 cacheControl: 'public, max-age=31536000',
                 },
             }).catch(err=>{
+                console.log(err)
                 errorQueue.push({ file: image, err })
             })
         const timeRemaining = calculateTimeRemainingInMS(moment(),when,currentRecordIndex/numberOfImages)
