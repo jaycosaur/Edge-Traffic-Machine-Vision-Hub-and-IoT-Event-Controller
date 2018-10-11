@@ -191,7 +191,6 @@ def mainWorker(camId):
                     IS_CAM_OK = False
                     print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
                     sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
-                print(2)
                 if(IS_CAM_OK and frame.payload.components):
                     image = frame.payload.components[0].data
                     if LOG:
@@ -213,9 +212,9 @@ def mainWorker(camId):
                     elif user_input_key==115: #s
                         MODE="NIGHT"
                         setThresholds("NIGHT", factor)
-                    elif user_input_key==10000: #w
+                    elif user_input_key==111: #o
                         CLOSE_TRIGGER_METHOD = "CALC"
-                    elif user_input_key==100001: #s
+                    elif user_input_key==108: #l
                         CLOSE_TRIGGER_METHOD = "DELAY"
 
                     print(user_input_key)
@@ -318,7 +317,7 @@ def mainWorker(camId):
                     frame.queue()
                     cv2.waitKey(1)
                     if frameCount%10==0:
-                        print("CURRENT MODE", MODE, "Vehicle Count: ", numberCars, " Frame: ", frameCount, " FPS: ", 1.0/(time.time()-lastTime))
+                        print("CURRENT MODE: ", MODE," CLOSE_TRIGGER: ", CLOSE_TRIGGER_METHOD, " Vehicle Count: ", numberCars, " Frame: ", frameCount, " FPS: ", 1.0/(time.time()-lastTime))
                     lastTime = time.time()
                     frameCount += 1
 
