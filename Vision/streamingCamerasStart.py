@@ -81,29 +81,6 @@ THRESHOLDS = {
     }
 }
 
-# THRESH CONSTANTS
-uproadThresh = 0 
-truckThresh = 0
-closeThresh = 0
-extraThresh = 0
-leftBound = 0
-leftBound2 = 0
-rightBound = 0
-rightBound2 = 0
-marginOfError = 0
-
-def setThresholds(MODE, factor):
-    thresh = THRESHOLDS[MODE]
-    uproadThresh = int(thresh['uproadThresh']*factor)
-    truckThresh = int(thresh['truckThresh']*factor)
-    closeThresh = int(thresh['closeThresh']*factor)
-    extraThresh = int(thresh['extraThresh']*factor)
-    leftBound = int(thresh['leftBound']*factor)
-    leftBound2 = int(thresh['leftBound2']*factor)
-    rightBound = int(thresh['rightBound']*factor)
-    rightBound2 = int(thresh['rightBound2']*factor)
-    marginOfError = int(thresh['marginOfError']*factor)
-
 class timeout:
     def __init__(self, seconds=1, error_message='Timeout'):
         self.seconds = seconds
@@ -150,9 +127,32 @@ def mainWorker(camId):
     IS_CAM_OK = True
 
     # SET MODE BASED ON TIME
+    
 
     MODE = "DAY"
-    # SET THRESHES
+    # SET THRESHES LOCALLY
+    uproadThresh = 0 
+    truckThresh = 0
+    closeThresh = 0
+    extraThresh = 0
+    leftBound = 0
+    leftBound2 = 0
+    rightBound = 0
+    rightBound2 = 0
+    marginOfError = 0
+
+    def setThresholds(MODE, factor):
+        thresh = THRESHOLDS[MODE]
+        uproadThresh = int(thresh['uproadThresh']*factor)
+        truckThresh = int(thresh['truckThresh']*factor)
+        closeThresh = int(thresh['closeThresh']*factor)
+        extraThresh = int(thresh['extraThresh']*factor)
+        leftBound = int(thresh['leftBound']*factor)
+        leftBound2 = int(thresh['leftBound2']*factor)
+        rightBound = int(thresh['rightBound']*factor)
+        rightBound2 = int(thresh['rightBound2']*factor)
+        marginOfError = int(thresh['marginOfError']*factor)
+
     setThresholds(MODE, factor)
 
     while(True):
