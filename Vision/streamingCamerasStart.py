@@ -142,6 +142,7 @@ def mainWorker(camId):
 
     def setThresholds(MODE, factor):
         thresh = THRESHOLDS[MODE]
+        print(thresh)
         uproadThresh = int(thresh['uproadThresh']*factor)
         truckThresh = int(thresh['truckThresh']*factor)
         closeThresh = int(thresh['closeThresh']*factor)
