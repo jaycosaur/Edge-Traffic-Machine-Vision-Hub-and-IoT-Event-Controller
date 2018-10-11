@@ -13,7 +13,7 @@ import imutils
 import signal
 
 
-yolo_thresh = 0.1
+yolo_thresh = 0.2
 yolo_hier_thresh = 0.2
 
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
@@ -192,7 +192,7 @@ def mainWorker(camId):
                     uproadTruckDelay = truckLastTrigger-uproadLastTrigger
                     
             while(IS_CAM_OK):
-                print(dir(cam.device.node_map))
+                #print(dir(cam.device.node_map))
                 try:
                     with timeout(seconds=3, error_message='FETCH_ERROR'):
                         frame = cam.fetch_buffer()
