@@ -151,7 +151,7 @@ def mainWorker(camId):
 
     # SET MODE BASED ON TIME
 
-
+    MODE = "NIGHT"
     # SET THRESHES
     setThresholds(MODE, factor)
 
