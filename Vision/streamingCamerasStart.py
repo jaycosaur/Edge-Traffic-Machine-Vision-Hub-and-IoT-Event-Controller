@@ -185,7 +185,9 @@ def mainWorker(camId):
             uproadTruckDelay = 0.0
 
             def setUproadTruckDelay():
-                nonlocal uproadTruckDelay, uproadLastTrigger, truckLastTrigger
+                nonlocal uproadTruckDelay
+                nonlocal uproadLastTrigger
+                nonlocal truckLastTrigger
                 if truckLastTrigger > uproadLastTrigger and truckLastTrigger-uproadLastTrigger>5:
                     uproadTruckDelay = truckLastTrigger-uproadLastTrigger
                     
