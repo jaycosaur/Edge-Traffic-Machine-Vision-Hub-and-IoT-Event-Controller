@@ -58,25 +58,25 @@ CAM_CONFIG = {
 
 THRESHOLDS = {
     'DAY': {
-        'uproadThresh': 235
-        'truckThresh': 155
-        'closeThresh': 110
-        'extraThresh': 50
-        'leftBound': 50
-        'leftBound2': 60
-        'rightBound': 90
-        'rightBound2': 125
+        'uproadThresh': 235,
+        'truckThresh': 155,
+        'closeThresh': 110,
+        'extraThresh': 50,
+        'leftBound': 50,
+        'leftBound2': 60,
+        'rightBound': 90,
+        'rightBound2': 125,
         'marginOfError': 15
     },
     'NIGHT': {
-        'uproadThresh': 230 
-        'truckThresh': 155
-        'closeThresh': 90
-        'extraThresh': 50
-        'leftBound': 50
-        'leftBound2': 60
-        'rightBound': 80
-        'rightBound2': 125
+        'uproadThresh': 230,
+        'truckThresh': 155,
+        'closeThresh': 90,
+        'extraThresh': 50,
+        'leftBound': 50,
+        'leftBound2': 60,
+        'rightBound': 80,
+        'rightBound2': 125,
         'marginOfError': 10   
     }
 }
@@ -161,7 +161,7 @@ def mainWorker(camId):
             h = Harvester()
             h.add_cti_file(CTI_FILE)
             h.update_device_info_list()
-            
+
             try:
                 cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
                 print ("Camera found!")
