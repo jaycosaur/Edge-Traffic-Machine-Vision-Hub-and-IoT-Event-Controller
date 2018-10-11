@@ -15,13 +15,17 @@ import signal
 yolo_thresh = 0.1 #default 0.5
 yolo_hier_thresh = 1 # default 0.5
 yolo_nms = .1 #default 0.45
-scaledRes = 416
-type = "tiny" # tiny / main
+scaledRes = 320
+type = "320" # tiny / 416 / 320
 
 if type == "tiny":
     datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
     cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-tiny.cfg'
     weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3-tiny.weights'
+elif type == "320":
+    datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
+    cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-320.cfg'
+    weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
 else:
     datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
     cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
