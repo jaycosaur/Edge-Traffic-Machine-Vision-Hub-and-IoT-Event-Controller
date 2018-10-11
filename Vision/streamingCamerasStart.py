@@ -212,12 +212,8 @@ def mainWorker(camId):
                     print(4)
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
-
-                    if MODE=="DAY":
-                        c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
-                    if MODE=="NIGHT":
-                        frameGray = cv2.cvtColor(frameColorised, cv2.COLOR_BayerRG2GRAY)
-                        h1, w1 = frameColorised.shape[1], frameColorised.shape[0]
+                    print(4.5)
+                    c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
                     print(5)
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_2' and MODE=="DAY":
