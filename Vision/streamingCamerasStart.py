@@ -241,7 +241,7 @@ def mainWorker(camId):
                     # PROCESSING SPECIFIC
                     if MODE=="NIGHT":
                         print(7)
-                        frameGray = cv2.cvtColor(frameColorised, cv2.COLOR_BayerRG2GRAY)
+                        frameGray = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2GRAY)
                         print(7.1)
                         thresh = cv2.threshold(frameGray,  grayThresh, 255, cv2.THRESH_BINARY)[1]
                         print(7.2)
