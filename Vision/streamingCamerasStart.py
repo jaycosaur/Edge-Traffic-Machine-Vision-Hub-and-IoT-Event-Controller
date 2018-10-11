@@ -153,7 +153,7 @@ def mainWorker(camId):
 
 
     # SET THRESHES
-    setThresolds(MODE, factor)
+    setThresholds(MODE, factor)
 
     while(True):
         try:
@@ -200,10 +200,10 @@ def mainWorker(camId):
                         showYolo = True
                     elif user_input_key==120: #x
                         showYolo = False
-                    elif user_input_key==119:
+                    elif user_input_key==119: #w
                         MODE="DAY"
                         setThresolds(MODE, factor)
-                    elif user_input_key==115:
+                    elif user_input_key==115: #s
                         MODE="NIGHT"
                         setThresolds(MODE, factor)
 
