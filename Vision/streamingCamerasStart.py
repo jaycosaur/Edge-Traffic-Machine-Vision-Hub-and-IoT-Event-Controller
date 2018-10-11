@@ -13,8 +13,8 @@ import imutils
 import signal
 
 
-thresh = 0.5
-hier_thresh = 0.2
+yolo_thresh = 0.3
+yolo_hier_thresh = 0.2
 
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
 cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
@@ -192,6 +192,7 @@ def mainWorker(camId):
                     uproadTruckDelay = truckLastTrigger-uproadLastTrigger
                     
             while(IS_CAM_OK):
+                print(cam.device.node_map)
                 try:
                     with timeout(seconds=3, error_message='FETCH_ERROR'):
                         frame = cam.fetch_buffer()
@@ -290,7 +291,7 @@ def mainWorker(camId):
                     if MODE=="DAY":
                         img = np.rot90(frameColorised, 1)
                         img2 = Image(img)
-                        results = net.detect(img2)
+                        results = net.detect(img2, thresh=yolo_thresh)
                         for cat, score, bounds in results:
                                 x, y, w, h = bounds
                                 x, y = (h1-int(y), int(x))
