@@ -240,6 +240,8 @@ def mainWorker(camId):
                     print(6)
                     # PROCESSING SPECIFIC
                     if MODE=="NIGHT":
+                        print(6)
+                        frameGray = cv2.cvtColor(frameColorised, cv2.COLOR_BayerRG2GRAY)
                         thresh = cv2.threshold(frameGray,  grayThresh, 255, cv2.THRESH_BINARY)[1]
                         labels = measure.label(thresh, neighbors=8, background=0)
                         mask = np.zeros(thresh.shape, dtype="uint8")
