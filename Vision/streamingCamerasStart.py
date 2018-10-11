@@ -36,18 +36,6 @@ triggerDelay = 0.250
 grayThresh = 150
 
 LOG = False
-MODE = "DAY"
-
-# SET THRESHES LOCALLY
-uproadThresh = 0 
-truckThresh = 0
-closeThresh = 0
-extraThresh = 0
-leftBound = 0
-leftBound2 = 0
-rightBound = 0
-rightBound2 = 0
-marginOfError = 0
 
 CAM_CONFIG = {
     'CAM_1': {
@@ -135,22 +123,41 @@ def mainWorker(camId):
     showLines = False
     showYolo = False
     IS_CAM_OK = True
-    
+    MODE = "DAY"
 
     # SET MODE BASED ON TIME
     
+    # SET THRESHES LOCALLY
+    uproadThresh = 0 
+    truckThresh = 0
+    closeThresh = 0
+    extraThresh = 0
+    leftBound = 0
+    leftBound2 = 0
+    rightBound = 0
+    rightBound2 = 0
+    marginOfError = 0
+
     def setThresholds(MODE, factor):
         thresh = THRESHOLDS[MODE]
-        print(thresh)
-        global uproadThresh = int(thresh['uproadThresh']*factor)
-        global truckThresh = int(thresh['truckThresh']*factor)
-        global closeThresh = int(thresh['closeThresh']*factor)
-        global extraThresh = int(thresh['extraThresh']*factor)
-        global leftBound = int(thresh['leftBound']*factor)
-        global leftBound2 = int(thresh['leftBound2']*factor)
-        global rightBound = int(thresh['rightBound']*factor)
-        global rightBound2 = int(thresh['rightBound2']*factor)
-        global marginOfError = int(thresh['marginOfError']*factor)
+        nonlocal uproadThresh
+        nonlocal truckThresh
+        nonlocal closeThresh
+        nonlocal extraThresh
+        nonlocal leftBound
+        nonlocal leftBound2
+        nonlocal rightBound
+        nonlocal rightBound2
+        nonlocal marginOfError
+        uproadThresh = int(thresh['uproadThresh']*factor)
+        truckThresh = int(thresh['truckThresh']*factor)
+        closeThresh = int(thresh['closeThresh']*factor)
+        extraThresh = int(thresh['extraThresh']*factor)
+        leftBound = int(thresh['leftBound']*factor)
+        leftBound2 = int(thresh['leftBound2']*factor)
+        rightBound = int(thresh['rightBound']*factor)
+        rightBound2 = int(thresh['rightBound2']*factor)
+        marginOfError = int(thresh['marginOfError']*factor)
 
     setThresholds(MODE, factor)
 
@@ -202,10 +209,10 @@ def mainWorker(camId):
                     elif user_input_key==120: #x
                         showYolo = False
                     elif user_input_key==119: #w
-                        global MODE="DAY"
+                        MODE="DAY"
                         setThresholds("DAY", factor)
                     elif user_input_key==115: #s
-                        global MODE="NIGHT"
+                        MODE="NIGHT"
                         setThresholds("NIGHT", factor)
 
                     print(user_input_key)
