@@ -204,10 +204,10 @@ def mainWorker(camId):
                         showYolo = False
                     elif user_input_key==119: #w
                         MODE="DAY"
-                        setThresolds("DAY", factor)
+                        setThresholds("DAY", factor)
                     elif user_input_key==115: #s
                         MODE="NIGHT"
-                        setThresolds("NIGHT", factor)
+                        setThresholds("NIGHT", factor)
                     print(4)
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
