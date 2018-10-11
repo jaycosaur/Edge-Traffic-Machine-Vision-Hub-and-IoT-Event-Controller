@@ -306,15 +306,15 @@ def mainWorker(camId):
                                 currentTime = time.time()
                                 if y <= rightBound and camId=='CAM_1' and h>10 and w>10:
                                     if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                                        urllib.request.urlopen(TRIGGER_FAR_URL).read()
                                         numberCars += 1
                                         uproadLastTrigger = currentTime
                                     if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                                        urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
                                         truckLastTrigger = currentTime
                                         setUproadTruckDelay()
                                     if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                                        urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                                         closeLastTrigger = currentTime
 
                     # DISPLAY FRAME IN WINDOW
