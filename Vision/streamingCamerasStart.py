@@ -117,7 +117,7 @@ def mainWorker(camId):
     numberCars = 0
     lastSnapshot = None
     baseColor = (255,255,255)
-    baseRes = 400
+    baseRes = 416
     scale = 800/1920
     factor = baseRes/320
     showLines = False
