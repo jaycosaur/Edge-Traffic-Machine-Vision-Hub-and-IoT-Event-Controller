@@ -200,10 +200,10 @@ def mainWorker(camId):
                         showYolo = True
                     elif user_input_key==120: #x
                         showYolo = False
-                    else user_input_key==119:
+                    elif user_input_key==119:
                         MODE="DAY"
                         setThresolds(MODE, factor)
-                    else user_input_key==115:
+                    elif user_input_key==115:
                         MODE="NIGHT"
                         setThresolds(MODE, factor)
 
