@@ -12,19 +12,16 @@ from imutils import contours
 import imutils
 import signal
 
-
 yolo_thresh = 0.1 #default 0.5
 yolo_hier_thresh = 1 # default 0.5
 yolo_nms = .1 #default 0.45
 scaledRes = 416
-
-type = "tiny"
+type = "tiny" # tiny / main
 
 if type == "tiny":
     datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
     cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-tiny.cfg'
     weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3-tiny.weights'
-
 else:
     datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
     cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
