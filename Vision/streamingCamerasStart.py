@@ -311,8 +311,8 @@ def mainWorker(camId):
                                         uproadLastTrigger = currentTime
                                     if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                                        setUproadTruckDelay()
                                         truckLastTrigger = currentTime
+                                        setUproadTruckDelay()
                                     if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                                         closeLastTrigger = currentTime
