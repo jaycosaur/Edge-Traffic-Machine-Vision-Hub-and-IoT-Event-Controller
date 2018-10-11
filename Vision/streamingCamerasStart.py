@@ -113,7 +113,7 @@ def mainWorker(camId):
     #variable declarations
     lastTime = time.time()
     transposeTime = 0
-    i = 0
+    frameCount = 0
     numberCars = 0
     lastSnapshot = None
     baseColor = (255,255,255)
@@ -207,8 +207,8 @@ def mainWorker(camId):
                     elif user_input_key==115: #s
                         MODE="NIGHT"
                         setThresholds("NIGHT", factor)
-                    else:
-                        print(user_input_key)
+
+                    print(user_input_key)
 
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
@@ -307,10 +307,10 @@ def mainWorker(camId):
                             
                     frame.queue()
                     cv2.waitKey(1)
-                    if i%10==0:
-                        print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
+                    if frameCount%10==0:
+                        print("Count: ", numberCars, " Frame: ", frameCount, " FPS: ", 1.0/(time.time()-lastTime))
                     lastTime = time.time()
-                    i += 1
+                    frameCount += 1
 
             #IF CAM NOT OK
             cam.stop_image_acquisition()
