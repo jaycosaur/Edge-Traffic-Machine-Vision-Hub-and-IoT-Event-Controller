@@ -13,13 +13,22 @@ import imutils
 import signal
 
 
-yolo_thresh = 0.1
-yolo_hier_thresh = 1
-yolo_nms = .1
+yolo_thresh = 0.1 #default 0.5
+yolo_hier_thresh = 1 # default 0.5
+yolo_nms = .1 #default 0.45
+scaledRes = 416
 
-datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
-cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
-weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
+type = "tiny"
+
+if type == "tiny":
+    datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
+    cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-tiny.cfg'
+    weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3-tiny.weights'
+
+else:
+    datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
+    cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
+    weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
 
 SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
 
@@ -118,7 +127,7 @@ def mainWorker(camId):
     numberCars = 0
     lastSnapshot = None
     baseColor = (255,255,255)
-    baseRes = 416
+    baseRes = scaledRes
     scale = 800/1920
     factor = baseRes/320
     showLines = False
