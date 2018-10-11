@@ -192,7 +192,7 @@ def mainWorker(camId):
                     uproadTruckDelay = truckLastTrigger-uproadLastTrigger
                     
             while(IS_CAM_OK):
-                print(cam.device.node_map)
+                print(dir(cam.device.node_map))
                 try:
                     with timeout(seconds=3, error_message='FETCH_ERROR'):
                         frame = cam.fetch_buffer()
