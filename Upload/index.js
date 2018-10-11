@@ -16,12 +16,12 @@ const bucketName = "onetask-sydney-tfnsw"
 
 const firestore = new Firestore({
     projectId: projectId,
-    keyFilename: '/keys/OneTaskTfNSWWeb-14ae9ec35097.json',
+    keyFilename: process.env.gcloudkeypath,
   });
 
 const storage = new Storage({
     projectId: projectId,
-    keyFilename: '/keys/OneTaskTfNSWWeb-14ae9ec35097.json',
+    keyFilename: process.env.gcloudkeypath,
 });
 
 firestore.settings({
