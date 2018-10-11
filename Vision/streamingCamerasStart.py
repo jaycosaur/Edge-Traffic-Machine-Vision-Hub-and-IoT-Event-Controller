@@ -15,6 +15,7 @@ import signal
 
 yolo_thresh = 0.1
 yolo_hier_thresh = 0.2
+yolo_nms = .45
 
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
 cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
@@ -291,7 +292,7 @@ def mainWorker(camId):
                     if MODE=="DAY":
                         img = np.rot90(frameColorised, 1)
                         img2 = Image(img)
-                        results = net.detect(img2, thresh=yolo_thresh)
+                        results = net.detect(img2, thresh=yolo_thresh, nms=yolo_nms, hier_thresh=yolo_hier_thresh)
                         for cat, score, bounds in results:
                                 x, y, w, h = bounds
                                 x, y = (h1-int(y), int(x))
