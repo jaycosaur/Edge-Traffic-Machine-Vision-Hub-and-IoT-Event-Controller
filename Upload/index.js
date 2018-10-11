@@ -14,6 +14,8 @@ const projectId = "onetask-tfnsw-web"
 const bucketName = "onetask-sydney-tfnsw"
 // Creates a client
 
+console.log(process.env)
+
 const firestore = new Firestore({
     projectId: projectId,
     keyFilename: process.env.gcloudkeypath,
