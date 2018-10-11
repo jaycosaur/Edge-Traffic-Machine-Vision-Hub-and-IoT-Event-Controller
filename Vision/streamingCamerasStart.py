@@ -17,8 +17,8 @@ yolo_thresh = 0.1
 yolo_hier_thresh = 0.2
 
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
-cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
-weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
+cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-tiny.cfg'
+weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3-tiny.weights'
 
 SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
 
