@@ -15,8 +15,8 @@ import signal
 yolo_thresh = 0.1 #default 0.5
 yolo_hier_thresh = 1 # default 0.5
 yolo_nms = .1 #default 0.45
-scaledRes = 320
-type = "320" # tiny / 416 / 320
+scaledRes = 416
+type = "main" # tiny / 416 / 320
 
 if type == "tiny":
     datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
