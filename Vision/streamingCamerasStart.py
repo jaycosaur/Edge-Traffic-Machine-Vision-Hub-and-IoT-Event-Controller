@@ -188,6 +188,7 @@ def mainWorker(camId):
                 nonlocal uproadTruckDelay
                 nonlocal uproadLastTrigger
                 nonlocal truckLastTrigger
+                print(uproadLastTrigger,truckLastTrigger )
                 if truckLastTrigger > uproadLastTrigger and truckLastTrigger-uproadLastTrigger>5:
                     uproadTruckDelay = truckLastTrigger-uproadLastTrigger
                     
