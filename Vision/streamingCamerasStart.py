@@ -177,6 +177,8 @@ def mainWorker(camId):
             truckLastTrigger = time.time()
             closeLastTrigger = time.time()
 
+            print(1)
+
             while(IS_CAM_OK):
                 try:
                     with timeout(seconds=3, error_message='FETCH_ERROR'):
@@ -185,9 +187,10 @@ def mainWorker(camId):
                     IS_CAM_OK = False
                     print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
                     sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
-
+                print(2)
                 if(IS_CAM_OK and frame.payload.components):
                     image = frame.payload.components[0].data
+                    print(3)
                     if LOG:
                         print(image)
                     # USER CONTROLS
