@@ -188,8 +188,7 @@ def mainWorker(camId):
                 nonlocal uproadTruckDelay
                 nonlocal uproadLastTrigger
                 nonlocal truckLastTrigger
-                print(truckLastTrigger-uproadLastTrigger)
-                if truckLastTrigger > uproadLastTrigger and truckLastTrigger-uproadLastTrigger>5:
+                if truckLastTrigger > uproadLastTrigger and truckLastTrigger-uproadLastTrigger<5:
                     uproadTruckDelay = truckLastTrigger-uproadLastTrigger
                     
             while(IS_CAM_OK):
@@ -283,8 +282,8 @@ def mainWorker(camId):
                                         numberCars += 1
                                     if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                                        setUproadTruckDelay()
                                         truckLastTrigger = currentTime
+                                        setUproadTruckDelay()
                                     if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                                         closeLastTrigger = currentTime
