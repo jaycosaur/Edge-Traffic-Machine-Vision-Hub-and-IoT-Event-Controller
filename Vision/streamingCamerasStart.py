@@ -124,6 +124,7 @@ def mainWorker(camId):
     showYolo = False
     IS_CAM_OK = True
     MODE = "DAY"
+    CLOSE_TRIGGER_METHOD = "DELAY" # DELAY, CALC
 
     # SET MODE BASED ON TIME
     
@@ -160,7 +161,6 @@ def mainWorker(camId):
         marginOfError = int(thresh['marginOfError']*factor)
 
     setThresholds(MODE, factor)
-
     while(True):
         try:
             print(camId, "Creating harvester modules and loading genlcam producers ...")
@@ -182,8 +182,6 @@ def mainWorker(camId):
             uproadLastTrigger = time.time()
             truckLastTrigger = time.time()
             closeLastTrigger = time.time()
-
-            print(1)
 
             while(IS_CAM_OK):
                 try:
@@ -211,9 +209,14 @@ def mainWorker(camId):
                     elif user_input_key==119: #w
                         MODE="DAY"
                         setThresholds("DAY", factor)
+                        # CHANGE EXPOSURE AND GAIN
                     elif user_input_key==115: #s
                         MODE="NIGHT"
                         setThresholds("NIGHT", factor)
+                    elif user_input_key==10000: #w
+                        CLOSE_TRIGGER_METHOD = "CALC"
+                    elif user_input_key==100001: #s
+                        CLOSE_TRIGGER_METHOD = "DELAY"
 
                     print(user_input_key)
 
@@ -315,7 +318,7 @@ def mainWorker(camId):
                     frame.queue()
                     cv2.waitKey(1)
                     if frameCount%10==0:
-                        print("Count: ", numberCars, " Frame: ", frameCount, " FPS: ", 1.0/(time.time()-lastTime))
+                        print("CURRENT MODE", MODE, "Vehicle Count: ", numberCars, " Frame: ", frameCount, " FPS: ", 1.0/(time.time()-lastTime))
                     lastTime = time.time()
                     frameCount += 1
 
