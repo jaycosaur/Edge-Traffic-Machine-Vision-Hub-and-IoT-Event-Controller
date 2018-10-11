@@ -16,8 +16,6 @@ import signal
 thresh = 0.5
 hier_thresh = 0.2
 
-MODE = "NIGHT" # "DAY" "NIGHT"
-
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
 cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
 weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
@@ -125,11 +123,12 @@ def mainWorker(camId):
     showLines = False
     showYolo = False
     IS_CAM_OK = True
+    MODE = "DAY"
 
     # SET MODE BASED ON TIME
     
 
-    MODE = "DAY"
+    
     # SET THRESHES LOCALLY
     uproadThresh = 0 
     truckThresh = 0
