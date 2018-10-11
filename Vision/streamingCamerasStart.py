@@ -13,7 +13,7 @@ import imutils
 import signal
 
 
-yolo_thresh = 0.2
+yolo_thresh = 0.1
 yolo_hier_thresh = 0.2
 
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
