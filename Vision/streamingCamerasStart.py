@@ -14,8 +14,8 @@ import signal
 
 
 yolo_thresh = 0.1
-yolo_hier_thresh = 0.2
-yolo_nms = .45
+yolo_hier_thresh = 0.0
+yolo_nms = .1
 
 datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
 cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
