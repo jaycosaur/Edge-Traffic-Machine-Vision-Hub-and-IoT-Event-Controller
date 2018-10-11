@@ -28,8 +28,6 @@ firestore.settings({
     timestampsInSnapshots: true
 })
 
-
-
 const log = console.log
 const PATH_TO_FILES = process.argv[2]
 
@@ -80,9 +78,10 @@ const main = async () => {
 
     const metaData =  await csv({
         noheader: true,
-        headers: ["time","timeUNIX","timeISO","timeGPS","GPS_COORDS","CAM","PLATE","PACKAGE_ID","PATH","ID"]
+        headers: ["time","timeUNIX","timeISO","timeGPS","GPS_COORDS","CAM","PLATE","PATH","ID"]
     }).fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
+    console.log(metaData)
 
     // remove duplicates
     const store = {}
