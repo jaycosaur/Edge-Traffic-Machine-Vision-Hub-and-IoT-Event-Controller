@@ -240,11 +240,15 @@ def mainWorker(camId):
                     print(6)
                     # PROCESSING SPECIFIC
                     if MODE=="NIGHT":
-                        print(6)
+                        print(7)
                         frameGray = cv2.cvtColor(frameColorised, cv2.COLOR_BayerRG2GRAY)
+                        print(7.1)
                         thresh = cv2.threshold(frameGray,  grayThresh, 255, cv2.THRESH_BINARY)[1]
+                        print(7.2)
                         labels = measure.label(thresh, neighbors=8, background=0)
+                        print(7.3)
                         mask = np.zeros(thresh.shape, dtype="uint8")
+                        print(8)
                         for label in np.unique(labels):
                             # if this is the background label, ignore it
                             if label == 0:
@@ -252,6 +256,7 @@ def mainWorker(camId):
                             labelMask = np.zeros(thresh.shape, dtype="uint8")
                             labelMask[labels == label] = 255
                             mask = cv2.add(mask, labelMask)
+                        print(9)
                         if len(np.unique(labels))>0:
                             cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                             cnts = cnts[0] if imutils.is_cv2() else cnts[1]
@@ -303,6 +308,7 @@ def mainWorker(camId):
                                         urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                                         closeLastTrigger = currentTime
 
+                    print(20)
                     # DISPLAY FRAME IN WINDOW
                     if IS_ROTATE:
                         cv2.imshow(WINDOW_NAME, np.rot90(frameColorised))
