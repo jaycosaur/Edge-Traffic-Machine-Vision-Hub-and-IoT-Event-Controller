@@ -81,8 +81,6 @@ const main = async () => {
         headers: ["time","timeUNIX","timeISO","timeGPS","GPS_COORDS","CAM","PLATE","PATH","ID"]
     }).fromFile(path.join(FULL_PATH,CONFIG.META_FILE_NAME)) 
 
-    console.log(metaData)
-
     // remove duplicates
     const store = {}
 
@@ -132,11 +130,13 @@ const main = async () => {
         //process.exit()
     }
 
+    log(chalk.bgGreen.black('Processing Part 1 ...'))
     const imagesInStore = filesInStore.filter(file=>file.includes('.png'))
+    log(chalk.bgGreen.black('Processing Part 2 ...'))
     const imagesInStoreNames = imagesInStore.map(i=>i.split('.')[0])
 
     // create sightings and check that files are present if not remove and log!
-
+    log(chalk.bgGreen.black('Processing Part 3 ...'))
     const storeWithImages = storeArray.map(record => {
         return {
             ...record,
@@ -146,8 +146,6 @@ const main = async () => {
 
     console.log(storeWithImages.filter(i=>i.hasImage).length)
     console.log(storeWithImages.filter(i=>!i.hasImage).length)
-
-    process.exit()
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Adding Records to Database ...'))
