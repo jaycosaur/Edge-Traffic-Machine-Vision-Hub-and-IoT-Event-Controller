@@ -215,7 +215,7 @@ def mainWorker(camId):
                     c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
                     print(5)
                     # SHOW LINES SECTION
-                    if showLines and camId=='CAM_2' and MODE=="DAY":
+                    if showLines and camId=='CAM_1' and MODE=="DAY":
                         cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (uproadThresh+marginOfError,0), (uproadThresh+marginOfError, w1), (255,0,0), 1)
                         cv2.line(frameColorised, (uproadThresh-marginOfError,0), (uproadThresh-marginOfError, w1), (255,0,0), 1)
@@ -229,7 +229,7 @@ def mainWorker(camId):
                         cv2.line(frameColorised, (0,leftBound2), (h1, leftBound2), (255,255,255), 1)
                         cv2.line(frameColorised, (0,leftBound), (h1, leftBound), (255,255,255), 1) 
 
-                    if showLines and camId=='CAM_2' and MODE=="NIGHT":
+                    if showLines and camId=='CAM_1' and MODE=="NIGHT":
                         cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
@@ -323,8 +323,9 @@ def mainWorker(camId):
             #IF CAM NOT OK
             cam.stop_image_acquisition()
             cam.destroy()
-        except:
+        except Exception as e:
             print ("Critical Script error! Trying again in 5 seconds ...")
+            print(e)
             time.sleep(5) #sleep for 10 seconds and then retry!
 
 # main event
