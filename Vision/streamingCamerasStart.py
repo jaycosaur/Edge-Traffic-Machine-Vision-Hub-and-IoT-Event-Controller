@@ -212,12 +212,10 @@ def mainWorker(camId):
                     elif user_input_key==115: #s
                         MODE="NIGHT"
                         setThresholds("NIGHT", factor)
-                    elif user_input_key==111: #o
+                    elif user_input_key==101: #o
                         CLOSE_TRIGGER_METHOD = "CALC"
-                    elif user_input_key==108: #l
+                    elif user_input_key==100: #l
                         CLOSE_TRIGGER_METHOD = "DELAY"
-
-                    print(user_input_key)
 
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
@@ -317,7 +315,7 @@ def mainWorker(camId):
                     frame.queue()
                     cv2.waitKey(1)
                     if frameCount%10==0:
-                        print("CURRENT MODE: ", MODE," CLOSE_TRIGGER: ", CLOSE_TRIGGER_METHOD, " Vehicle Count: ", numberCars, " Frame: ", frameCount, " FPS: ", 1.0/(time.time()-lastTime))
+                        print("CURRENT MODE: ", MODE," CLOSE_TRIGGER: ", CLOSE_TRIGGER_METHOD, " Vehicle Count: ", numberCars, " Frame: ", frameCount, " FPS: ", int(1.0/(time.time()-lastTime)))
                     lastTime = time.time()
                     frameCount += 1
 
