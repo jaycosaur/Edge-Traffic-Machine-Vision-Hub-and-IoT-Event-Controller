@@ -189,7 +189,6 @@ def mainWorker(camId):
                 print(2)
                 if(IS_CAM_OK and frame.payload.components):
                     image = frame.payload.components[0].data
-                    print(3)
                     if LOG:
                         print(image)
                     # USER CONTROLS
@@ -208,12 +207,12 @@ def mainWorker(camId):
                     elif user_input_key==115: #s
                         MODE="NIGHT"
                         setThresholds("NIGHT", factor)
-                    print(4)
+                    else:
+                        print(user_input_key)
+
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
-                    print(4.5)
                     c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
-                    print(5)
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
                         cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
@@ -236,18 +235,12 @@ def mainWorker(camId):
                         cv2.line(frameColorised, (0,rightBound), (h1, rightBound), (255,255,255), 1)
                         cv2.line(frameColorised, (0,leftBound), (h1, leftBound), (255,255,255), 1)
                         cv2.line(frameColorised, (0,leftBound2), (h1, leftBound2), (255,0,255), 1)
-                    print(6)
                     # PROCESSING SPECIFIC
                     if MODE=="NIGHT":
-                        print(7)
                         frameGray = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2GRAY)
-                        print(7.1)
                         thresh = cv2.threshold(frameGray,  grayThresh, 255, cv2.THRESH_BINARY)[1]
-                        print(7.2)
                         labels = measure.label(thresh, neighbors=8, background=0)
-                        print(7.3)
                         mask = np.zeros(thresh.shape, dtype="uint8")
-                        print(8)
                         for label in np.unique(labels):
                             # if this is the background label, ignore it
                             if label == 0:
@@ -255,7 +248,6 @@ def mainWorker(camId):
                             labelMask = np.zeros(thresh.shape, dtype="uint8")
                             labelMask[labels == label] = 255
                             mask = cv2.add(mask, labelMask)
-                        print(9)
                         if len(np.unique(labels))>0:
                             cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                             cnts = cnts[0] if imutils.is_cv2() else cnts[1]
@@ -307,7 +299,6 @@ def mainWorker(camId):
                                         urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                                         closeLastTrigger = currentTime
 
-                    print(20)
                     # DISPLAY FRAME IN WINDOW
                     if IS_ROTATE:
                         cv2.imshow(WINDOW_NAME, np.rot90(frameColorised))
@@ -316,7 +307,8 @@ def mainWorker(camId):
                             
                     frame.queue()
                     cv2.waitKey(1)
-                    print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
+                    if i%10==0:
+                        print("Count: ", numberCars, " Frame: ", i, " FPS: ", 1.0/(time.time()-lastTime))
                     lastTime = time.time()
                     i += 1
 
