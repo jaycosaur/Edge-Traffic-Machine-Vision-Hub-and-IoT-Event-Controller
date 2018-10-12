@@ -517,6 +517,7 @@ const main = async () => {
         farProcessingGroupCount: farProcessingGroup,
         closeProcessingGroupCount: closeProcessingGroup,
         truckProcessingGroupCount: truckProcessingGroup,
+        numberOfRecordsPerGroup: SIZE_OF_PROCESSING_GROUP,
         uploadStart: moment().toISOString()
     })
 
