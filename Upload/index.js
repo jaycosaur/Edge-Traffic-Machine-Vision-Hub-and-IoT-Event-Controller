@@ -357,7 +357,7 @@ const main = async () => {
     // close 2k -> close 4k and close color
 
     const SIZE_OF_PROCESSING_GROUP = 500
-    let processingGroup = 0
+    let closeProcessingGroup = 0
     let count = 0
 
     close2k.map((val,i)=>{
@@ -366,13 +366,13 @@ const main = async () => {
         const clusterId = uuidv4()
         count += 1
         if (count%SIZE_OF_PROCESSING_GROUP===0){
-            processingGroup +=1
+            closeProcessingGroup +=1
         }
         // update 4k and col
         close4k[id4k] = {
             ...close4k[id4k],
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            closeProcessingGroup: closeProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -382,7 +382,7 @@ const main = async () => {
         closecolor[idcol] = {
             ...closecolor[idcol],
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            closeProcessingGroup: closeProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -392,7 +392,7 @@ const main = async () => {
         return ({
             ...val,
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            closeProcessingGroup: closeProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -402,7 +402,7 @@ const main = async () => {
     })
 
     // truck 2k -> truck 4k and truck color
-    processingGroup = 0
+    let truckProcessingGroup = 0
     count = 0
 
     truck2k.map((val,i)=>{
@@ -412,12 +412,12 @@ const main = async () => {
         const clusterId = uuidv4()
         count += 1
         if (count%SIZE_OF_PROCESSING_GROUP===0){
-            processingGroup +=1
+            truckProcessingGroup +=1
         }
         truck4k[id4k] = {
             ...truck4k[id4k],
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            truckProcessingGroup: truckProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -427,7 +427,7 @@ const main = async () => {
         truckcolor[idcol] = {
             ...truckcolor[idcol],
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            truckProcessingGroup: truckProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -437,7 +437,7 @@ const main = async () => {
         return ({
             ...val,
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            truckProcessingGroup: truckProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -447,7 +447,7 @@ const main = async () => {
     })
 
     // far 2k -> far 4k and far color
-    processingGroup = 0
+    let farProcessingGroup = 0
     count = 0
 
     far2k.map((val,i)=>{
@@ -457,12 +457,12 @@ const main = async () => {
         const clusterId = uuidv4()
         count += 1
         if (count%SIZE_OF_PROCESSING_GROUP===0){
-            processingGroup +=1
+            farProcessingGroup +=1
         }
         far4k[id4k] = {
             ...far4k[id4k],
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            farProcessingGroup: farProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -472,7 +472,7 @@ const main = async () => {
         farcolor[idcol] = {
             ...farcolor[idcol],
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            farProcessingGroup: farProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -482,7 +482,7 @@ const main = async () => {
         return ({
             ...val,
             clusterId: clusterId,
-            processingGroup: processingGroup,
+            farProcessingGroup: farProcessingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -514,6 +514,9 @@ const main = async () => {
         numberOfImages: numberOfImages,
         numberOfVehicles: storeWithImages.filter(i=>i.CAM==CAM9).length, // FIX LATER ALLIGATOR
         numberOfRecords: storeWithImages.length,
+        farProcessingGroupCount: farProcessingGroup,
+        closeProcessingGroupCount: closeProcessingGroup,
+        truckProcessingGroupCount: truckProcessingGroup,
         uploadStart: moment().toISOString()
     })
 
