@@ -345,7 +345,7 @@ const main = async () => {
         let smallestDiff = valueToMatch
         for (i=0; i<arr.length; i++){
             let val = arr[i]
-            console.log(valueToMatch, val)
+            console.log(Math.abs(val-valueToMatch))
             const ind = i
             if (Math.abs(val-valueToMatch)<smallestDiff){
                 smallestDiff = Math.abs(val-valueToMatch)<smallestDiff
