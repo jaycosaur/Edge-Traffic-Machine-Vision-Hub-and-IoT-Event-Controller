@@ -336,13 +336,15 @@ const main = async () => {
 
     closestElement = (valueToMatch, arr) => {
         let closestIndex = 0
-        let smallestDiff = Math.abs(valueToMatch-arr[0])
-        arr.forEach((val, ind)=>{
+        let smallestDiff = valueToMatch
+        for (i=0; i<arr.length; i++){
+            let val = arr[val]
+            const ind = i
             if (Math.abs(val-valueToMatch)<smallestDiff){
                 smallestDiff = Math.abs(val-valueToMatch)<smallestDiff
                 closestIndex = ind
             }
-        })
+        }
         return closestIndex
     }
     
@@ -352,9 +354,11 @@ const main = async () => {
         let id4k = closestElement(val['timeUNIX'], close4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], closecolor.map(i=>i['timeUNIX']))
         console.log(id4k, idcol)
+        const clusterId = uuidv4()
         // update 4k and col
         close4k[id4k] = {
             ...close4k[id4k],
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -363,6 +367,7 @@ const main = async () => {
         }
         closecolor[idcol] = {
             ...closecolor[idcol],
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -371,6 +376,7 @@ const main = async () => {
         }
         return ({
             ...val,
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -385,8 +391,10 @@ const main = async () => {
         let id4k = closestElement(val['timeUNIX'], truck4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], truckcolor.map(i=>i['timeUNIX']))
         // update 4k and col
+        const clusterId = uuidv4()
         truck4k[id4k] = {
             ...truck4k[id4k],
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -395,6 +403,7 @@ const main = async () => {
         }
         truckcolor[idcol] = {
             ...truckcolor[idcol],
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -403,6 +412,7 @@ const main = async () => {
         }
         return ({
             ...val,
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -417,8 +427,10 @@ const main = async () => {
         let id4k = closestElement(val['timeUNIX'], far4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], farcolor.map(i=>i['timeUNIX']))
         // update 4k and col
+        const clusterId = uuidv4()
         far4k[id4k] = {
             ...far4k[id4k],
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -427,6 +439,7 @@ const main = async () => {
         }
         farcolor[idcol] = {
             ...farcolor[idcol],
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -435,6 +448,7 @@ const main = async () => {
         }
         return ({
             ...val,
+            clusterId: clusterId,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
