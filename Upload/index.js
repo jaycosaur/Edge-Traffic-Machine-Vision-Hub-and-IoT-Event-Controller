@@ -541,8 +541,8 @@ const main = async () => {
         if(recordIndex%500==0){
             let uploadSTime = uploadStartTime.clone()
             await batch.commit()
-            const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStartTime,recordIndex/numberOfFilesInMetaData)
-            console.log(`${recordIndex} out of ${numberOfFilesInMetaData} ( ${Math.round(100*(recordIndex/numberOfFilesInMetaData))}%) | ${errorqueue.length} Error Records | Started: ${uploadStartTime.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadSTime.add(timeRemaining, 'ms').format('LLLL')}`)
+            const timeRemaining = calculateTimeRemainingInMS(moment(),uploadStartTime,recordIndex/storeWithImages.length)
+            console.log(`${recordIndex} out of ${storeWithImages.length} ( ${Math.round(100*(recordIndex/storeWithImages.length))}%) | ${errorqueue.length} Error Records | Started: ${uploadStartTime.format('LLLL')} | Est. Time Remaining: ${Math.round(timeRemaining/(1000*60))} minutes| Est. Completed Time: ${uploadSTime.add(timeRemaining, 'ms').format('LLLL')}`)
             batch = firestore.batch()
         }
     }
