@@ -356,14 +356,23 @@ const main = async () => {
     
     // close 2k -> close 4k and close color
 
+    const SIZE_OF_PROCESSING_GROUP = 500
+    let processingGroup = 0
+    let count = 0
+
     close2k.map((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], close4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], closecolor.map(i=>i['timeUNIX']))
         const clusterId = uuidv4()
+        count += 1
+        if (count%SIZE_OF_PROCESSING_GROUP===0){
+            processingGroup +=1
+        }
         // update 4k and col
         close4k[id4k] = {
             ...close4k[id4k],
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -373,6 +382,7 @@ const main = async () => {
         closecolor[idcol] = {
             ...closecolor[idcol],
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -382,6 +392,7 @@ const main = async () => {
         return ({
             ...val,
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: closecolor[idcol]["ID"],
@@ -391,15 +402,22 @@ const main = async () => {
     })
 
     // truck 2k -> truck 4k and truck color
+    let processingGroup = 0
+    let count = 0
 
     truck2k.map((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], truck4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], truckcolor.map(i=>i['timeUNIX']))
         // update 4k and col
         const clusterId = uuidv4()
+        count += 1
+        if (count%SIZE_OF_PROCESSING_GROUP===0){
+            processingGroup +=1
+        }
         truck4k[id4k] = {
             ...truck4k[id4k],
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -409,6 +427,7 @@ const main = async () => {
         truckcolor[idcol] = {
             ...truckcolor[idcol],
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -418,6 +437,7 @@ const main = async () => {
         return ({
             ...val,
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: truckcolor[idcol]["ID"],
@@ -427,15 +447,22 @@ const main = async () => {
     })
 
     // far 2k -> far 4k and far color
+    let processingGroup = 0
+    let count = 0
 
     far2k.map((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], far4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], farcolor.map(i=>i['timeUNIX']))
         // update 4k and col
         const clusterId = uuidv4()
+        count += 1
+        if (count%SIZE_OF_PROCESSING_GROUP===0){
+            processingGroup +=1
+        }
         far4k[id4k] = {
             ...far4k[id4k],
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -445,6 +472,7 @@ const main = async () => {
         farcolor[idcol] = {
             ...farcolor[idcol],
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -454,6 +482,7 @@ const main = async () => {
         return ({
             ...val,
             clusterId: clusterId,
+            processingGroup: processingGroup,
             CLUSTER: {
                 ["2K"]: val["ID"],
                 ["COLOR"]: farcolor[idcol]["ID"],
@@ -475,10 +504,6 @@ const main = async () => {
         ...far4k,
         ...farcolor
     ].sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
-
-    console.log(storeWithImages)
-    
-    process.exit()
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Creating batch ...'))
@@ -518,9 +543,8 @@ const main = async () => {
             batch = firestore.batch()
         }
     }
+
     await batch.commit()
-
-
     log(chalk.bgGreen.black('Completed Record Additions.'))
     process.exit()
     log(chalk.bgGreen.black('Adding Sightings to Database ...'))
