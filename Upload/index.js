@@ -224,8 +224,8 @@ const main = async () => {
 
     const camNames = Object.keys(CAM_CONFIG)
 
-    let close2k = storeWithImages.filter(i=>i.CAM==="CAM8")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let close2k = storeWithImages.filter(i=>i["CAM"]==="CAM8")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -236,8 +236,8 @@ const main = async () => {
                         })
                     })
 
-    let close4k = storeWithImages.filter(i=>i.CAM==="CAM6")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let close4k = storeWithImages.filter(i=>i["CAM"]==="CAM6")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -248,8 +248,8 @@ const main = async () => {
                         })
                     })
 
-    let closecolor = storeWithImages.filter(i=>i.CAM==="CAM3")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let closecolor = storeWithImages.filter(i=>i["CAM"]==="CAM3")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -260,8 +260,8 @@ const main = async () => {
                         })
                     })
 
-    let truck2k = storeWithImages.filter(i=>i.CAM==="CAM7")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let truck2k = storeWithImages.filter(i=>i["CAM"]==="CAM7")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -272,8 +272,8 @@ const main = async () => {
                         })
                     })
 
-    let truck4k = storeWithImages.filter(i=>i.CAM==="CAM5")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let truck4k = storeWithImages.filter(i=>i["CAM"]==="CAM5")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -284,8 +284,8 @@ const main = async () => {
                         })
                     })
 
-    let truckcolor = storeWithImages.filter(i=>i.CAM==="CAM2")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let truckcolor = storeWithImages.filter(i=>i["CAM"]==="CAM2")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -296,8 +296,8 @@ const main = async () => {
                         })
                     })
 
-    let far2k = storeWithImages.filter(i=>i.CAM==="CAM9")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let far2k = storeWithImages.filter(i=>i["CAM"]==="CAM9")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -308,8 +308,8 @@ const main = async () => {
                         })
                     })
 
-    let far4k = storeWithImages.filter(i=>i.CAM==="CAM4")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let far4k = storeWithImages.filter(i=>i["CAM"]==="CAM4")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -320,8 +320,8 @@ const main = async () => {
                         })
                     })
 
-    let farcolor = storeWithImages.filter(i=>i.CAM==="CAM1")
-                    .sort(a.timeUNIX-b.timeUNIX)
+    let farcolor = storeWithImages.filter(i=>i["CAM"]==="CAM1")
+                    .sort(a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -349,8 +349,8 @@ const main = async () => {
     // close 2k -> close 4k and close color
 
     close2k.map((val,i)=>{
-        let id4k = closestElement(val.timeUNIX, close4k.map(i=>i.timeUNIX))
-        let idcol = closestElement(val.timeUNIX, closecolor.map(i=>i.timeUNIX))
+        let id4k = closestElement(val['timeUNIX'], close4k.map(i=>i['timeUNIX']))
+        let idcol = closestElement(val['timeUNIX'], closecolor.map(i=>i['timeUNIX']))
         // update 4k and col
         close4k[id4k] = {
             ...close4k[id4k],
@@ -381,8 +381,8 @@ const main = async () => {
     // truck 2k -> truck 4k and truck color
 
     truck2k.map((val,i)=>{
-        let id4k = closestElement(val.timeUNIX, truck4k.map(i=>i.timeUNIX))
-        let idcol = closestElement(val.timeUNIX, truckcolor.map(i=>i.timeUNIX))
+        let id4k = closestElement(val['timeUNIX'], truck4k.map(i=>i['timeUNIX']))
+        let idcol = closestElement(val['timeUNIX'], truckcolor.map(i=>i['timeUNIX']))
         // update 4k and col
         truck4k[id4k] = {
             ...truck4k[id4k],
@@ -413,8 +413,8 @@ const main = async () => {
     // far 2k -> far 4k and far color
 
     far2k.map((val,i)=>{
-        let id4k = closestElement(val.timeUNIX, far4k.map(i=>i.timeUNIX))
-        let idcol = closestElement(val.timeUNIX, farcolor.map(i=>i.timeUNIX))
+        let id4k = closestElement(val['timeUNIX'], far4k.map(i=>i['timeUNIX']))
+        let idcol = closestElement(val['timeUNIX'], farcolor.map(i=>i['timeUNIX']))
         // update 4k and col
         far4k[id4k] = {
             ...far4k[id4k],
@@ -454,7 +454,7 @@ const main = async () => {
         ...far2k,
         ...far4k,
         ...farcolor
-    ].sort((a,b)=>a.timeUNIX-b.timeUNIX)
+    ].sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Creating batch ...'))
