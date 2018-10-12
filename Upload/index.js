@@ -9,6 +9,7 @@ const fs = require('fs');
 const csv=require('csvtojson')
 const CONFIG  =require('./config.json')
 const axios = require('axios')
+const uuidv4 = require('uuid/v4')
 
 const projectId = "onetask-tfnsw-web"
 const bucketName = "onetask-sydney-tfnsw"
@@ -150,8 +151,17 @@ const main = async () => {
     console.log(storeWithImages.filter(i=>!i.hasImage).length)
 
     log(chalk.bgGreen.black('Starting upload process ...'))
+    log(chalk.bgGreen.black('Creating batch ...'))
+    const batchUuid = uuidv4()
+    await firestore.doc(`batches/${batchUuid}`).set({
+        batchId: batchUuid,
+        numberOfImages: numberOfImages,
+        numberOfFilesInMetaData: numberOfFilesInMetaData,
+        uploadStart: moment().toISOString()
+    })
+
+
     log(chalk.bgGreen.black('Adding Records to Database ...'))
-    
     // Adding records to Firestore DB before commencing image uploads
     let recordIndex = 0
     let errorqueue = []
@@ -162,7 +172,10 @@ const main = async () => {
     for (const record of storeArray) {
         recordIndex +=1
         let ref = firestore.doc(`records/${record.ID}`)
-        batch.set(ref, record)
+        batch.set(ref, {
+           ...record,
+           uploadBatchId: batchUuid
+        })
         //const res = await ref.set(record)
         if(recordIndex%500==0){
             let uploadSTime = uploadStartTime.clone()
