@@ -359,7 +359,6 @@ const main = async () => {
     close2k.map((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], close4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], closecolor.map(i=>i['timeUNIX']))
-        console.log(id4k, idcol)
         const clusterId = uuidv4()
         // update 4k and col
         close4k[id4k] = {
@@ -476,6 +475,10 @@ const main = async () => {
         ...far4k,
         ...farcolor
     ].sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
+
+    console.log(storeWithImages)
+    
+    process.exit()
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Creating batch ...'))
