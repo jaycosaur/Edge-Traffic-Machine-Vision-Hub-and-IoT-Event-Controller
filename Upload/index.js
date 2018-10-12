@@ -217,9 +217,9 @@ const main = async () => {
     let dummyImageStore = [...imagesInStore]
 
     let storeWithImages = storeArray.map(record => {
-        const doesContain = dummyImage.indexOf(record.PATH)
+        const doesContain = dummyImageStore.indexOf(record.PATH)
         if(doesContain>-1){
-            dummyImage = [...dummyImage.slice(0,doesContain),...dummyImage.slice(doesContain+1)]
+            dummyImage = [...dummyImageStore.slice(0,doesContain),...dummyImageStore.slice(doesContain+1)]
         }
         return {
             ...record,
