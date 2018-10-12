@@ -15,7 +15,80 @@ const projectId = "onetask-tfnsw-web"
 const bucketName = "onetask-sydney-tfnsw"
 // Creates a client
 
-console.log(process.env)
+const CAM_CONFIG = {
+    'CAM1': {
+        'name': 'Daheng Imaging-CAA18080045',
+        'window': 'UPROAD-COLOR',
+        'pixel_format': 'BAYERRG8',
+        'ref': 'CAM1',
+        'ANGLE': 'UPROAD',
+        'TYPE': 'COLOR'
+    },
+    'CAM2': {
+        'name': 'Daheng Imaging-CAA18080046',
+        'window': 'TRUCK-COLOR',
+        'pixel_format': 'BAYERRG8',
+        'ref': 'CAM2',
+        'ANGLE': 'TRUCK',
+        'TYPE': 'COLOR'
+    },
+    'CAM3': {
+        'name': 'Daheng Imaging-CAA18080047',
+        'window': 'CLOSE-COLOR',
+        'pixel_format': 'BAYERRG8',
+        'ref': 'CAM3',
+        'ANGLE': 'CLOSE',
+        'TYPE': 'COLOR'
+    },
+    'CAM4': {
+        'name': 'Daheng Imaging-CAB18080019',
+        'window': 'UPROAD-4K',
+        'pixel_format': 'MONO8',
+        'ref': 'CAM4',
+        'ANGLE': 'UPROAD',
+        'TYPE': '4K'
+    },
+    'CAM5': {
+        'name': 'Daheng Imaging-CAB18080020',
+        'window': 'TRUCK-4K',
+        'pixel_format': 'MONO8',
+        'ref': 'CAM5',
+        'ANGLE': 'TRUCK',
+        'TYPE': '4K'
+    },
+    'CAM6': {
+        'name': 'Daheng Imaging-CAB18080021',
+        'window': 'CLOSE-4K',
+        'pixel_format': 'MONO8',
+        'ref': 'CAM6',
+        'ANGLE': 'CLOSE',
+        'TYPE': '4K'
+    },
+    'CAM7': {
+        'name': 'Daheng Imavision-QV0170030004',
+        'window': 'TRUCK-2K',
+        'pixel_format': 'MONO8',
+        'ref': 'CAM7',
+        'ANGLE': 'TRUCK',
+        'TYPE': '2K'
+    },
+    'CAM8': {
+        'name': 'Daheng Imavision-QV0180080308',
+        'window': 'CLOSE-2K',
+        'pixel_format': 'MONO8',
+        'ref': 'CAM8',
+        'ANGLE': 'CLOSE',
+        'TYPE': '2K'
+    },
+    'CAM9': {
+        'name': 'Daheng Imavision-QV0180080309',
+        'window': 'UPROAD-2K',
+        'pixel_format': 'MONO8',
+        'ref': 'CAM9',
+        'ANGLE': 'UPROAD',
+        'TYPE': '2K'
+    }
+}
 
 const firestore = new Firestore({
     projectId: projectId,
@@ -140,26 +213,261 @@ const main = async () => {
 
     // create sightings and check that files are present if not remove and log!
     log(chalk.bgGreen.black('Processing Part 3 ...'))
-    const storeWithImages = storeArray.map(record => {
+    let storeWithImages = storeArray.map(record => {
         return {
             ...record,
             hasImage: imagesInStore.includes(record.PATH)
         }
     })
+    log(chalk.bgGreen.black('Processing Part 4 - linking images with previous and next ...'))
 
-    console.log(storeWithImages.filter(i=>i.hasImage).length)
-    console.log(storeWithImages.filter(i=>!i.hasImage).length)
+    const camNames = Object.keys(CAM_CONFIG)
+
+    let close2k = storeWithImages.filter(i=>CAM==="CAM8")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let close4k = storeWithImages.filter(i=>CAM==="CAM6")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let closecolor = storeWithImages.filter(i=>CAM==="CAM3")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let truck2k = storeWithImages.filter(i=>CAM==="CAM7")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let truck4k = storeWithImages.filter(i=>CAM==="CAM5")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let truckcolor = storeWithImages.filter(i=>CAM==="CAM2")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let far2k = storeWithImages.filter(i=>CAM==="CAM9")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let far4k = storeWithImages.filter(i=>CAM==="CAM4")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    let farcolor = storeWithImages.filter(i=>CAM==="CAM1")
+                    .sort(a.timeUNIX-b.timeUNIX)
+                    .map((record,index,arr)=>{
+                        const hasNext = index < arr.length-1
+                        const hasPrevious = index > 0
+                        return ({
+                            ...record,
+                            previousRecordId: hasPrevious?arr[index-1].ID:null,
+                            nextRecordId: hasNext?arr[index+1].ID:null,
+                        })
+                    })
+
+    log(chalk.bgGreen.black('Processing Part 5 - linking images with same clusters...'))
+
+    closestElement = (valueToMatch, arr) => {
+        let closestIndex = -1
+        let smallestDiff = Math.abs(valueToMatch-arr[0])
+        arr.forEach((val, ind)=>{
+            if (Math.abs(val-valueToMatch)<smallestDiff){
+                smallestDiff = Math.abs(val-valueToMatch)<smallestDiff
+                closestIndex = ind
+            }
+        })
+        return ind
+    }
+    
+    // close 2k -> close 4k and close color
+
+    close2k.map((val,i)=>{
+        let id4k = closestElement(val.timeUNIX, close4k.map(i=>i.timeUNIX))
+        let idcol = closestElement(val.timeUNIX, closecolor.map(i=>i.timeUNIX))
+        // update 4k and col
+        close4k[id4k] = {
+            ...close4k[id4k],
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: closecolor[idcol].ID,
+                ["4K"]: close4k[id4k].ID,
+            }
+        }
+        closecolor[idcol] = {
+            ...closecolor[idcol],
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: closecolor[idcol].ID,
+                ["4K"]: close4k[id4k].ID,
+            }
+        }
+        return ({
+            ...val,
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: closecolor[idcol].ID,
+                ["4K"]: close4k[id4k].ID,
+            }
+        })
+    })
+
+    // truck 2k -> truck 4k and truck color
+
+    truck2k.map((val,i)=>{
+        let id4k = closestElement(val.timeUNIX, truck4k.map(i=>i.timeUNIX))
+        let idcol = closestElement(val.timeUNIX, truckcolor.map(i=>i.timeUNIX))
+        // update 4k and col
+        truck4k[id4k] = {
+            ...truck4k[id4k],
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: truckcolor[idcol].ID,
+                ["4K"]: truck4k[id4k].ID,
+            }
+        }
+        truckcolor[idcol] = {
+            ...truckcolor[idcol],
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: truckcolor[idcol].ID,
+                ["4K"]: truck4k[id4k].ID,
+            }
+        }
+        return ({
+            ...val,
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: truckcolor[idcol].ID,
+                ["4K"]: truck4k[id4k].ID,
+            }
+        })
+    })
+
+    // far 2k -> far 4k and far color
+
+    far2k.map((val,i)=>{
+        let id4k = closestElement(val.timeUNIX, far4k.map(i=>i.timeUNIX))
+        let idcol = closestElement(val.timeUNIX, farcolor.map(i=>i.timeUNIX))
+        // update 4k and col
+        far4k[id4k] = {
+            ...far4k[id4k],
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: farcolor[idcol].ID,
+                ["4K"]: far4k[id4k].ID,
+            }
+        }
+        farcolor[idcol] = {
+            ...farcolor[idcol],
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: farcolor[idcol].ID,
+                ["4K"]: far4k[id4k].ID,
+            }
+        }
+        return ({
+            ...val,
+            CLUSTER: {
+                ["2K"]: val.ID,
+                ["COLOR"]: farcolor[idcol].ID,
+                ["4K"]: far4k[id4k].ID,
+            }
+        })
+    })
+
+    // remake storeWithImages
+
+    storeWithImages = [
+        ...close2k,
+        ...close4k,
+        ...closecolor,
+        ...truck2k,
+        ...truck4k,
+        ...truckcolor,
+        ...far2k,
+        ...far4k,
+        ...farcolor
+    ].sort((a,b)=>a.timeUNIX-b.timeUNIX)
+
+    process.exit()
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Creating batch ...'))
     const batchUuid = uuidv4()
+
     await firestore.doc(`batches/${batchUuid}`).set({
         batchId: batchUuid,
         numberOfImages: numberOfImages,
-        numberOfFilesInMetaData: numberOfFilesInMetaData,
+        numberOfVehicles: storeWithImages.filter(i=>i.CAM==CAM9).length, // FIX LATER ALLIGATOR
+        numberOfRecords: storeWithImages.length,
         uploadStart: moment().toISOString()
     })
-
 
     log(chalk.bgGreen.black('Adding Records to Database ...'))
     // Adding records to Firestore DB before commencing image uploads
@@ -169,12 +477,14 @@ const main = async () => {
 
     let batch = firestore.batch()
 
-    for (const record of storeArray) {
+    for (const record of storeWithImages) {
         recordIndex +=1
         let ref = firestore.doc(`records/${record.ID}`)
         batch.set(ref, {
            ...record,
-           uploadBatchId: batchUuid
+           uploadBatchId: batchUuid,
+           CAM: CAM_CONFIG[record.CAM]['window'],
+           ...CAM_CONFIG[record.CAM]
         })
         //const res = await ref.set(record)
         if(recordIndex%500==0){
