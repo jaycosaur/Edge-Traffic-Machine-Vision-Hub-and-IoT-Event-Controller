@@ -214,10 +214,16 @@ const main = async () => {
     // create sightings and check that files are present if not remove and log!
     log(chalk.bgGreen.black('Processing Part 3 - checking images exist ...'))
 
+    let dummyImageStore = [...imagesInStore]
+
     let storeWithImages = storeArray.map(record => {
+        const doesContain = dummyImage.indexOf(record.PATH)
+        if(doesContain>-1){
+            dummyImage = [...dummyImage.slice(0,doesContain),...dummyImage.slice(doesContain+1)]
+        }
         return {
             ...record,
-            hasImage: imagesInStore.includes(record.PATH)
+            hasImage: doesContain>-1
         }
     }).filter(i=>i.hasImage)
     log(chalk.bgGreen.black('Processing Part 4 - linking images with previous and next ...'))
