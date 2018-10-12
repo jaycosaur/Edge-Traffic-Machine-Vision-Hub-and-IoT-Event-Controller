@@ -342,7 +342,7 @@ const main = async () => {
                 closestIndex = ind
             }
         })
-        return ind
+        return closestIndex
     }
     
     // close 2k -> close 4k and close color
@@ -454,8 +454,6 @@ const main = async () => {
         ...far4k,
         ...farcolor
     ].sort((a,b)=>a.timeUNIX-b.timeUNIX)
-
-    process.exit()
 
     log(chalk.bgGreen.black('Starting upload process ...'))
     log(chalk.bgGreen.black('Creating batch ...'))
