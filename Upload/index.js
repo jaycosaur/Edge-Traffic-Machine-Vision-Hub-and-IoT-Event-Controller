@@ -335,10 +335,10 @@ const main = async () => {
     log(chalk.bgGreen.black('Processing Part 5 - linking images with same clusters...'))
 
     closestElement = (valueToMatch, arr) => {
-        let closestIndex = 0
+        let closestIndex = -1
         let smallestDiff = valueToMatch
         for (i=0; i<arr.length; i++){
-            let val = arr[val]
+            let val = arr[i]
             const ind = i
             if (Math.abs(val-valueToMatch)<smallestDiff){
                 smallestDiff = Math.abs(val-valueToMatch)<smallestDiff
