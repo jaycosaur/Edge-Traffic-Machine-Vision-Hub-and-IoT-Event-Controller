@@ -212,13 +212,14 @@ const main = async () => {
     const imagesInStoreNames = imagesInStore.map(i=>i.split('.')[0])
 
     // create sightings and check that files are present if not remove and log!
-    log(chalk.bgGreen.black('Processing Part 3 ...'))
+    log(chalk.bgGreen.black('Processing Part 3 - checking images exist ...'))
+
     let storeWithImages = storeArray.map(record => {
         return {
             ...record,
             hasImage: imagesInStore.includes(record.PATH)
         }
-    })
+    }).filter(i=>i.hasImage)
     log(chalk.bgGreen.black('Processing Part 4 - linking images with previous and next ...'))
 
     const camNames = Object.keys(CAM_CONFIG)
