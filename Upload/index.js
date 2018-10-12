@@ -511,7 +511,7 @@ const main = async () => {
 
     await firestore.doc(`batches/${batchUuid}`).set({
         batchId: batchUuid,
-        numberOfVehicles: storeWithImages.filter(i=>i['CAM']==CAM9).length, // FIX LATER ALLIGATOR
+        numberOfVehicles: storeWithImages.filter(i=>i['CAM']=="CAM9").length, // FIX LATER ALLIGATOR
         numberOfRecords: storeWithImages.length,
         farProcessingGroupCount: farProcessingGroup,
         closeProcessingGroupCount: closeProcessingGroup,
