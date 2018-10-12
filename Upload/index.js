@@ -402,8 +402,8 @@ const main = async () => {
     })
 
     // truck 2k -> truck 4k and truck color
-    let processingGroup = 0
-    let count = 0
+    processingGroup = 0
+    count = 0
 
     truck2k.map((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], truck4k.map(i=>i['timeUNIX']))
@@ -447,8 +447,8 @@ const main = async () => {
     })
 
     // far 2k -> far 4k and far color
-    let processingGroup = 0
-    let count = 0
+    processingGroup = 0
+    count = 0
 
     far2k.map((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], far4k.map(i=>i['timeUNIX']))
