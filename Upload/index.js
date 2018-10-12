@@ -351,29 +351,30 @@ const main = async () => {
     close2k.map((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], close4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], closecolor.map(i=>i['timeUNIX']))
+        console.log(id4k, idcol)
         // update 4k and col
         close4k[id4k] = {
             ...close4k[id4k],
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: closecolor[idcol].ID,
-                ["4K"]: close4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: closecolor[idcol]["ID"],
+                ["4K"]: close4k[id4k]["ID"],
             }
         }
         closecolor[idcol] = {
             ...closecolor[idcol],
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: closecolor[idcol].ID,
-                ["4K"]: close4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: closecolor[idcol]["ID"],
+                ["4K"]: close4k[id4k]["ID"],
             }
         }
         return ({
             ...val,
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: closecolor[idcol].ID,
-                ["4K"]: close4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: closecolor[idcol]["ID"],
+                ["4K"]: close4k[id4k]["ID"],
             }
         })
     })
@@ -387,25 +388,25 @@ const main = async () => {
         truck4k[id4k] = {
             ...truck4k[id4k],
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: truckcolor[idcol].ID,
-                ["4K"]: truck4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: truckcolor[idcol]["ID"],
+                ["4K"]: truck4k[id4k]["ID"],
             }
         }
         truckcolor[idcol] = {
             ...truckcolor[idcol],
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: truckcolor[idcol].ID,
-                ["4K"]: truck4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: truckcolor[idcol]["ID"],
+                ["4K"]: truck4k[id4k]["ID"],
             }
         }
         return ({
             ...val,
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: truckcolor[idcol].ID,
-                ["4K"]: truck4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: truckcolor[idcol]["ID"],
+                ["4K"]: truck4k[id4k]["ID"],
             }
         })
     })
@@ -419,25 +420,25 @@ const main = async () => {
         far4k[id4k] = {
             ...far4k[id4k],
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: farcolor[idcol].ID,
-                ["4K"]: far4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: farcolor[idcol]["ID"],
+                ["4K"]: far4k[id4k]["ID"],
             }
         }
         farcolor[idcol] = {
             ...farcolor[idcol],
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: farcolor[idcol].ID,
-                ["4K"]: far4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: farcolor[idcol]["ID"],
+                ["4K"]: far4k[id4k]["ID"],
             }
         }
         return ({
             ...val,
             CLUSTER: {
-                ["2K"]: val.ID,
-                ["COLOR"]: farcolor[idcol].ID,
-                ["4K"]: far4k[id4k].ID,
+                ["2K"]: val["ID"],
+                ["COLOR"]: farcolor[idcol]["ID"],
+                ["4K"]: far4k[id4k]["ID"],
             }
         })
     })
