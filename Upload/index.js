@@ -225,7 +225,7 @@ const main = async () => {
     const camNames = Object.keys(CAM_CONFIG)
 
     let close2k = storeWithImages.filter(i=>i["CAM"]==="CAM8")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -237,7 +237,7 @@ const main = async () => {
                     })
 
     let close4k = storeWithImages.filter(i=>i["CAM"]==="CAM6")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -249,7 +249,7 @@ const main = async () => {
                     })
 
     let closecolor = storeWithImages.filter(i=>i["CAM"]==="CAM3")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -261,7 +261,7 @@ const main = async () => {
                     })
 
     let truck2k = storeWithImages.filter(i=>i["CAM"]==="CAM7")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -273,7 +273,7 @@ const main = async () => {
                     })
 
     let truck4k = storeWithImages.filter(i=>i["CAM"]==="CAM5")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -285,7 +285,7 @@ const main = async () => {
                     })
 
     let truckcolor = storeWithImages.filter(i=>i["CAM"]==="CAM2")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -297,7 +297,7 @@ const main = async () => {
                     })
 
     let far2k = storeWithImages.filter(i=>i["CAM"]==="CAM9")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -309,7 +309,7 @@ const main = async () => {
                     })
 
     let far4k = storeWithImages.filter(i=>i["CAM"]==="CAM4")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
@@ -321,7 +321,7 @@ const main = async () => {
                     })
 
     let farcolor = storeWithImages.filter(i=>i["CAM"]==="CAM1")
-                    .sort(a['timeUNIX']-b['timeUNIX'])
+                    .sort((a,b)=>a['timeUNIX']-b['timeUNIX'])
                     .map((record,index,arr)=>{
                         const hasNext = index < arr.length-1
                         const hasPrevious = index > 0
