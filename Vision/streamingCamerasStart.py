@@ -12,7 +12,7 @@ from imutils import contours
 import imutils
 import signal
 
-yolo_thresh = 0.1 #default 0.5
+yolo_thresh = 0.07 #default 0.5
 yolo_hier_thresh = 1 # default 0.5
 yolo_nms = .1 #default 0.45
 scaledRes = 416
@@ -126,6 +126,9 @@ def mainWorker(camId):
     transposeTime = 0
     frameCount = 0
     numberCars = 0
+    numberClose = 0
+    numberFar = 0
+    numberTruck = 0
     lastSnapshot = None
     baseColor = (255,255,255)
     baseRes = scaledRes
@@ -182,6 +185,7 @@ def mainWorker(camId):
             try:
                 cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
                 print ("Camera found!")
+                IS_CAM_OK = True
             except:
                 print ("Camera Not Found! Waiting 10 seconds and retrying ...")
                 time.sleep(10) #sleep for 10 seconds and then retry!
@@ -318,14 +322,16 @@ def mainWorker(camId):
                                 if y <= rightBound and camId=='CAM_1' and h>10 and w>10:
                                     if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_FAR_URL).read()
-                                        numberCars += 1
+                                        numberFar += 1
                                         uproadLastTrigger = currentTime
                                     if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
+                                        numberTruck += 1
                                         truckLastTrigger = currentTime
                                         setUproadTruckDelay()
                                     if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
                                         urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                                        numberClose += 1
                                         closeLastTrigger = currentTime
 
                     # DISPLAY FRAME IN WINDOW
@@ -337,7 +343,7 @@ def mainWorker(camId):
                     frame.queue()
                     cv2.waitKey(1)
                     if frameCount%10==0:
-                        print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "cars:", numberCars, "frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",uproadTruckDelay)
+                        print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "Count Far", numberFar, "Count Truck", numberTruck,"Count Close", numberClose,"frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",uproadTruckDelay)
                     lastTime = time.time()
                     frameCount += 1
 
@@ -347,8 +353,6 @@ def mainWorker(camId):
         except Exception as e:
             print ("Critical Script error! Trying again in 5 seconds ...")
             print(e)
-            cam.stop_image_acquisition()
-            cam.destroy()
             time.sleep(5) #sleep for 10 seconds and then retry!
 
 # main event
