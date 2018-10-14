@@ -43,7 +43,7 @@ TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
 CTI_FILE = '/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti'
 
 TIMEOUT_DELAY = 5
-triggerDelay = 0.500
+triggerDelay = 1.00
 grayThresh = 150
 
 LOG = False
@@ -281,7 +281,6 @@ def mainWorker(camId):
                     #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
                     
                     currentTime = time.time()
-                    print(currentTime-uproadLastTrigger)
                     if farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                         #urllib.request.urlopen(TRIGGER_FAR_URL).read()
                         numberFar += 1
