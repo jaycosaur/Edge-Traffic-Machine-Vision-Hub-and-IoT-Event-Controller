@@ -399,7 +399,7 @@ def mainWorker(camId):
                             
                     frame.queue()
                     cv2.waitKey(1)
-                    avFrameRate=avFrameRate*49/50+int(1.0/(time.time()-lastTime))
+                    avFrameRate=avFrameRate*49/50+int(1.0/(time.time()-lastTime))/50
                     if frameCount%10==0:
                         print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "Count Far", numberFar, "Count Truck", numberTruck,"Count Close", numberClose,"avFPS:", avFrameRate ,"frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",uproadTruckDelay)
                     lastTime = time.time()
