@@ -271,8 +271,28 @@ def mainWorker(camId):
                     truckStdAv = truckStdAv*19/20 + triggerBoxTruckStd/20
                     closeStdAv = closeStdAv*19/20 + triggerBoxCloseStd/20
 
-                    print("FAR AV:",farStdAv,"SD:",abs(farStdAv-triggerBoxFarStd), "TRUCK AV:",truckStdAv,"SD:", abs(truckStdAv-triggerBoxTruckStd),"CLOSE AV:",closeStdAv, "SD:", abs(closeStdAv-triggerBoxCloseStd))
+                    sdThreshold = 10
+
+                    farDiff = abs(farStdAv-triggerBoxFarStd)
+                    truckDiff = abs(truckStdAv-triggerBoxTruckStd)
+                    closeDiff = abs(closeStdAv-triggerBoxCloseStd)
+
+                    #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
                     
+                    currentTime = time.time()
+                    if farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
+                        urllib.request.urlopen(TRIGGER_FAR_URL).read()
+                        numberFar += 1
+                        uproadLastTrigger = currentTime
+                    if truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
+                        urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
+                        numberTruck += 1
+                        truckLastTrigger = currentTime
+                        setUproadTruckDelay()
+                    if closeDiff>sdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
+                        urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                        numberClose += 1
+                        closeLastTrigger = currentTime
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
                         cv2.rectangle(frameColorised, (uproadThresh,farBoxCenter-farBoxWidth),(uproadThresh+20,farBoxCenter+farBoxWidth),(255,0,0))
