@@ -264,7 +264,11 @@ def mainWorker(camId):
                     triggerBoxTruckStd= np.std(triggerBoxTruck)
                     triggerBoxCloseStd= np.std(triggerBoxClose)
 
-                    print("FAR MEAN:",triggerBoxFarMean,"SD:",triggerBoxFarStd, "TRUCK MEAN:",triggerBoxTruckMean,"SD:", triggerBoxTruckStd,"CLOSE MEAN:",triggerBoxCloseMean, "SD:", triggerBoxCloseStd)
+                    farStdAv = farStdAv*19/20 + triggerBoxFarStd/20
+                    truckStdAv = truckStdAv*19/20 + triggerBoxTruckStd/20
+                    closeStdAv = closeStdAv*19/20 + triggerBoxCloseStd/20
+
+                    print("FAR AV:",farStdAv,"SD:",farStdAv-triggerBoxFarStd, "TRUCK AV:",truckStdAv,"SD:", truckStdAv-triggerBoxTruckStd,"CLOSE AV:",closeStdAv, "SD:", closeStdAv-triggerBoxCloseStd)
                     
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
