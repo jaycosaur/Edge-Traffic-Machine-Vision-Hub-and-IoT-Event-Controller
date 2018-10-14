@@ -247,17 +247,16 @@ def mainWorker(camId):
                     center = 100
                     boxWidth = 40
                     farBoxCenter = 100
-                    farBoxWidth = 20
+                    farBoxWidth = 15
                     truckBoxCenter = 100
-                    truckBoxWidth = 30
+                    truckBoxWidth = 25
                     closeBoxCenter = 100
-                    closeBoxWidth = 35
+                    closeBoxWidth = 30
                     triggerBoxFar = frameScaled[farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth,uproadThresh:uproadThresh+20]   #frameScaled[uproadThresh:uproadThresh+20,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                     triggerBoxTruck = frameScaled[truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth,truckThresh:truckThresh+20] #frameScaled[truckThresh:truckThresh+20,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
                     triggerBoxClose =frameScaled[closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth,closeThresh:closeThresh+20]  #frameScaled[closeThresh:closeThresh+20,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
 
                     # ARRAY METRICS FOR TRIGGERING
-                    print(triggerBoxFar)
                     triggerBoxFarMean = np.mean(triggerBoxFar)
                     triggerBoxTruckMean = np.mean(triggerBoxTruck)
                     triggerBoxCloseMean = np.mean(triggerBoxClose)
