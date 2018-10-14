@@ -250,7 +250,7 @@ def mainWorker(camId):
                     center = 100
                     boxWidth = 40
                     farBoxCenter = 97
-                    farBoxWidth = 12
+                    farBoxWidth = 10
                     truckBoxCenter = 97
                     truckBoxWidth = 25
                     closeBoxCenter = 97
