@@ -125,6 +125,7 @@ def mainWorker(camId):
     lastTime = time.time()
     transposeTime = 0
     frameCount = 0
+    avFrameRate = 0
     numberCars = 0
     numberClose = 0
     numberFar = 0
@@ -398,8 +399,9 @@ def mainWorker(camId):
                             
                     frame.queue()
                     cv2.waitKey(1)
+                    avFrameRate=avFrameRate*49/50+int(1.0/(time.time()-lastTime))
                     if frameCount%10==0:
-                        print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "Count Far", numberFar, "Count Truck", numberTruck,"Count Close", numberClose,"frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",uproadTruckDelay)
+                        print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "Count Far", numberFar, "Count Truck", numberTruck,"Count Close", numberClose,"avFPS:", avFrameRate ,"frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",uproadTruckDelay)
                     lastTime = time.time()
                     frameCount += 1
 
