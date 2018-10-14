@@ -267,9 +267,9 @@ def mainWorker(camId):
                     triggerBoxTruckStd= np.std(triggerBoxTruck)
                     triggerBoxCloseStd= np.std(triggerBoxClose)
 
-                    farStdAv = farStdAv*19/20 + triggerBoxFarStd/20
-                    truckStdAv = truckStdAv*19/20 + triggerBoxTruckStd/20
-                    closeStdAv = closeStdAv*19/20 + triggerBoxCloseStd/20
+                    farStdAv = farStdAv*19/20 + triggerBoxFarStd/20 # 20 frame floating average
+                    truckStdAv = truckStdAv*19/20 + triggerBoxTruckStd/20 # 20 frame floating average
+                    closeStdAv = closeStdAv*19/20 + triggerBoxCloseStd/20 # 20 frame floating average
 
                     sdThreshold = 10
 
@@ -277,10 +277,10 @@ def mainWorker(camId):
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
                     closeDiff = abs(closeStdAv-triggerBoxCloseStd)
 
-                    #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
+                    print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
                     
                     currentTime = time.time()
-                    
+
                     if farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                         urllib.request.urlopen(TRIGGER_FAR_URL).read()
                         numberFar += 1
