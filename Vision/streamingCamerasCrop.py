@@ -253,8 +253,8 @@ def mainWorker(camId):
                     closeBoxCenter = 100
                     closeBoxWidth = 35
                     triggerBoxFar = frameScaled[uproadThresh:uproadThresh+20,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
-                    triggerBoxTruck = frameScaled[truckThresh:truckThresh+20,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
-                    triggerBoxClose = frameScaled[closeThresh:closeThresh+20,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
+                    triggerBoxTruck = []
+                    triggerBoxClose = []
 
                     # ARRAY METRICS FOR TRIGGERING
                     print(triggerBoxFar)
