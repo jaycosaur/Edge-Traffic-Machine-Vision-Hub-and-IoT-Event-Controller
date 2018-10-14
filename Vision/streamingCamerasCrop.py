@@ -282,18 +282,19 @@ def mainWorker(camId):
                     currentTime = time.time()
 
                     if farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
-                        urllib.request.urlopen(TRIGGER_FAR_URL).read()
+                        #urllib.request.urlopen(TRIGGER_FAR_URL).read()
                         numberFar += 1
                         uproadLastTrigger = currentTime
                     if truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
-                        urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
+                        #urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
                         numberTruck += 1
                         truckLastTrigger = currentTime
                         setUproadTruckDelay()
                     if closeDiff>sdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
-                        urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
+                        #urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                         numberClose += 1
                         closeLastTrigger = currentTime
+
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
                         cv2.rectangle(frameColorised, (uproadThresh,farBoxCenter-farBoxWidth),(uproadThresh+20,farBoxCenter+farBoxWidth),(255,0,0))
