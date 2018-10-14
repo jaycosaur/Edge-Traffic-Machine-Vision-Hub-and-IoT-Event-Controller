@@ -268,9 +268,11 @@ def mainWorker(camId):
                     triggerBoxTruckStd= np.std(triggerBoxTruck)
                     triggerBoxCloseStd= np.std(triggerBoxClose)
 
-                    farStdAv = farStdAv*49/50 + triggerBoxFarStd/50 # 50 frame floating average
-                    truckStdAv = truckStdAv*49/50 + triggerBoxTruckStd/50 # 50 frame floating average
-                    closeStdAv = closeStdAv*49/50 + triggerBoxCloseStd/50 # 50 frame floating average
+                    numberOfFrames = 200
+
+                    farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames # numberOfFrames frame floating average
+                    truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames # numberOfFrames frame floating average
+                    closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames # numberOfFrames frame floating average
 
                     sdThreshold = 20
 
