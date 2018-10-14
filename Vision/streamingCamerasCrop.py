@@ -260,9 +260,9 @@ def mainWorker(camId):
                     triggerBoxClose =frameScaled[closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth,closeThresh:closeThresh+20]  #frameScaled[closeThresh:closeThresh+20,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
 
                     # ARRAY METRICS FOR TRIGGERING
-                    triggerBoxFarMean = np.mean(triggerBoxFar)
-                    triggerBoxTruckMean = np.mean(triggerBoxTruck)
-                    triggerBoxCloseMean = np.mean(triggerBoxClose)
+                    #triggerBoxFarMean = np.mean(triggerBoxFar)
+                    #triggerBoxTruckMean = np.mean(triggerBoxTruck)
+                    #triggerBoxCloseMean = np.mean(triggerBoxClose)
                     triggerBoxFarStd= np.std(triggerBoxFar)
                     triggerBoxTruckStd= np.std(triggerBoxTruck)
                     triggerBoxCloseStd= np.std(triggerBoxClose)
@@ -271,7 +271,7 @@ def mainWorker(camId):
                     truckStdAv = truckStdAv*19/20 + triggerBoxTruckStd/20
                     closeStdAv = closeStdAv*19/20 + triggerBoxCloseStd/20
 
-                    print("FAR AV:",farStdAv,"SD:",farStdAv-triggerBoxFarStd, "TRUCK AV:",truckStdAv,"SD:", truckStdAv-triggerBoxTruckStd,"CLOSE AV:",closeStdAv, "SD:", closeStdAv-triggerBoxCloseStd)
+                    print("FAR AV:",farStdAv,"SD:",abs(farStdAv-triggerBoxFarStd), "TRUCK AV:",truckStdAv,"SD:", abs(truckStdAv-triggerBoxTruckStd),"CLOSE AV:",closeStdAv, "SD:", abs(closeStdAv-triggerBoxCloseStd))
                     
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
