@@ -244,13 +244,13 @@ def mainWorker(camId):
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
                     c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
-                    center = 200
+                    center = 100
                     boxWidth = 40
-                    farBoxCenter = 200
+                    farBoxCenter = 100
                     farBoxWidth = 40
-                    truckBoxCenter = 200
+                    truckBoxCenter = 100
                     truckBoxWidth = 40
-                    closeBoxCenter = 200
+                    closeBoxCenter = 100
                     closeBoxWidth = 40
                     triggerBoxFar = frameScaled[uproadThresh:uproadThresh+20,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                     triggerBoxTruck = frameScaled[truckThresh:truckThresh+20,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
