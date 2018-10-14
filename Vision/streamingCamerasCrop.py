@@ -251,11 +251,11 @@ def mainWorker(camId):
                     center = 100
                     boxWidth = 40
                     farBoxCenter = 97
-                    farBoxWidth = 10
+                    farBoxWidth = 5
                     truckBoxCenter = 97
-                    truckBoxWidth = 25
+                    truckBoxWidth = 10
                     closeBoxCenter = 97
-                    closeBoxWidth = 30
+                    closeBoxWidth = 10
                     boxHeight = 10
                     triggerBoxFar = frameScaled[farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth,uproadThresh:uproadThresh+boxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                     triggerBoxTruck = frameScaled[truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth,truckThresh:truckThresh+boxHeight] #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
