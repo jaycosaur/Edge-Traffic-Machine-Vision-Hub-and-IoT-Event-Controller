@@ -255,9 +255,10 @@ def mainWorker(camId):
                     truckBoxWidth = 25
                     closeBoxCenter = 97
                     closeBoxWidth = 30
-                    triggerBoxFar = frameScaled[farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth,uproadThresh:uproadThresh+20]   #frameScaled[uproadThresh:uproadThresh+20,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
-                    triggerBoxTruck = frameScaled[truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth,truckThresh:truckThresh+20] #frameScaled[truckThresh:truckThresh+20,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
-                    triggerBoxClose =frameScaled[closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth,closeThresh:closeThresh+20]  #frameScaled[closeThresh:closeThresh+20,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
+                    boxHeight = 10
+                    triggerBoxFar = frameScaled[farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth,uproadThresh:uproadThresh+boxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
+                    triggerBoxTruck = frameScaled[truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth,truckThresh:truckThresh+boxHeight] #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
+                    triggerBoxClose =frameScaled[closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth,closeThresh:closeThresh+boxHeight]  #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
 
                     # ARRAY METRICS FOR TRIGGERING
                     #triggerBoxFarMean = np.mean(triggerBoxFar)
@@ -297,9 +298,9 @@ def mainWorker(camId):
 
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
-                        cv2.rectangle(frameColorised, (uproadThresh,farBoxCenter-farBoxWidth),(uproadThresh+20,farBoxCenter+farBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (truckThresh,truckBoxCenter-truckBoxWidth),(truckThresh+20,truckBoxCenter+truckBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (closeThresh,closeBoxCenter-closeBoxWidth),(closeThresh+20,closeBoxCenter+closeBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (uproadThresh,farBoxCenter-farBoxWidth),(uproadThresh+boxHeight,farBoxCenter+farBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (truckThresh,truckBoxCenter-truckBoxWidth),(truckThresh+boxHeight,truckBoxCenter+truckBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (closeThresh,closeBoxCenter-closeBoxWidth),(closeThresh+boxHeight,closeBoxCenter+closeBoxWidth),(255,0,0))
                         """ cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (uproadThresh+marginOfError,0), (uproadThresh+marginOfError, w1), (255,0,0), 1)
                         cv2.line(frameColorised, (uproadThresh-marginOfError,0), (uproadThresh-marginOfError, w1), (255,0,0), 1)
