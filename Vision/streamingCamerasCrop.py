@@ -114,7 +114,7 @@ def sendMessageToSlack(message, color):
 def mainWorker(camId):
     # declare yolo detector in isolation from camera object for reinitiation of camera under failure.
     print(camId, ' Constructing Yolo Model ...')
-    net = Detector(bytes(cfgfile, encoding="utf-8"), bytes(weightfile, encoding="utf-8"), 0, bytes(datacfg, encoding="utf-8"))
+    #net = Detector(bytes(cfgfile, encoding="utf-8"), bytes(weightfile, encoding="utf-8"), 0, bytes(datacfg, encoding="utf-8"))
 
     CAM_NAME = CAM_CONFIG[camId]['name']
     WINDOW_NAME = CAM_CONFIG[camId]['window']
@@ -255,16 +255,22 @@ def mainWorker(camId):
                     triggerBoxFar = frameScaled[uproadThresh:uproadThresh+20,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                     triggerBoxTruck = frameScaled[truckThresh:truckThresh+20,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
                     triggerBoxClose = frameScaled[closeThresh:closeThresh+20,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
+
+                    # ARRAY METRICS FOR TRIGGERING
                     triggerBoxFarMean = np.mean(triggerBoxFar)
                     triggerBoxTruckMean = np.mean(triggerBoxTruck)
                     triggerBoxCloseMean = np.mean(triggerBoxClose)
-                    print("FAR MEAN:",triggerBoxFarMean,"TRUCK MEAN:",triggerBoxTruckMean,"CLOSE MEAN:",triggerBoxCloseMean)
+                    triggerBoxFarStd= np.std(triggerBoxFar)
+                    triggerBoxTruckStd= np.std(triggerBoxTruck)
+                    triggerBoxCloseStd= np.std(triggerBoxClose)
+
+                    print("FAR MEAN:",triggerBoxFarMean,"SD:",triggerBoxFarStd, "TRUCK MEAN:",triggerBoxTruckMean,"SD:", triggerBoxTruckStd,"CLOSE MEAN:",triggerBoxCloseMean, "SD:", triggerBoxCloseStd)
                     
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
-                        cv2.rectangle(frameColorised, (uproadThresh,farBoxCenter-farBoxWidth),(uproadThresh+20,farBoxCenter+farBoxWidth),color)
-                        cv2.rectangle(frameColorised, (truckThresh,truckBoxCenter-truckBoxWidth),(truckThresh+20,truckBoxCenter+truckBoxWidth),color)
-                        cv2.rectangle(frameColorised, (closeThresh,closeBoxCenter-closeBoxWidth),(closeThresh+20,closeBoxCenter+closeBoxWidth),color)
+                        cv2.rectangle(frameColorised, (uproadThresh,farBoxCenter-farBoxWidth),(uproadThresh+20,farBoxCenter+farBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (truckThresh,truckBoxCenter-truckBoxWidth),(truckThresh+20,truckBoxCenter+truckBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (closeThresh,closeBoxCenter-closeBoxWidth),(closeThresh+20,closeBoxCenter+closeBoxWidth),(255,0,0))
                         """ cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (uproadThresh+marginOfError,0), (uproadThresh+marginOfError, w1), (255,0,0), 1)
                         cv2.line(frameColorised, (uproadThresh-marginOfError,0), (uproadThresh-marginOfError, w1), (255,0,0), 1)
