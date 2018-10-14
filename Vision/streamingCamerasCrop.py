@@ -198,6 +198,9 @@ def mainWorker(camId):
             truckLastTrigger = time.time()
             closeLastTrigger = time.time()
             uproadTruckDelay = 0.0
+            farStdAv = 0.0
+            closeStdAv = 0.0
+            truckStdAv = 0.0
 
             def setUproadTruckDelay():
                 nonlocal uproadTruckDelay
