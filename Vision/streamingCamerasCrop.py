@@ -266,7 +266,7 @@ def mainWorker(camId):
                     baseValueHeight = 20
                     baseValueThresh = 50
 
-                    farBoxCenter = [97, 235]
+                    farBoxCenter = [97, 255]
                     farBoxWidth = 5
                     farBoxHeight = 10
 
