@@ -342,7 +342,7 @@ def mainWorker(camId):
                         closeLastTrigger = currentTime
 
                     # SHOW LINES SECTION
-                    if showLines and camId=='CAM_1' and MODE=="DAY":
+                    if showLines and MODE=="DAY":
                         if isFarClear:
                             cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(0,255,0))
                         else: 
