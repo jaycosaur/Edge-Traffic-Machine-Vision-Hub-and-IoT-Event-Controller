@@ -274,7 +274,7 @@ def mainWorker(camId):
                     truckBoxWidth = 5
                     truckBoxHeight = 10
 
-                    closeBoxCenter = [97, 90]
+                    closeBoxCenter = [97, 70]
                     closeBoxWidth = 5
                     closeBoxHeight = 15
 
