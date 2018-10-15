@@ -305,7 +305,7 @@ def mainWorker(camId):
                     # numberOfFrames frame floating average
                     baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
-                    sdThreshold = 30
+                    sdThreshold = 70
 
                     farDiff = abs(farStdAv -triggerBoxFarStd)
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
