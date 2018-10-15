@@ -290,9 +290,9 @@ def mainWorker(camId):
 
                     sdThreshold = 30
 
-                    farDiff = abs(baseAv-triggerBoxFarStd)
-                    truckDiff = abs(baseAv-triggerBoxTruckStd)
-                    closeDiff = abs(baseAv-triggerBoxCloseStd)
+                    farDiff = abs(farStdAv -triggerBoxFarStd)
+                    truckDiff = abs(truckStdAv-triggerBoxTruckStd)
+                    closeDiff = abs(closeStdAv-triggerBoxCloseStd)
 
                     #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
                     
