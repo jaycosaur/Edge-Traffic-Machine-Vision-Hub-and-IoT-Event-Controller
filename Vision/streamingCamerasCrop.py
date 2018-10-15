@@ -294,7 +294,7 @@ def mainWorker(camId):
                         
                     if isTruckClear and truckDiff>sdThreshold:
                         isTruckClear = False
-                    elif isTruckClear and (currentTime-truckLastTrigger)>triggerDelay: 
+                    elif isTruckClear == False and (currentTime-truckLastTrigger)>triggerDelay: 
                         isTruckClear = True
                         
                     if isCloseClear and closeDiff>sdThreshold:
