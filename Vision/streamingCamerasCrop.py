@@ -43,7 +43,7 @@ TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
 CTI_FILE = '/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti'
 
 TIMEOUT_DELAY = 5
-triggerDelay = 1.00
+triggerDelay = 0.5
 grayThresh = 150
 
 LOG = False
