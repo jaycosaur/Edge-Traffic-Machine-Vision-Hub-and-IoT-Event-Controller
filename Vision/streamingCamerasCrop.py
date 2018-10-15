@@ -275,10 +275,10 @@ def mainWorker(camId):
                     #triggerBoxFarMean = np.mean(triggerBoxFar)
                     #triggerBoxTruckMean = np.mean(triggerBoxTruck)
                     #triggerBoxCloseMean = np.mean(triggerBoxClose)
-                    triggerBoxFarStd= np.std(triggerBoxFar)
-                    triggerBoxTruckStd= np.std(triggerBoxTruck)
-                    triggerBoxCloseStd= np.std(triggerBoxClose)
-                    baseAvStd= np.std(triggerBoxClose)
+                    triggerBoxFarStd= np.mean(triggerBoxFar)
+                    triggerBoxTruckStd= np.mean(triggerBoxTruck)
+                    triggerBoxCloseStd= np.mean(triggerBoxClose)
+                    baseAvStd= np.mean(triggerBoxClose)
 
                     numberOfFrames = 200
 
