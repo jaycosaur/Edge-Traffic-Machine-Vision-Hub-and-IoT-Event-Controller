@@ -172,6 +172,7 @@ def mainWorker(camId):
             except:
                 print ("Camera Not Found! Waiting 10 seconds and retrying ...")
                 time.sleep(10) #sleep for 10 seconds and then retry!
+
                 continue #exit ()
 
             cam.start_image_acquisition()
@@ -279,7 +280,7 @@ def mainWorker(camId):
                     closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames# numberOfFrames frame floating average
                     baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
-                    sdThreshold = 70
+                    sdThreshold = 30
 
                     farDiff = abs(farStdAv -triggerBoxFarStd)
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
@@ -348,6 +349,7 @@ def mainWorker(camId):
             #IF CAM NOT OK
             cam.stop_image_acquisition()
             cam.destroy()
+            cv2.destroyWindow(WINDOW_NAME)
         except Exception as e:
             print ("Critical Script error! Trying again in 5 seconds ...")
             print(e)
