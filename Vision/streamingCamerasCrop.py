@@ -292,9 +292,9 @@ def mainWorker(camId):
                     elif isFarClear == False and (currentTime-uproadLastTrigger)>triggerDelay: 
                         isFarClear = True
                         
-                    if truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
+                    if isTruckClear and truckDiff>sdThreshold:
                         isTruckClear = False
-                    else: 
+                    elif isTruckClear and (currentTime-truckLastTrigger)>triggerDelay: 
                         isTruckClear = True
                         
                     if isCloseClear and closeDiff>sdThreshold:
