@@ -272,11 +272,11 @@ def mainWorker(camId):
 
                     farBoxCenter = [97, 285]
                     farBoxWidth = 5
-                    farBoxHeight = 5
+                    farBoxHeight = 10
 
                     truckBoxCenter = [97, 155]
                     truckBoxWidth = 5
-                    truckBoxHeight = 5
+                    truckBoxHeight = 10
 
                     closeBoxCenter = [97, 70]
                     closeBoxWidth = 5
