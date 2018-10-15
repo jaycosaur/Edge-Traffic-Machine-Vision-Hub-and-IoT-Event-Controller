@@ -288,7 +288,7 @@ def mainWorker(camId):
                     closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames # numberOfFrames frame floating average
                     baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
-                    sdThreshold = 50
+                    sdThreshold = 30
 
                     farDiff = abs(baseAv-triggerBoxFarStd)
                     truckDiff = abs(baseAv-triggerBoxTruckStd)
