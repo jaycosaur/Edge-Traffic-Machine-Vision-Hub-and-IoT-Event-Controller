@@ -298,16 +298,16 @@ def mainWorker(camId):
                     #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
                     
                     currentTime = time.time()
-                    if currentTime-startTime>5 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
+                    if currentTime-startTime>10 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                         #urllib.request.urlopen(TRIGGER_FAR_URL).read()
                         numberFar += 1
                         uproadLastTrigger = currentTime
-                    if currentTime-startTime>5 and truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
+                    if currentTime-startTime>10 and truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
                         #urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
                         numberTruck += 1
                         truckLastTrigger = currentTime
                         setUproadTruckDelay()
-                    if currentTime-startTime>5 and closeDiff>sdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
+                    if currentTime-startTime>10 and closeDiff>sdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
                         #urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                         numberClose += 1
                         closeLastTrigger = currentTime
