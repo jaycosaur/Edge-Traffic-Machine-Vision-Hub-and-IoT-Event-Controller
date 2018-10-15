@@ -285,6 +285,7 @@ def mainWorker(camId):
                     farDiff = abs(farStdAv -triggerBoxFarStd)
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
                     closeDiff = abs(closeStdAv-triggerBoxCloseStd)
+                    currentTime = time.time()
 
                     if isFarClear and farDiff>sdThreshold:
                         isFarClear = False
@@ -302,7 +303,7 @@ def mainWorker(camId):
                         isCloseClear = True
                         
                     
-                    currentTime = time.time()
+                    
                     if currentTime-startTime>10 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                         urllib.request.urlopen(TRIGGER_FAR_URL).read()
                         numberFar += 1
