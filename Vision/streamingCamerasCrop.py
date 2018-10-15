@@ -354,7 +354,7 @@ def mainWorker(camId):
                         if isCloseClear:
                             cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,255,0))
                         else:
-                            cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,255,0))
+                            cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,0,255))
 
                         #cv2.rectangle(frameColorised, (baseValueThresh,baseValueCenter-baseValueWidth),(baseValueThresh+baseValueHeight,baseValueCenter+baseValueWidth),(0,255,0))
                         """ cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
