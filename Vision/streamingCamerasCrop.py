@@ -320,7 +320,7 @@ def mainWorker(camId):
                     if truckDiff>sdThreshold:
                         isTruckClear = False
                     else: 
-                        isFarClear = True
+                        isTruckClear = True
                     if closeDiff>sdThreshold:
                         isCloseClear = False
                     else: 
