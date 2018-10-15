@@ -326,9 +326,9 @@ def mainWorker(camId):
 
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
-                        cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+boxHeight,farBoxCenter[0]+farBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+boxHeight,truckBoxCenter[0]+truckBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+boxHeight,closeBoxCenter[0]+closeBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+truckBoxHeight,truckBoxCenter[0]+truckBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(255,0,0))
                         #cv2.rectangle(frameColorised, (baseValueThresh,baseValueCenter-baseValueWidth),(baseValueThresh+baseValueHeight,baseValueCenter+baseValueWidth),(0,255,0))
                         """ cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (uproadThresh+marginOfError,0), (uproadThresh+marginOfError, w1), (255,0,0), 1)
