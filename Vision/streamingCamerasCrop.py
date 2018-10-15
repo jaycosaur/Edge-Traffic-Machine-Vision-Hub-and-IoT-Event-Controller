@@ -170,9 +170,11 @@ def mainWorker(camId):
                 print ("Camera found!")
                 IS_CAM_OK = True
             except:
-                print ("Camera Not Found! Waiting 10 seconds and retrying ...")
-                time.sleep(10) #sleep for 10 seconds and then retry!
-
+                print ("Camera Not Found! Waiting 20 seconds and retrying ...")
+                time.sleep(20) #sleep for 10 seconds and then retry!
+                cam.stop_image_acquisition()
+                cam.destroy()
+                cv2.destroyWindow(WINDOW_NAME)
                 continue #exit ()
 
             cam.start_image_acquisition()
