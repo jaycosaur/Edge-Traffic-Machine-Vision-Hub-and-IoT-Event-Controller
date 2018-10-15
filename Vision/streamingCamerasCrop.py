@@ -300,9 +300,9 @@ def mainWorker(camId):
 
                     numberOfFrames = 200
 
-                     # numberOfFrames frame floating average
-                     # numberOfFrames frame floating average
-                    # numberOfFrames frame floating average
+                    farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames # numberOfFrames frame floating average
+                    truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames # numberOfFrames frame floating average
+                    closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames# numberOfFrames frame floating average
                     baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
                     sdThreshold = 70
@@ -311,23 +311,25 @@ def mainWorker(camId):
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
                     closeDiff = abs(closeStdAv-triggerBoxCloseStd)
 
+                    
+
                     #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
 
                     if farDiff>sdThreshold:
                         isFarClear = False
                     else: 
                         isFarClear = True
-                        farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames
+                        
                     if truckDiff>sdThreshold:
                         isTruckClear = False
                     else: 
                         isTruckClear = True
-                        truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames
+                        
                     if closeDiff>sdThreshold:
                         isCloseClear = False
                     else: 
                         isCloseClear = True
-                        closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames
+                        
                     
                     currentTime = time.time()
                     if currentTime-startTime>10 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
