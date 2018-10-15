@@ -250,7 +250,7 @@ def mainWorker(camId):
                     frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                     frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
                     c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
-                    center = 100
+
                     boxWidth = 40
                     farBoxCenter = 97
                     farBoxWidth = 5
@@ -266,11 +266,23 @@ def mainWorker(camId):
                     baseValueHeight = 20
                     baseValueThresh = 50
 
+                    farBoxCenter = [97, 235]
+                    farBoxWidth = 5
+                    farBoxHeight = 10
+
+                    truckBoxCenter = [97, 155]
+                    truckBoxWidth = 5
+                    truckBoxHeight = 10
+
+                    closeBoxCenter = [97, 110]
+                    closeBoxWidth = 5
+                    closeBoxHeight = 15
 
 
-                    triggerBoxFar = frameScaled[farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth,uproadThresh:uproadThresh+boxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
-                    triggerBoxTruck = frameScaled[truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth,truckThresh:truckThresh+boxHeight] #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
-                    triggerBoxClose =frameScaled[closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth,closeThresh:closeThresh+closeBoxHeight]  #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
+
+                    triggerBoxFar = frameScaled[farBoxCenter[0]-farBoxWidth:farBoxCenter[0]+farBoxWidth,farBoxCenter[1]:farBoxCenter[1]+farBoxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
+                    triggerBoxTruck = frameScaled[truckBoxCenter[0]-truckBoxWidth:truckBoxCenter[0]+truckBoxWidth,truckBoxCenter[1]:truckBoxCenter[1]+truckBoxHeight]  #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
+                    triggerBoxClose = frameScaled[closeBoxCenter[0]-closeBoxWidth:closeBoxCenter[0]+closeBoxWidth,closeBoxCenter[1]:closeBoxCenter[1]+closeBoxHeight]   #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
                     baseAvBox =frameScaled[baseValueCenter-baseValueWidth:baseValueCenter+baseValueWidth,baseValueThresh:baseValueThresh+baseValueHeight]  #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
 
                     # ARRAY METRICS FOR TRIGGERING
@@ -314,10 +326,10 @@ def mainWorker(camId):
 
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
-                        cv2.rectangle(frameColorised, (uproadThresh,farBoxCenter-farBoxWidth),(uproadThresh+boxHeight,farBoxCenter+farBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (truckThresh,truckBoxCenter-truckBoxWidth),(truckThresh+boxHeight,truckBoxCenter+truckBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (closeThresh,closeBoxCenter-closeBoxWidth),(closeThresh+closeBoxHeight,closeBoxCenter+closeBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (baseValueThresh,baseValueCenter-baseValueWidth),(baseValueThresh+baseValueHeight,baseValueCenter+baseValueWidth),(0,255,0))
+                        cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+boxHeight,farBoxCenter[0]+farBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+boxHeight,truckBoxCenter[0]+truckBoxWidth),(255,0,0))
+                        cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+boxHeight,closeBoxCenter[0]+closeBoxWidth),(255,0,0))
+                        #cv2.rectangle(frameColorised, (baseValueThresh,baseValueCenter-baseValueWidth),(baseValueThresh+baseValueHeight,baseValueCenter+baseValueWidth),(0,255,0))
                         """ cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (uproadThresh+marginOfError,0), (uproadThresh+marginOfError, w1), (255,0,0), 1)
                         cv2.line(frameColorised, (uproadThresh-marginOfError,0), (uproadThresh-marginOfError, w1), (255,0,0), 1)
