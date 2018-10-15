@@ -176,6 +176,7 @@ def mainWorker(camId):
         marginOfError = int(thresh['marginOfError']*factor)
 
     setThresholds(MODE, factor)
+    startTime = time.time()
     while(True):
         try:
             print(camId, "Creating harvester modules and loading genlcam producers ...")
@@ -297,16 +298,16 @@ def mainWorker(camId):
                     #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
                     
                     currentTime = time.time()
-                    if farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
+                    if startTime-currentTime>5 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                         #urllib.request.urlopen(TRIGGER_FAR_URL).read()
                         numberFar += 1
                         uproadLastTrigger = currentTime
-                    if truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
+                    if startTime-currentTime>5 and truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
                         #urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
                         numberTruck += 1
                         truckLastTrigger = currentTime
                         setUproadTruckDelay()
-                    if closeDiff>sdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
+                    if startTime-currentTime>5 and closeDiff>sdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
                         #urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
                         numberClose += 1
                         closeLastTrigger = currentTime
