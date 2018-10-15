@@ -154,6 +154,10 @@ def mainWorker(camId):
     rightBound2 = 0
     marginOfError = 0
 
+    isFarClear = True
+    isTruckClear = True
+    isCloseClear = True
+
     def setThresholds(MODE, factor):
         thresh = THRESHOLDS[MODE]
         nonlocal uproadThresh
@@ -268,11 +272,11 @@ def mainWorker(camId):
 
                     farBoxCenter = [97, 285]
                     farBoxWidth = 5
-                    farBoxHeight = 10
+                    farBoxHeight = 5
 
                     truckBoxCenter = [97, 155]
                     truckBoxWidth = 5
-                    truckBoxHeight = 10
+                    truckBoxHeight = 5
 
                     closeBoxCenter = [97, 70]
                     closeBoxWidth = 5
@@ -326,9 +330,19 @@ def mainWorker(camId):
 
                     # SHOW LINES SECTION
                     if showLines and camId=='CAM_1' and MODE=="DAY":
-                        cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+truckBoxHeight,truckBoxCenter[0]+truckBoxWidth),(255,0,0))
-                        cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(255,0,0))
+                        if isFarClear:
+                            cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(0,255,0))
+                        else: 
+                            cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(0,0,255))
+                        if isTruckClear:
+                            cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+truckBoxHeight,truckBoxCenter[0]+truckBoxWidth),(0,255,0))
+                        else:
+                            cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+truckBoxHeight,truckBoxCenter[0]+truckBoxWidth),(0,0,255))       
+                        if isCloseClear:
+                            cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,255,0))
+                        else:
+                            cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,255,0))
+
                         #cv2.rectangle(frameColorised, (baseValueThresh,baseValueCenter-baseValueWidth),(baseValueThresh+baseValueHeight,baseValueCenter+baseValueWidth),(0,255,0))
                         """ cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
                         cv2.line(frameColorised, (uproadThresh+marginOfError,0), (uproadThresh+marginOfError, w1), (255,0,0), 1)
