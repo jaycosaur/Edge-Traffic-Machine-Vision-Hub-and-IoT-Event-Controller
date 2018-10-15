@@ -12,25 +12,6 @@ from imutils import contours
 import imutils
 import signal
 
-yolo_thresh = 0.07 #default 0.5
-yolo_hier_thresh = 1 # default 0.5
-yolo_nms = .1 #default 0.45
-scaledRes = 416
-type = "main" # tiny / 416 / 320
-
-if type == "tiny":
-    datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
-    cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-tiny.cfg'
-    weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3-tiny.weights'
-elif type == "320":
-    datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
-    cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3-320.cfg'
-    weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
-else:
-    datacfg = '/home/server/Projects/YOLO3-4-Py/cfg/coco.data'
-    cfgfile = '/home/server/Projects/YOLO3-4-Py/cfg/yolov3.cfg'
-    weightfile = '/home/server/Projects/YOLO3-4-Py/weights/yolov3.weights'
-
 SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
 
 TRIGGER_FAR_URL = 'http://192.168.1.100:8000/trigger-far'
@@ -45,7 +26,7 @@ CTI_FILE = '/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti'
 TIMEOUT_DELAY = 5
 triggerDelay = 0.5
 grayThresh = 150
-
+scaledRes = 416
 LOG = False
 
 CAM_CONFIG = {
@@ -112,10 +93,6 @@ def sendMessageToSlack(message, color):
     urllib.request.urlopen(req, jsondataasbytes)
 
 def mainWorker(camId):
-    # declare yolo detector in isolation from camera object for reinitiation of camera under failure.
-    print(camId, ' Constructing Yolo Model ...')
-    #net = Detector(bytes(cfgfile, encoding="utf-8"), bytes(weightfile, encoding="utf-8"), 0, bytes(datacfg, encoding="utf-8"))
-
     CAM_NAME = CAM_CONFIG[camId]['name']
     WINDOW_NAME = CAM_CONFIG[camId]['window']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
@@ -290,9 +267,6 @@ def mainWorker(camId):
                     baseAvBox =frameScaled[baseValueCenter-baseValueWidth:baseValueCenter+baseValueWidth,baseValueThresh:baseValueThresh+baseValueHeight]  #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
 
                     # ARRAY METRICS FOR TRIGGERING
-                    #triggerBoxFarMean = np.mean(triggerBoxFar)
-                    #triggerBoxTruckMean = np.mean(triggerBoxTruck)
-                    #triggerBoxCloseMean = np.mean(triggerBoxClose)
                     triggerBoxFarStd= np.mean(triggerBoxFar)
                     triggerBoxTruckStd= np.mean(triggerBoxTruck)
                     triggerBoxCloseStd= np.mean(triggerBoxClose)
@@ -310,10 +284,6 @@ def mainWorker(camId):
                     farDiff = abs(farStdAv -triggerBoxFarStd)
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
                     closeDiff = abs(closeStdAv-triggerBoxCloseStd)
-
-                    
-
-                    #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
 
                     if farDiff>sdThreshold:
                         isFarClear = False
@@ -360,96 +330,6 @@ def mainWorker(camId):
                             cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,255,0))
                         else:
                             cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,0,255))
-
-                        #cv2.rectangle(frameColorised, (baseValueThresh,baseValueCenter-baseValueWidth),(baseValueThresh+baseValueHeight,baseValueCenter+baseValueWidth),(0,255,0))
-                        """ cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
-                        cv2.line(frameColorised, (uproadThresh+marginOfError,0), (uproadThresh+marginOfError, w1), (255,0,0), 1)
-                        cv2.line(frameColorised, (uproadThresh-marginOfError,0), (uproadThresh-marginOfError, w1), (255,0,0), 1)
-                        cv2.line(frameColorised, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
-                        cv2.line(frameColorised, (truckThresh+marginOfError,0), (truckThresh+marginOfError, w1), (255,0,0), 1)
-                        cv2.line(frameColorised, (truckThresh-marginOfError,0), (truckThresh-marginOfError, w1), (255,0,0), 1)
-                        cv2.line(frameColorised, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
-                        cv2.line(frameColorised, (closeThresh+marginOfError,0), (closeThresh+marginOfError, w1), (255,0,0), 1)
-                        cv2.line(frameColorised, (closeThresh-marginOfError,0), (closeThresh-marginOfError, w1), (255,0,0), 1)
-                        cv2.line(frameColorised, (0,rightBound), (h1, rightBound), (255,255,255), 1)
-                        cv2.line(frameColorised, (0,leftBound2), (h1, leftBound2), (255,255,255), 1)
-                        cv2.line(frameColorised, (0,leftBound), (h1, leftBound), (255,255,255), 1)  """
-
-                    if showLines and camId=='CAM_1' and MODE=="NIGHT":
-                        cv2.line(frameColorised, (uproadThresh,0), (uproadThresh, w1), (255,255,0), 1)
-                        cv2.line(frameColorised, (truckThresh,0), (truckThresh, w1), (255,255,0), 1)
-                        cv2.line(frameColorised, (closeThresh,0), (closeThresh, w1), (255,255,0), 1)
-                        cv2.line(frameColorised, (0,rightBound), (h1, rightBound), (255,255,255), 1)
-                        cv2.line(frameColorised, (0,leftBound), (h1, leftBound), (255,255,255), 1)
-                        cv2.line(frameColorised, (0,leftBound2), (h1, leftBound2), (255,0,255), 1)
-                    # PROCESSING SPECIFIC
-                    if MODE=="NIGHT":
-                        frameGray = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2GRAY)
-                        thresh = cv2.threshold(frameGray,  grayThresh, 255, cv2.THRESH_BINARY)[1]
-                        labels = measure.label(thresh, neighbors=8, background=0)
-                        mask = np.zeros(thresh.shape, dtype="uint8")
-                        for label in np.unique(labels):
-                            # if this is the background label, ignore it
-                            if label == 0:
-                                continue
-                            labelMask = np.zeros(thresh.shape, dtype="uint8")
-                            labelMask[labels == label] = 255
-                            mask = cv2.add(mask, labelMask)
-                        if len(np.unique(labels))>0:
-                            cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                            cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-                            # loop over the contours
-                            for (i, c) in enumerate(cnts):
-                                currentTime = time.time()
-                                # draw the bright spot on the image
-                                (x, y, w, h) = cv2.boundingRect(c)
-                                ((cX, cY), radius) = cv2.minEnclosingCircle(c)
-                                if showYolo:
-                                    cv2.circle(frameColorised, (int(cX), int(cY)), int(5),
-                                        (0, 0, 255), 3)
-                                if cY <= rightBound and cY >= leftBound and camId=='CAM_1':
-                                    if cX>=uproadThresh-marginOfError and cX<=uproadThresh+marginOfError and (currentTime-uproadLastTrigger)>triggerDelay and cY>=leftBound2:
-                                        urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                                        uproadLastTrigger = currentTime
-                                        numberCars += 1
-                                    if cX>=truckThresh-marginOfError and cX<=truckThresh+marginOfError and (currentTime-truckLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                                        truckLastTrigger = currentTime
-                                        setUproadTruckDelay()
-                                    if cX>=closeThresh-marginOfError and cX<=closeThresh+marginOfError and (currentTime-closeLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
-                                        closeLastTrigger = currentTime
-                    if MODE=="DAYZ":
-                        img = np.rot90(frameColorised, 1)
-                        img2 = Image(img)
-                        results = net.detect(img2, thresh=yolo_thresh, nms=yolo_nms, hier_thresh=yolo_hier_thresh)
-                        for cat, score, bounds in results:
-                                x, y, w, h = bounds
-                                x, y = (h1-int(y), int(x))
-                                x1,y1,x2,y2 = [int(x-h/2),int(y-w/2),int(x+h/2),int(y+w/2)]
-
-                                type = str(cat.decode("utf-8"))
-                                color = baseColor
-                                if showYolo and h>5:
-                                    cv2.rectangle(frameColorised, (x1,y1),(x2,y2),color)
-                                    cv2.circle(frameColorised, (int(x), int(y)), int(2),(0, 255, 0), 3)
-
-                                currentTime = time.time()
-                                if y <= rightBound and camId=='CAM_1' and h>10 and w>10:
-                                    if x>=uproadThresh-10 and x<=uproadThresh+10 and y>=leftBound2 and (currentTime-uproadLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_FAR_URL).read()
-                                        numberFar += 1
-                                        uproadLastTrigger = currentTime
-                                    if x>=truckThresh-marginOfError and x<=truckThresh+marginOfError and y>=leftBound and (currentTime-truckLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_TRUCK_URL).read()
-                                        numberTruck += 1
-                                        truckLastTrigger = currentTime
-                                        setUproadTruckDelay()
-                                    if x>=closeThresh-marginOfError*2 and x<=closeThresh+marginOfError*2 and y>=leftBound and (currentTime-closeLastTrigger)>triggerDelay:
-                                        urllib.request.urlopen(TRIGGER_CLOSE_URL).read()
-                                        numberClose += 1
-                                        closeLastTrigger = currentTime
-
                     # DISPLAY FRAME IN WINDOW
                     if IS_ROTATE:
                         cv2.imshow(WINDOW_NAME, np.rot90(frameColorised))

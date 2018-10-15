@@ -101,7 +101,7 @@ def worker(camId):
 
     payload = cam.get_payload()
 
-    [x,y,width,height] = cam.get_region ()
+    [x,y,width,height] = cam.get_region()
     print(cam.get_device().get_string_feature_value("TriggerMode"))
     print(cam.get_device().get_available_enumeration_feature_values_as_strings("TriggerSource"))
     print(cam.get_device().get_available_enumeration_feature_values_as_strings("TriggerActivation"))
