@@ -202,6 +202,7 @@ def mainWorker(camId):
             farStdAv = 0.0
             closeStdAv = 0.0
             truckStdAv = 0.0
+            baseAv = 0.0
 
             def setUproadTruckDelay():
                 nonlocal uproadTruckDelay
@@ -268,6 +269,7 @@ def mainWorker(camId):
                     triggerBoxFar = frameScaled[farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth,uproadThresh:uproadThresh+boxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                     triggerBoxTruck = frameScaled[truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth,truckThresh:truckThresh+boxHeight] #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
                     triggerBoxClose =frameScaled[closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth,closeThresh:closeThresh+boxHeight]  #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
+                    baseAvBox =frameScaled[baseValueCenter-baseValueWidth:baseValueCenter+baseValueWidth,baseValueThresh:baseValueThresh+baseValueHeight]  #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
 
                     # ARRAY METRICS FOR TRIGGERING
                     #triggerBoxFarMean = np.mean(triggerBoxFar)
@@ -276,18 +278,20 @@ def mainWorker(camId):
                     triggerBoxFarStd= np.std(triggerBoxFar)
                     triggerBoxTruckStd= np.std(triggerBoxTruck)
                     triggerBoxCloseStd= np.std(triggerBoxClose)
+                    baseAvStd= np.std(triggerBoxClose)
 
                     numberOfFrames = 200
 
                     farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames # numberOfFrames frame floating average
                     truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames # numberOfFrames frame floating average
                     closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames # numberOfFrames frame floating average
+                    baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
                     sdThreshold = 20
 
-                    farDiff = abs(farStdAv-triggerBoxFarStd)
-                    truckDiff = abs(truckStdAv-triggerBoxTruckStd)
-                    closeDiff = abs(closeStdAv-triggerBoxCloseStd)
+                    farDiff = abs(baseAv-triggerBoxFarStd)
+                    truckDiff = abs(baseAv-triggerBoxTruckStd)
+                    closeDiff = abs(baseAv-triggerBoxCloseStd)
 
                     #print("FAR AV:",farStdAv,"SD:",farDiff, "TRUCK AV:",truckStdAv,"SD:", truckDiff,"CLOSE AV:",closeStdAv, "SD:", closeDiff)
                     
