@@ -286,19 +286,19 @@ def mainWorker(camId):
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
                     closeDiff = abs(closeStdAv-triggerBoxCloseStd)
 
-                    if farDiff>sdThreshold:
+                    if isFarClear and farDiff>sdThreshold:
                         isFarClear = False
-                    else: 
+                    elif isFarClear == False and (currentTime-uproadLastTrigger)>triggerDelay: 
                         isFarClear = True
                         
-                    if truckDiff>sdThreshold:
+                    if truckDiff>sdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
                         isTruckClear = False
                     else: 
                         isTruckClear = True
                         
-                    if closeDiff>sdThreshold:
+                    if isCloseClear and closeDiff>sdThreshold:
                         isCloseClear = False
-                    else: 
+                    elif isCloseClear == False  and (currentTime-closeLastTrigger)>triggerDelay:
                         isCloseClear = True
                         
                     
