@@ -300,9 +300,9 @@ def mainWorker(camId):
 
                     numberOfFrames = 200
 
-                    farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames # numberOfFrames frame floating average
-                    truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames # numberOfFrames frame floating average
-                    closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames # numberOfFrames frame floating average
+                     # numberOfFrames frame floating average
+                     # numberOfFrames frame floating average
+                    # numberOfFrames frame floating average
                     baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
                     sdThreshold = 30
@@ -317,14 +317,17 @@ def mainWorker(camId):
                         isFarClear = False
                     else: 
                         isFarClear = True
+                        farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames
                     if truckDiff>sdThreshold:
                         isTruckClear = False
                     else: 
                         isTruckClear = True
+                        truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames
                     if closeDiff>sdThreshold:
                         isCloseClear = False
                     else: 
                         isCloseClear = True
+                        closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames
                     
                     currentTime = time.time()
                     if currentTime-startTime>10 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
