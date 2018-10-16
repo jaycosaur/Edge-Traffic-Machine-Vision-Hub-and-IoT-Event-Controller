@@ -215,6 +215,8 @@ def mainWorker(camId):
                     IS_CAM_OK = False
                     print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
                     sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
+                    cam.stop_image_acquisition()
+                    cam.destroy()
                 if(IS_CAM_OK and frame.payload.components):
                     image = frame.payload.components[0].data
                     if LOG:
