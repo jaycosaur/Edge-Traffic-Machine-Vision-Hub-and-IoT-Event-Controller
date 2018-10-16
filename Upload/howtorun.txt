@@ -1,0 +1,7 @@
+FOR DATABASE SYNC:
+
+sudo gsutil cp "*.png" gs://onetask-sydney-tfnsw
+
+FOR FILE UPLOAD:
+
+sudo gcloudkeypath=/keys/gcloudkey.json node index.js /Volumes/ONETASK-ONE/

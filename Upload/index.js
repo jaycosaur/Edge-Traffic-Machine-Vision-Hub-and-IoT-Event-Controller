@@ -225,7 +225,7 @@ const main = async () => {
             ...record,
             hasImage: doesContain>-1
         }
-    }).filter(i=>i.hasImage).map(i=>({...i, timeUNIX: parseInt(i["timeUNIX"])}))
+    }).map(i=>({...i, timeUNIX: parseInt(i["timeUNIX"])}))
     log(chalk.bgGreen.black('Processing Part 4 - linking images with previous and next ...'))
 
     const camNames = Object.keys(CAM_CONFIG)
