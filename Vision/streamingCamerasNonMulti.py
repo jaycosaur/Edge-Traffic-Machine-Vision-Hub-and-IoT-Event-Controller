@@ -174,7 +174,7 @@ def mainWorker(camId):
                 time.sleep(20) #sleep for 10 seconds and then retry!
                 cam.stop_image_acquisition()
                 cam.destroy()
-                continue #exit ()
+                process.exit()
 
             cam.start_image_acquisition()
             cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
@@ -361,29 +361,5 @@ def mainWorker(camId):
             print(e)
             time.sleep(5) #sleep for 10 seconds and then retry!
 
-# main event
-if __name__ == '__main__':
-    camIds = ['CAM_1']
-    processes = {}
-    n = 0
-    for i in camIds:
-        p = multiprocessing.Process(target=mainWorker, args=(i,))
-        p.start()
-        processes[n] = (p,camId)
-        n += 1
-    while len(processes)>0:
-        for n in processes.keys():
-            (p, a) = processes[n]
-            sleep(0.5)
-            if p.exitcode is None and not p.is_alive(): # Not finished and not running
-                 # Do your error handling and restarting here assigning the new process to processes[n]
-                 print(a, 'is gone as if never born!')
-            elif p.exitcode < 0:
-                print ('Process Ended with an error or a terminate', a)
-                # Handle this either by restarting or delete the entry so it is removed from list as for else
-            else:
-                print (a, 'finished')
-                p.join() # Allow tidyup
-                del processes[n] # Removed finished items from the dictionary 
-                # When none are left then loop will end
-    
+
+mainWorker('CAM_1')
