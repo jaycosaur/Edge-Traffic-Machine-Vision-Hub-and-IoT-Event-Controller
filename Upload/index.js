@@ -360,7 +360,7 @@ const main = async () => {
     let closeProcessingGroup = 0
     let count = 0
 
-    close2k.map((val,i)=>{
+    close2k.forEach((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], close4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], closecolor.map(i=>i['timeUNIX']))
         const clusterId = uuidv4()
@@ -389,8 +389,8 @@ const main = async () => {
                 ["4K"]: close4k[id4k]["ID"],
             }
         }
-        return ({
-            ...val,
+        close2k[i] = {
+            ...close2k[i],
             clusterId: clusterId,
             closeProcessingGroup: closeProcessingGroup,
             CLUSTER: {
@@ -398,14 +398,14 @@ const main = async () => {
                 ["COLOR"]: closecolor[idcol]["ID"],
                 ["4K"]: close4k[id4k]["ID"],
             }
-        })
+        }
     })
 
     // truck 2k -> truck 4k and truck color
     let truckProcessingGroup = 0
     count = 0
 
-    truck2k.map((val,i)=>{
+    truck2k.forEach((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], truck4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], truckcolor.map(i=>i['timeUNIX']))
         // update 4k and col
@@ -434,8 +434,8 @@ const main = async () => {
                 ["4K"]: truck4k[id4k]["ID"],
             }
         }
-        return ({
-            ...val,
+        truck2k[i] = {
+            ...truck2k[i],
             clusterId: clusterId,
             truckProcessingGroup: truckProcessingGroup,
             CLUSTER: {
@@ -443,14 +443,14 @@ const main = async () => {
                 ["COLOR"]: truckcolor[idcol]["ID"],
                 ["4K"]: truck4k[id4k]["ID"],
             }
-        })
+        }
     })
 
     // far 2k -> far 4k and far color
     let farProcessingGroup = 0
     count = 0
 
-    far2k.map((val,i)=>{
+    far2k.forEach((val,i)=>{
         let id4k = closestElement(val['timeUNIX'], far4k.map(i=>i['timeUNIX']))
         let idcol = closestElement(val['timeUNIX'], farcolor.map(i=>i['timeUNIX']))
         // update 4k and col
@@ -479,8 +479,8 @@ const main = async () => {
                 ["4K"]: far4k[id4k]["ID"],
             }
         }
-        return ({
-            ...val,
+        far2k[i] = {
+            ...far2k[i],
             clusterId: clusterId,
             farProcessingGroup: farProcessingGroup,
             CLUSTER: {
@@ -488,7 +488,7 @@ const main = async () => {
                 ["COLOR"]: farcolor[idcol]["ID"],
                 ["4K"]: far4k[id4k]["ID"],
             }
-        })
+        }
     })
 
     // remake storeWithImages

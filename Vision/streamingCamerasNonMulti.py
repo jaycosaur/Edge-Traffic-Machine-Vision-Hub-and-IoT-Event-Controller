@@ -158,14 +158,15 @@ def mainWorker(camId):
 
     setThresholds(MODE, factor)
     startTime = time.time()
-    while(True):
+    IS_CAM_OK = True
+    while(IS_CAM_OK):
         print(camId, "Creating harvester modules and loading genlcam producers ...")
         h = Harvester()
         h.add_cti_file(CTI_FILE)
         h.update_device_info_list()
         cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
         print ("Camera found!")
-        IS_CAM_OK = True
+        
 
         cam.start_image_acquisition()
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
