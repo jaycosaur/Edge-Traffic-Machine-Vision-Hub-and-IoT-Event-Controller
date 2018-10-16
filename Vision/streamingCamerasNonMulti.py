@@ -236,17 +236,17 @@ def mainWorker(camId):
                 baseValueHeight = 20
                 baseValueThresh = 50
 
-                farBoxCenter = [97, 298] # [97,285]
-                farBoxWidth = 5 # 15 # 5
+                farBoxCenter = [97, 295] #[97,295]night #[97, 298]day
+                farBoxWidth = 15 # 15atnight # 5
                 farBoxHeight = 10
 
-                truckBoxCenter = [97, 190] # [97, 155]
-                truckBoxWidth = 10 #30 # 5
-                truckBoxHeight = 10 #10
+                truckBoxCenter = [97, 170] # [97, 190]day [97, 170]day
+                truckBoxWidth = 30 #30atnight # 5
+                truckBoxHeight = 20 #10 #20night
 
-                closeBoxCenter = [97, 50] # [97, 70]
-                closeBoxWidth = 15 #35 #5
-                closeBoxHeight = 15 #15
+                closeBoxCenter = [97, 60] # [97, 50]day
+                closeBoxWidth = 35 #35atnight #15
+                closeBoxHeight = 35 #15day #35night
 
 
 
