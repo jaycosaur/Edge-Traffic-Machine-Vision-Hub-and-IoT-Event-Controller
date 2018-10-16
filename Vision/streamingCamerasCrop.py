@@ -250,17 +250,17 @@ def mainWorker(camId):
                     baseValueHeight = 20
                     baseValueThresh = 50
 
-                    farBoxCenter = [97, 285]
-                    farBoxWidth = 15 # 5
+                    farBoxCenter = [97, 298] # [97,285]
+                    farBoxWidth = 5 # 15 # 5
                     farBoxHeight = 10
 
-                    truckBoxCenter = [97, 170] # [97, 155]
-                    truckBoxWidth = 30 # 5
-                    truckBoxHeight = 20 #10
+                    truckBoxCenter = [97, 190] # [97, 155]
+                    truckBoxWidth = 10 #30 # 5
+                    truckBoxHeight = 10 #10
 
-                    closeBoxCenter = [97, 60] # [97, 70]
-                    closeBoxWidth = 35 #5
-                    closeBoxHeight = 35 #15
+                    closeBoxCenter = [97, 50] # [97, 70]
+                    closeBoxWidth = 15 #35 #5
+                    closeBoxHeight = 15 #15
 
 
 
@@ -282,9 +282,9 @@ def mainWorker(camId):
                     closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames# numberOfFrames frame floating average
                     baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
-                    sdThreshold = 2 #30
-                    tsdThreshold = 1
-                    csdThreshold = 0.5
+                    sdThreshold = 32 #30 #2
+                    tsdThreshold = 32 #0.8
+                    csdThreshold = 32 #0.3
 
                     farDiff = abs(farStdAv -triggerBoxFarStd)
                     truckDiff = abs(truckStdAv-triggerBoxTruckStd)
@@ -308,16 +308,16 @@ def mainWorker(camId):
                         
                     
                     
-                    if currentTime-startTime>10 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
+                    if currentTime-startTime>20 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                         urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                         numberFar += 1
                         uproadLastTrigger = currentTime
-                    if currentTime-startTime>10 and truckDiff>tsdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
+                    if currentTime-startTime>20 and truckDiff>tsdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
                         urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                         numberTruck += 1
                         truckLastTrigger = currentTime
                         setUproadTruckDelay()
-                    if currentTime-startTime>10 and closeDiff>csdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
+                    if currentTime-startTime>20 and closeDiff>csdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
                         urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                         numberClose += 1
                         closeLastTrigger = currentTime
