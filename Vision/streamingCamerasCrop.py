@@ -174,7 +174,6 @@ def mainWorker(camId):
                 time.sleep(20) #sleep for 10 seconds and then retry!
                 cam.stop_image_acquisition()
                 cam.destroy()
-                cv2.destroyWindow(WINDOW_NAME)
                 continue #exit ()
 
             cam.start_image_acquisition()
@@ -205,6 +204,11 @@ def mainWorker(camId):
                     IS_CAM_OK = False
                     print('CAM TOOK TOO LONG TO FETCH BUFFER - KILLING AND RESTARTING!')
                     sendMessageToSlack('Streaming Camera has Failed - Restarting ...', '#ff3300')
+                    cv2.destroyWindow(WINDOW_NAME)
+                    cam.stop_image_acquisition()
+                    cam.destroy()
+                    time.sleep(5)
+
                 if(IS_CAM_OK and frame.payload.components):
                     image = frame.payload.components[0].data
                     if LOG:
@@ -305,8 +309,6 @@ def mainWorker(camId):
                         isCloseClear = False
                     elif isCloseClear == False  and (currentTime-closeLastTrigger)>triggerDelay:
                         isCloseClear = True
-                        
-                    
                     
                     if currentTime-startTime>20 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                         urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
@@ -354,7 +356,6 @@ def mainWorker(camId):
             #IF CAM NOT OK
             cam.stop_image_acquisition()
             cam.destroy()
-            cv2.destroyWindow(WINDOW_NAME)
         except Exception as e:
             print ("Critical Script error! Trying again in 5 seconds ...")
             print(e)
