@@ -2,4 +2,4 @@
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.2/lib64
 
-pm2 start streamingCamerasNonMulti.py
+pm2 start streamingCamerasNonMulti.py --interpreter='python3'
