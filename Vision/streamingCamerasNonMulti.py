@@ -184,6 +184,9 @@ def mainWorker(camId):
         cam.start_image_acquisition()
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
 
+        def nothing(x):
+            pass
+
         # create variable track bars
         autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
         nightModeSwitch = '0 : Night Mode\n1 : Day Mode'
