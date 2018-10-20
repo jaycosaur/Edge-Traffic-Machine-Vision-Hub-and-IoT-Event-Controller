@@ -14,7 +14,7 @@ from gi.repository import Aravis
 
 Aravis.enable_interface("Fake")
 
-CACHE_PATH = "/home/server/store/raw/"
+CACHE_PATH = "/media/server/CACHE/store/processed/"
 
 CAM_CONFIG = {
     'CAM_1': {

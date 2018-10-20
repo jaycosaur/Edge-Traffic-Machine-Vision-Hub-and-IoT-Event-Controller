@@ -28,6 +28,7 @@ triggerDelay = 0.5
 grayThresh = 150
 scaledRes = 416
 LOG = False
+DELAY_TIME_FROM_INIT_TO_TRIGGER = 20
 
 # AUTO NIGHT TIME
 # AUTO GAIN
@@ -185,10 +186,12 @@ def mainWorker(camId):
 
         # create variable track bars
         autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
+        nightModeSwitch = '0 : Night Mode\n1 : Day Mode'
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('autoExposureSwitch',WINDOW_NAME,0,255,nothing)
+        cv2.createTrackbar('nightModeSwitch',WINDOW_NAME,0,255,nothing)
 
         uproadLastTrigger = time.time()
         truckLastTrigger = time.time()
@@ -231,10 +234,6 @@ def mainWorker(camId):
                 elif user_input_key==115: #s
                     MODE="NIGHT"
                     setThresholds("NIGHT", factor)
-                elif user_input_key==101: #o
-                    CLOSE_TRIGGER_METHOD = "CALC"
-                elif user_input_key==100: #l
-                    CLOSE_TRIGGER_METHOD = "DELAY"
 
                 frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                 frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
@@ -255,17 +254,17 @@ def mainWorker(camId):
                 baseValueHeight = 20
                 baseValueThresh = 50
 
-                farBoxCenter = [97, 295] #[97,295]night #[97, 298]day
-                farBoxWidth = 15 # 15atnight # 5
+                farBoxCenter = [97, 298] #[97,295]night #[97, 298]day
+                farBoxWidth = 5 # 15atnight # 5
                 farBoxHeight = 10
 
                 truckBoxCenter = [97, 170] # [97, 190]day [97, 170]day
-                truckBoxWidth = 30 #30atnight # 5
-                truckBoxHeight = 20 #10 #20night
+                truckBoxWidth = 5 #30atnight # 5
+                truckBoxHeight = 10 #10 #20night
 
-                closeBoxCenter = [97, 60] # [97, 50]day
-                closeBoxWidth = 35 #35atnight #15
-                closeBoxHeight = 35 #15day #35night
+                closeBoxCenter = [97, 50] # [97, 50]day
+                closeBoxWidth = 15 #35atnight #15
+                closeBoxHeight = 15 #15day #35night
 
 
 
@@ -287,9 +286,9 @@ def mainWorker(camId):
                 closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames# numberOfFrames frame floating average
                 baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
 
-                sdThreshold = 32 #30 #2
-                tsdThreshold = 32 #0.8
-                csdThreshold = 32 #0.3
+                sdThreshold = 30#32 #30 #2
+                tsdThreshold = 30 #32 #0.8
+                csdThreshold = 30 #32 #0.3
 
                 farDiff = abs(farStdAv -triggerBoxFarStd)
                 truckDiff = abs(truckStdAv-triggerBoxTruckStd)
@@ -311,16 +310,16 @@ def mainWorker(camId):
                 elif isCloseClear == False  and (currentTime-closeLastTrigger)>triggerDelay:
                     isCloseClear = True
                 
-                if currentTime-startTime>20 and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
+                if currentTime-startTime>DELAY_TIME_FROM_INIT_TO_TRIGGER and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
                     urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
                     numberFar += 1
                     uproadLastTrigger = currentTime
-                if currentTime-startTime>20 and truckDiff>tsdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
+                if currentTime-startTime>DELAY_TIME_FROM_INIT_TO_TRIGGER and truckDiff>tsdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
                     urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
                     numberTruck += 1
                     truckLastTrigger = currentTime
                     setUproadTruckDelay()
-                if currentTime-startTime>20 and closeDiff>csdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
+                if currentTime-startTime>DELAY_TIME_FROM_INIT_TO_TRIGGER and closeDiff>csdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
                     urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
                     numberClose += 1
                     closeLastTrigger = currentTime
