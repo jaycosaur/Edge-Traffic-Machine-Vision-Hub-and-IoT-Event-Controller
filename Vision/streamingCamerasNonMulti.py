@@ -184,17 +184,25 @@ def mainWorker(camId):
         def nothing(x):
             pass
 
+        def toggleBoxes(x):
+            if x==1:
+                showLines = True
+            else:
+                showLines = False
+
         # create variable track bars
+        showBoxes = '0 : BOXES OFF \n1 : BOXES ON'
         autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
         autoGainSwitch = '0 : Auto Gain OFF \n1 : Auto Gain ON'
         nightModeSwitch = '0 : Night Mode\n1 : Day Mode'
+        cv2.createTrackbar(showBoxes,WINDOW_NAME,0,1,toggleBoxes)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar(autoExposureSwitch,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar(autoGainSwitch,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar(nightModeSwitch,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar('Exposure',WINDOW_NAME,50,500,nothing)
+        cv2.createTrackbar('Exposure',WINDOW_NAME,20,1000,nothing)
         cv2.createTrackbar('Gain',WINDOW_NAME,0,24,nothing)
 
         uproadLastTrigger = time.time()
