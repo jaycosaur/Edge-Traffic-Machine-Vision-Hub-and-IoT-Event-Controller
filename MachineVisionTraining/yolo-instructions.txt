@@ -1,0 +1,20 @@
+HELP: https://timebutt.github.io/static/how-to-train-yolov2-to-detect-custom-objects/
+
+TRAINING SCRIPT TO RUN: 
+
+darknet.exe detector train <relative path to .data> <relative path to .cfg> <relative path to conv file>
+
+TEST DETECTOR: 
+
+darknet.exe detector test <relative path to .data> <relative path to .cfg> <relative path to .weights>  <relative path to image> 
+eg. darknet.exe detector test cfg/obj.data cfg/yolo-obj.cfg yolo-obj1000.weights data/testimage.jpg
+
+MY TRAINING GOT INTERUPTED! 
+
+No worries, you can restart at your last weights file through the following: 
+
+darknet.exe detector <relative path to .data> <relative path to .cfg> <relative path to latest .weights>
+
+eg. darknet.exe detector train cfg/obj.data cfg/yolo-obj.cfg yolo-obj_2000.weights
+
+When should you stop training the model: https://github.com/AlexeyAB/darknet#when-should-i-stop-training
