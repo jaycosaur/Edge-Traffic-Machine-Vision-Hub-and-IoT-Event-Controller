@@ -29,6 +29,18 @@ grayThresh = 150
 scaledRes = 416
 LOG = False
 
+# AUTO NIGHT TIME
+# AUTO GAIN
+# AUTO EXPOSURE
+# EXPOSURE SETTINGS
+# GAIN
+# TRIGGER DELAY
+# TRIGGER MODE
+# GRAY VALUE
+
+switch = '0 : OFF \n1 : ON'
+cv2.createTrackbar(switch, 'image',0,1,nothing)
+
 CAM_CONFIG = {
     'CAM_1': {
         'name': 'QG0170070016',
@@ -170,6 +182,13 @@ def mainWorker(camId):
 
         cam.start_image_acquisition()
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
+
+        # create variable track bars
+        autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
+        cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
+        cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
+        cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
+        cv2.createTrackbar('autoExposureSwitch',WINDOW_NAME,0,255,nothing)
 
         uproadLastTrigger = time.time()
         truckLastTrigger = time.time()
