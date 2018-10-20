@@ -39,9 +39,6 @@ DELAY_TIME_FROM_INIT_TO_TRIGGER = 20
 # TRIGGER MODE
 # GRAY VALUE
 
-switch = '0 : OFF \n1 : ON'
-cv2.createTrackbar(switch, 'image',0,1,nothing)
-
 CAM_CONFIG = {
     'CAM_1': {
         'name': 'QG0170070016',
