@@ -68,7 +68,7 @@ module.exports = actionHandler = (action) => {
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
         fsX.move(action.payload.path, path.join(config.BACKUP_LOCATIONS[0], fileName), (err) => {
-            if (err) console.log("Error Backing up: %s", filename)
+            if (err) console.log("Error Backing up: %s", fileName)
         })
     }
 }
