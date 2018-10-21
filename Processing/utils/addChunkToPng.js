@@ -7,7 +7,7 @@ const sha256 = require('sha256')
 
 const encoder = (keyvalue, currentPath, newPath, callback) => {
     fs.readFile(currentPath, (err, buffer) => {
-        new PNG.buffer(buffer).decode((pixels)=>{
+        new PNG(buffer).decode((pixels)=>{
             console.log(pixels)
             securityIndicator = sha256("12345678910")
             const chunks = extract(buffer)
