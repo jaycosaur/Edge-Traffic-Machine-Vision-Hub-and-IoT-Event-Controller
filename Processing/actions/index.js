@@ -98,8 +98,8 @@ module.exports = actionHandler = (action) => {
                     capture_time_unixms: UNIX,
                 }
                 const pathin = action.payload.path
-                const pathout = `${config.PROCESSED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`
-                pool.exec(hashingWorker, [dataToWrite, pathin, pathout])
+                const pathout = `${config.BACKUP_LOCATIONS[0]}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`
+                pool.exec(hashingWorker, [dataToWrite, pathin, pathout]).then(res=>console.log("done")).catch(err=>console.log(err))
             }).catch(err=>console.log(err))     
     }
     if(action.type === actionTypes.processedStoreFileUpdated){
