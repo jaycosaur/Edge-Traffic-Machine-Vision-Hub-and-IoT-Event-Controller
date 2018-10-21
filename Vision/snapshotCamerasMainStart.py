@@ -8,13 +8,16 @@ import urllib.request
 import numpy as np 
 import ctypes
 import uuid
+import json
 
 gi.require_version('Aravis', '0.4')
 from gi.repository import Aravis
-
 Aravis.enable_interface("Fake")
 
-CACHE_PATH = "/media/server/CACHE/store/processed/"
+with open('./../config.json', 'r') as f:
+    CONFIG = json.load(f)
+
+CACHE_PATH = CONFIG['RAW_STORE_PATH']
 
 CAM_CONFIG = {
     'CAM_1': {
