@@ -20,7 +20,7 @@ const convertNameToObj = (meta) => {
     }, {fileType, fileName: meta})
 }
 
-const end_timeout = 3000;
+const end_timeout = 1000;
 
 module.exports = actionHandler = (action) => {
     console.log(chalk.black.bgYellow('Action Received: ', action.type))
@@ -30,7 +30,6 @@ module.exports = actionHandler = (action) => {
 
         function checkEnd(path, prev) {
             fs.stat(path, function (err, stat) {
-        
                 // Replace error checking with something appropriate for your app.
                 if (err) throw err;
                 if (stat.mtime.getTime() === prev.mtime.getTime()) {

@@ -22,7 +22,7 @@ class writerClass {
             message: record
         }])       // returns a promise
             .then(() => {
-                console.log(chalk.green(`${Date.now()} => ${record}`));
+                //console.log(chalk.green(`${Date.now()} => ${record}`));
             });
     }
 }
