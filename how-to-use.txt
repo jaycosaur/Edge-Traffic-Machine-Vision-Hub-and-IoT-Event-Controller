@@ -23,3 +23,9 @@ Vision Scripts
 Machine Vision Scripts
     This is for the generation and creation of required files needed for yolo.
     See the instructions of data-preparation-instructions.txt for how to fetch images and prepare files and see yolo-instructions.txt on how to use this data to train a yolo darknet model
+
+Security Indicators and Checking Authenticity
+    Security Indicators are generated in the following manner: The PNG pixel data is read in as a Buffer, then converted into a UTF8 formatted string which is then fed into a SHA256 hashing algorithm.
+    There are two scripts in Processing/utils/ that are responsible for reading out meta data from the pngs and for checking authenticity.
+        - extractPngMeta.js is used to print out the meta data on the image, this is run by: node extractPngMeta.js <relative path to file>
+        - checkIfPngOriginal.js is used to print out the meta data and to confirm that the image security indicator stored in the image meta data matches the generated security indicator that is made from the current images pixel distribution, this is run by: node checkIfPngOriginal.js <relative path to file>
