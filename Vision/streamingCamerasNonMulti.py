@@ -25,19 +25,9 @@ CTI_FILE = '/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti'
 
 TIMEOUT_DELAY = 5
 triggerDelay = 0.5
-grayThresh = 150
 scaledRes = 416
 LOG = False
 DELAY_TIME_FROM_INIT_TO_TRIGGER = 20
-
-# AUTO NIGHT TIME
-# AUTO GAIN
-# AUTO EXPOSURE
-# EXPOSURE SETTINGS
-# GAIN
-# TRIGGER DELAY
-# TRIGGER MODE
-# GRAY VALUE
 
 CAM_CONFIG = {
     'CAM_1': {
@@ -176,8 +166,6 @@ def mainWorker(camId):
         h.update_device_info_list()
         cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
         print ("Camera found!")
-        
-
         cam.start_image_acquisition()
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
 
@@ -190,177 +178,143 @@ def mainWorker(camId):
             else:
                 showLines = False
 
+        def switchMode(x):
+            if x==1:
+                MODE = "DAY"
+            else:
+                MODE = "NIGHT"
+
+        # cv2.setTrackbarPos(trackbarname, winname, pos)
+
         # create variable track bars
         showBoxes = '0 : BOXES OFF \n1 : BOXES ON'
         autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
         autoGainSwitch = '0 : Auto Gain OFF \n1 : Auto Gain ON'
-        nightModeSwitch = '0 : Night Mode\n1 : Day Mode'
+        modeSwitch = '0 : Night Mode\n1 : Day Mode'
         cv2.createTrackbar(showBoxes,WINDOW_NAME,0,1,toggleBoxes)
+        cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
+        cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar(autoExposureSwitch,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar(autoGainSwitch,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar(nightModeSwitch,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar('Exposure',WINDOW_NAME,20,1000,nothing)
         cv2.createTrackbar('Gain',WINDOW_NAME,0,24,nothing)
-
+        # setThresholds("DAY", factor)
         uproadLastTrigger = time.time()
         truckLastTrigger = time.time()
         closeLastTrigger = time.time()
-        uproadTruckDelay = 0.0
         farStdAv = 0.0
         closeStdAv = 0.0
         truckStdAv = 0.0
         baseAv = 0.0
 
-        def setUproadTruckDelay():
-            nonlocal uproadTruckDelay
-            nonlocal uproadLastTrigger
-            nonlocal truckLastTrigger
-            if truckLastTrigger > uproadLastTrigger and truckLastTrigger-uproadLastTrigger<5:
-                uproadTruckDelay = truckLastTrigger-uproadLastTrigger
-                
-        while(IS_CAM_OK):
-            with timeout(seconds=3, error_message='FETCH_ERROR'):
+        while(IS_CAM_OK): # MAIN WHILE LOOP FOR IMAGE ACQUISITION
+            with timeout(seconds=1, error_message='FETCH_ERROR'):
                 frame = cam.fetch_buffer()
 
             if(IS_CAM_OK and frame.payload.components):
                 image = frame.payload.components[0].data
-                if LOG:
-                    print(image)
-                # USER CONTROLS
-                user_input_key = cv2.waitKey(1)
-                if user_input_key==113: #q
-                    showLines = True
-                elif user_input_key==97: #a
-                    showLines = False
-                elif user_input_key==122: #z
-                    showYolo = True
-                elif user_input_key==120: #x
-                    showYolo = False
-                elif user_input_key==119: #w
-                    MODE="DAY"
-                    setThresholds("DAY", factor)
-                    # CHANGE EXPOSURE AND GAIN
-                elif user_input_key==115: #s
-                    MODE="NIGHT"
-                    setThresholds("NIGHT", factor)
-
                 frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                 frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
                 c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
+                
+                if MODE=="NIGHT":
+                    farBoxCenter = [97, 295] 
+                    farBoxWidth = 15 
+                    farBoxHeight = 10
 
-                boxWidth = 40
-                farBoxCenter = 97
-                farBoxWidth = 5
-                truckBoxCenter = 97
-                truckBoxWidth = 10
-                closeBoxCenter = 97
-                closeBoxWidth = 10
-                boxHeight = 10
-                closeBoxHeight = 15
+                    truckBoxCenter = [97, 190]
+                    truckBoxWidth = 30 
+                    truckBoxHeight = 20 
 
-                baseValueCenter = 50
-                baseValueWidth = 3
-                baseValueHeight = 20
-                baseValueThresh = 50
+                    closeBoxCenter = [97, 50] 
+                    closeBoxWidth = 35
+                    closeBoxHeight = 35
 
-                farBoxCenter = [97, 298] #[97,295]night #[97, 298]day
-                farBoxWidth = 5 # 15atnight # 5
-                farBoxHeight = 10
+                    sdThreshold = 2#32 #30 #2
+                    tsdThreshold = 0.8 #32 #0.8
+                    csdThreshold = 0.3 #32 #0.3
+  
+                else: # DAY DEFAULTS
+                    farBoxCenter = [97, 298]
+                    farBoxWidth = 5
+                    farBoxHeight = 10
 
-                truckBoxCenter = [97, 170] # [97, 190]day [97, 170]day
-                truckBoxWidth = 5 #30atnight # 5
-                truckBoxHeight = 10 #10 #20night
+                    truckBoxCenter = [97, 170]
+                    truckBoxWidth = 5
+                    truckBoxHeight = 10
 
-                closeBoxCenter = [97, 50] # [97, 50]day
-                closeBoxWidth = 15 #35atnight #15
-                closeBoxHeight = 15 #15day #35night
+                    closeBoxCenter = [97, 50]
+                    closeBoxWidth = 15
+                    closeBoxHeight = 15
 
-
+                    sdThreshold = 30#32 #30 #2
+                    tsdThreshold = 30 #32 #0.8
+                    csdThreshold = 30 #32 #0.3
 
                 triggerBoxFar = frameScaled[farBoxCenter[0]-farBoxWidth:farBoxCenter[0]+farBoxWidth,farBoxCenter[1]:farBoxCenter[1]+farBoxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                 triggerBoxTruck = frameScaled[truckBoxCenter[0]-truckBoxWidth:truckBoxCenter[0]+truckBoxWidth,truckBoxCenter[1]:truckBoxCenter[1]+truckBoxHeight]  #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
                 triggerBoxClose = frameScaled[closeBoxCenter[0]-closeBoxWidth:closeBoxCenter[0]+closeBoxWidth,closeBoxCenter[1]:closeBoxCenter[1]+closeBoxHeight]   #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
-                baseAvBox =frameScaled[baseValueCenter-baseValueWidth:baseValueCenter+baseValueWidth,baseValueThresh:baseValueThresh+baseValueHeight]  #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
 
                 # ARRAY METRICS FOR TRIGGERING
                 triggerBoxFarStd= np.mean(triggerBoxFar)
                 triggerBoxTruckStd= np.mean(triggerBoxTruck)
                 triggerBoxCloseStd= np.mean(triggerBoxClose)
-                baseAvStd= np.mean(triggerBoxClose)
 
                 numberOfFrames = 200
 
-                farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames # numberOfFrames frame floating average
-                truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames # numberOfFrames frame floating average
-                closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames# numberOfFrames frame floating average
-                baseAv = baseAv*(numberOfFrames-1)/numberOfFrames + baseAvStd/numberOfFrames
-
-                sdThreshold = 30#32 #30 #2
-                tsdThreshold = 30 #32 #0.8
-                csdThreshold = 30 #32 #0.3
+                farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames
+                truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames
+                closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames
 
                 farDiff = abs(farStdAv -triggerBoxFarStd)
                 truckDiff = abs(truckStdAv-triggerBoxTruckStd)
                 closeDiff = abs(closeStdAv-triggerBoxCloseStd)
                 currentTime = time.time()
 
+                # WAS GOING TO BE USED TO IDENTIFY CARS, NOW JUST A VISUAL AID FOR WHEN ZONES ARE RESETTING OR NOT
                 if isFarClear and farDiff>sdThreshold:
                     isFarClear = False
                 elif isFarClear == False and (currentTime-uproadLastTrigger)>triggerDelay: 
                     isFarClear = True
-                    
                 if isTruckClear and truckDiff>tsdThreshold:
                     isTruckClear = False
                 elif isTruckClear == False and (currentTime-truckLastTrigger)>triggerDelay: 
                     isTruckClear = True
-                    
                 if isCloseClear and closeDiff>csdThreshold:
                     isCloseClear = False
                 elif isCloseClear == False  and (currentTime-closeLastTrigger)>triggerDelay:
                     isCloseClear = True
-                
-                if currentTime-startTime>DELAY_TIME_FROM_INIT_TO_TRIGGER and farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
-                    urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
-                    numberFar += 1
-                    uproadLastTrigger = currentTime
-                if currentTime-startTime>DELAY_TIME_FROM_INIT_TO_TRIGGER and truckDiff>tsdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
-                    urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
-                    numberTruck += 1
-                    truckLastTrigger = currentTime
-                    setUproadTruckDelay()
-                if currentTime-startTime>DELAY_TIME_FROM_INIT_TO_TRIGGER and closeDiff>csdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
-                    urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
-                    numberClose += 1
-                    closeLastTrigger = currentTime
+
+                if currentTime-startTime>DELAY_TIME_FROM_INIT_TO_TRIGGER:
+                    if farDiff>sdThreshold and (currentTime-uproadLastTrigger)>triggerDelay:
+                        urllib.request.urlopen(TRIGGER_FAR_FLASH_URL).read()
+                        numberFar += 1
+                        uproadLastTrigger = currentTime
+                    if truckDiff>tsdThreshold and (currentTime-truckLastTrigger)>triggerDelay:
+                        urllib.request.urlopen(TRIGGER_TRUCK_FLASH_URL).read()
+                        numberTruck += 1
+                        truckLastTrigger = currentTime
+                    if closeDiff>csdThreshold and (currentTime-closeLastTrigger)>triggerDelay:
+                        urllib.request.urlopen(TRIGGER_CLOSE_FLASH_URL).read()
+                        numberClose += 1
+                        closeLastTrigger = currentTime
 
                 # SHOW LINES SECTION
-                if showLines and MODE=="DAY":
-                    if isFarClear:
-                        cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(0,255,0))
-                    else: 
-                        cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(0,0,255))
-                    if isTruckClear:
-                        cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+truckBoxHeight,truckBoxCenter[0]+truckBoxWidth),(0,255,0))
-                    else:
-                        cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+truckBoxHeight,truckBoxCenter[0]+truckBoxWidth),(0,0,255))       
-                    if isCloseClear:
-                        cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,255,0))
-                    else:
-                        cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,0,255))
+                if showLines:
+                    cv2.rectangle(frameColorised, (farBoxCenter[1],farBoxCenter[0]-farBoxWidth),(farBoxCenter[1]+farBoxHeight,farBoxCenter[0]+farBoxWidth),(0,255,0) if isFarClear else (0,0,255))
+                    cv2.rectangle(frameColorised, (truckBoxCenter[1],truckBoxCenter[0]-truckBoxWidth),(truckBoxCenter[1]+truckBoxHeight,truckBoxCenter[0]+truckBoxWidth),(0,255,0) if isTruckClear else (0,0,255))
+                    cv2.rectangle(frameColorised, (closeBoxCenter[1],closeBoxCenter[0]-closeBoxWidth),(closeBoxCenter[1]+closeBoxHeight,closeBoxCenter[0]+closeBoxWidth),(0,255,0) if isCloseClear else (0,0,255))
+
                 # DISPLAY FRAME IN WINDOW
-                if IS_ROTATE:
-                    cv2.imshow(WINDOW_NAME, np.rot90(frameColorised))
-                else:
-                    cv2.imshow(WINDOW_NAME, frameColorised)
+                cv2.imshow(WINDOW_NAME, np.rot90(frameColorised) if IS_ROTATE else frameColorised)
                         
                 frame.queue()
                 cv2.waitKey(1)
                 avFrameRate=avFrameRate*49/50+int(1.0/(time.time()-lastTime))/50
                 if frameCount%1==0:
-                    #print("mode:", MODE,"close mode:", CLOSE_TRIGGER_METHOD, "Count Far", numberFar, "Count Truck", numberTruck,"Count Close", numberClose,"avFPS:", avFrameRate ,"frame:", frameCount, "fps:", int(1.0/(time.time()-lastTime)),"trigger dif",uproadTruckDelay)
                     print("CF", numberFar, "CT", numberTruck,"CC", numberClose,"avFPS", int(avFrameRate),"FV", int(triggerBoxFarStd),"TV", int(triggerBoxTruckStd), "CV", int(triggerBoxCloseStd))
                 lastTime = time.time()
                 frameCount += 1

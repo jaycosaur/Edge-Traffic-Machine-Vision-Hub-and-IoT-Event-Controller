@@ -1,0 +1,25 @@
+Starting Upload Scripts
+
+    -please see howtorun.txt in /Upload/ for how to execute file upload to cloud services.
+
+On Site Processing Scripts
+    These are fully responsible for the management of files, metadata, backup, security indicator writing etc.
+    It is broken down into three main scripts:
+        - index.js - responsible for watching the raw folder, upon file save to raw folder it appends meta-data to the file and then moves file to the processed cache
+        - autoBackup.js - responsible for backing up data to the BACKUP_LOCATIONS denoted in the config.json, watches the processed cache.
+        - nasBackup.js - responsible for backing up data to the NAS drive, it watches the first BACKUP_LOCATION and on save it automatically begins to transfer data to NAS location given in config.json
+    
+    Supplementary scripts are as follows:
+        - resetStore.js - **DO NOT RUN AS SUDO** this cleans out the local store and resets to default state - run with: node resetStore.js
+        - resetCache.js - **DO NOT RUN AS SUDO** this cleans out the processed cache and resets to default state - run with: node resetCache.js
+
+    All scripts are controlled by PM2, to initiate scripts please run ...
+
+Vision Scripts
+
+    All scripts are controlled via PM2 see http://pm2.keymetrics.io/
+    To start scripts: ./initSnapshots for the 9 snapshot recorders, and ./initStreamsPM2 for the streaming camera
+
+Machine Vision Scripts
+    This is for the generation and creation of required files needed for yolo.
+    See the instructions of data-preparation-instructions.txt for how to fetch images and prepare files and see yolo-instructions.txt on how to use this data to train a yolo darknet model

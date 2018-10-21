@@ -1,7 +1,9 @@
-FOR DATABASE SYNC:
+FOR DATABASE SYNC: NEEDS TO BE RUN IN ~onetask-server/Upload
 
-sudo gcloudkeypath=/keys/gcloudkey.json node index.js /Volumes/ONETASK-ONE/
+sudo gcloudkeypath=/keys/gcloudkey.json node index.js <PATH_TO_DISK>
 
-FOR FILE UPLOAD:
+eg. sudo gcloudkeypath=/keys/gcloudkey.json node index.js /Volumes/ONETASK-ONE/
 
-sudo gsutil cp "*.png" gs://onetask-sydney-tfnsw
+FOR FILE UPLOAD: NEEDS TO BE RUN FROM WITHIN THE HARDDRIVE! 
+
+sudo gsutil -m cp "*.png" gs://onetask-sydney-tfnsw
