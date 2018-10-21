@@ -23,7 +23,7 @@ const convertNameToObj = (meta) => {
 }
 
 module.exports = actionHandler = (action) => {
-    //console.log(chalk.black.bgYellow('Action Received: ', action.type))
+    console.log(chalk.black.bgYellow('Action Received: ', action.type))
     if(action.type === actionTypes.rawStoreFileUpdated){
         console.log("TEST1")
         const pathComps = action.payload.path.split("/")
