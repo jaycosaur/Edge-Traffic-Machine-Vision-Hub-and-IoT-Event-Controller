@@ -351,7 +351,7 @@ def mainWorker(camId):
                     toggleAutoExposure(autoExposureValue)
                 if cv2.getTrackbarPos(autoGainSwitch,WINDOW_NAME)!=autoGainValue:
                     autoGainValue = cv2.getTrackbarPos(autoGainSwitch,WINDOW_NAME)
-                    toggleLogs(autoGainValue)
+                    toggleAutoGain(autoGainValue)
                 if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
                     modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
                     switchMode(modeSwitchValue)
