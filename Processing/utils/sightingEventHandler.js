@@ -31,7 +31,7 @@ class writerClass {
             ...record,
         }])       // returns a promise
             .then(() => {
-                console.log(chalk.magenta(`${Date.now()} => ${Object.keys(record).map(key=>`${key}=${record[key]}`)}`));
+                //console.log(chalk.magenta(`${Date.now()} => ${Object.keys(record).map(key=>`${key}=${record[key]}`)}`));
             });
     }
 }
