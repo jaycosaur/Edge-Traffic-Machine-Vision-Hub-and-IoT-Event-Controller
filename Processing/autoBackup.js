@@ -1,6 +1,4 @@
-const watch = require('node-watch');
 const chokidar = require('chokidar')
-
 const config = require('./../config.json')
 const chalk = require('chalk');
 const moment = require('moment')
@@ -43,32 +41,7 @@ class fileBackupQueue {
             this.lastBackedUp = moment()
         })
     }
-    /* return Promise.all(this.backupPath.map(bpath => {
-        return Promise.all(
-            this.backupStack.map(file=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
-        ) 
-        return Promise.all( this.backupStack.map(file => {
-            return Promise.all(
-                this.backupPath.map(bpath=>fs.copy(path.join(this.watchPath,file), path.join(bpath,file)))
-            )
-        }))
-        
 
-        return new Promise(async (resolve, reject)=>{
-            for (const file of this.backupStack) {
-                for (const bpath of this.backupPath){
-                    try {
-                        await fs.copy(path.join(this.watchPath,file), path.join(bpath,file))
-                        console.log(chalk.bold.green(file + ' complete!'))
-                    } catch (err) {
-                        console.log(chalk.bold.red(err))
-                    }
-                }
-            }
-            resolve()
-        })
-          
-        */
     backupFiles() {
         return Promise.all( this.backupStack.map(file => {
             return Promise.all(
@@ -103,7 +76,7 @@ class fileBackupQueue {
     }
 
     init() {
-        this.watch =  chokidar.watch(this.watchPath, { awaitWriteFinish: true })
+        this.watch = chokidar.watch(this.watchPath, { awaitWriteFinish: true })
         console.log(this.watchPath)
         chokidar.watch(this.watchPath, { awaitWriteFinish: true }).on('add', function(name) {
             const fileName = name.split('/').pop()

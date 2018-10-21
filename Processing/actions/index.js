@@ -1,6 +1,7 @@
 const config = require('./../../config.json')
 const actionTypes = require('./actionTypes')
 const fs = require('fs');
+const fsX = require('fs-extra');
 const chalk = require('chalk');
 const moment = require('moment');
 const logWriter = require('./../utils/sightingEventHandler')
@@ -25,7 +26,6 @@ module.exports = actionHandler = (action) => {
     if(action.type === actionTypes.rawStoreFileUpdated){
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
-
         axios.get('http://192.168.1.100:8000/gps-coords')
             .then(function (response) {
                 const { lat, lon, time } = response.data
@@ -56,7 +56,18 @@ module.exports = actionHandler = (action) => {
                         })
                     }
                 )
-            })
-                
+            })       
+    }
+}
+
+module.exports = actionHandler = (action) => {
+    //console.log(chalk.black.bgYellow('Action Received: ', action.type))
+    if(action.type === actionTypes.processedStoreFileUpdated){
+        // backup to external and unlink
+        const pathComps = action.payload.path.split("/")
+        const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
+        fsX.move(action.payload.path, path.join(config.BACKUP_LOCATIONS[0], fileName), (err) => {
+            if (err) console.log("Error Backing up: %s", filename)
+        })
     }
 }
