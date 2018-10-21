@@ -40,7 +40,7 @@ rawStoreWatcher.on('add', function(name) {
             writeLogger.write(`${"RAW_STORE_FILE_UPDATED"} | ${name}`)
     })
 
-procesedStoreWatcher.on('add', function(name) {
+processedStoreWatcher.on('add', function(name) {
         eventQueue({type: "PROCESSED_STORE_FILE_UPDATED", payload: {path: name}})
         writeLogger.write(`${"PROCESSED_STORE_FILE_UPDATED"} | ${name}`)
 })
