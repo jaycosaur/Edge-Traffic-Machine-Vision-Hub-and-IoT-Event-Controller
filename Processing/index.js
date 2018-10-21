@@ -35,15 +35,14 @@ console.log(chalk.bgGreen.black(`Now watching '${RAW_PATH}', '${STAGED_PATH}' an
     writeLogger.write(`${evt} | ${name}`)
 }) */
 
-rawStoreWatcher.on('add', function(name) {
-            console.log('woot')
-            eventQueue({type: "RAW_STORE_FILE_UPDATED", payload: {path: name}})
-            writeLogger.write(`${"RAW_STORE_FILE_UPDATED"} | ${name}`)
-    })
+rawStoreWatcher.on('add', async (name) => {
+    writeLogger.write(`${"RAW_STORE_FILE_UPDATED"} | ${name}`)
+    return eventQueue({type: "RAW_STORE_FILE_UPDATED", payload: {path: name}})
+})
 
 processedStoreWatcher.on('add', function(name) {
-        eventQueue({type: "PROCESSED_STORE_FILE_UPDATED", payload: {path: name}})
-        writeLogger.write(`${"PROCESSED_STORE_FILE_UPDATED"} | ${name}`)
+    eventQueue({type: "PROCESSED_STORE_FILE_UPDATED", payload: {path: name}})
+    writeLogger.write(`${"PROCESSED_STORE_FILE_UPDATED"} | ${name}`)
 })
 
 stagedStoreWatcher.on('change', function(evt, name) {

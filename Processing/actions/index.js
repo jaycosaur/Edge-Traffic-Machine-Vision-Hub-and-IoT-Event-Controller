@@ -28,7 +28,7 @@ module.exports = actionHandler = (action) => {
         console.log("TEST1")
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
-        axios.get('http://192.168.1.100:8000/gps-coords')
+        return axios.get('http://192.168.1.100:8000/gps-coords')
             .then(function (response) {
                 const { lat, lon, time } = response.data
                 const objToWrite = {
