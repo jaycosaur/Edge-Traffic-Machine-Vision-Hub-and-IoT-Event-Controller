@@ -9,6 +9,7 @@ const encoder = (keyvalue, currentPath, newPath, callback) => {
     fs.readFile(currentPath, (err, buffer) => {
         new PNG(buffer).decode((pixels)=>{
             let timestart = new Date.now()
+            console.log('starting ....')
             securityIndicator = sha256(pixels.toString('utf8'))
             console.log("HASH TOOK: ", Math.round(Date.now()-timestart))
             const chunks = extract(buffer)
