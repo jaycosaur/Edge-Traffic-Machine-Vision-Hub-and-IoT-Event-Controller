@@ -37,7 +37,7 @@ console.log(chalk.bgGreen.black(`Now watching '${RAW_PATH}', '${STAGED_PATH}' an
 
 rawStoreWatcher.on('add', async (name) => {
     writeLogger.write(`${"RAW_STORE_FILE_UPDATED"} | ${name}`)
-    return eventQueue({type: "RAW_STORE_FILE_UPDATED", payload: {path: name}})
+    await eventQueue({type: "RAW_STORE_FILE_UPDATED", payload: {path: name}})
 })
 
 processedStoreWatcher.on('add', function(name) {
