@@ -92,14 +92,14 @@ def worker(camId):
         exit ()
 
     cam.set_pixel_format (PIXEL_CONFIG)
-    cam.get_device().set_string_feature_value("TriggerSource", "Line3")
-    cam.get_device().set_string_feature_value("GainAuto", "Off")
-    cam.set_acquisition_mode(Aravis.AcquisitionMode.CONTINUOUS)
-    cam.set_trigger('On')
+    #cam.get_device().set_string_feature_value("TriggerSource", "Line3")
+    #cam.get_device().set_string_feature_value("GainAuto", "Off")
+    #cam.set_acquisition_mode(Aravis.AcquisitionMode.CONTINUOUS)
+    #cam.set_trigger('On')
 
     stream = cam.create_stream (None, None)
-    cam.get_device().set_string_feature_value("TriggerActivation", 'FallingEdge')
-    cam.set_exposure_time(1000)
+    #cam.get_device().set_string_feature_value("TriggerActivation", 'FallingEdge')
+    #cam.set_exposure_time(1000)
     #cam.set_gain_auto(Aravis.Auto(2)) #auto gain
 
     payload = cam.get_payload()
@@ -121,10 +121,6 @@ def worker(camId):
     print ("Pixel Formats  : %s" %(cam.get_available_pixel_formats_as_display_names()))
 
     cv2.namedWindow(WINDOW_NAME, flags=0)
-
-    #for i in range(0,5):
-        #stream.push_buffer (Aravis.Buffer.new_allocate (payload))
-
     cam.start_acquisition()
 
     lastTime = time.time()
@@ -263,7 +259,6 @@ def worker(camId):
             cv2.imwrite(CACHE_PATH+imageName,im.copy())
             print('Camera ', WINDOW_NAME, ' was triggered at ', time.time())
             lastTime = time.time()
-        #stream.push_buffer(buffer)
         cv2.waitKey(1)
 
     cam.stop_acquisition ()

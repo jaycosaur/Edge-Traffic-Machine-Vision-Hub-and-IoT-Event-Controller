@@ -5,7 +5,7 @@ const fs = require('fs')
 const PNG = require('png-js');
 const sha256 = require('sha256')
 
-encode = (keyvalue, currentPath, newPath, callback) => {
+const encoder = (keyvalue, currentPath, newPath, callback) => {
     fs.readFile(currentPath, (err, buffer) => {
         new PNG.buffer(buffer).decode((pixels)=>{
             console.log(pixels)
@@ -25,4 +25,4 @@ encode = (keyvalue, currentPath, newPath, callback) => {
     })
 }
 
-module.exports = encode
+module.exports = encoder
