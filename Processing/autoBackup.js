@@ -1,4 +1,6 @@
 const watch = require('node-watch');
+const chokidar = require('chokidar')
+
 const config = require('./../config.json')
 const chalk = require('chalk');
 const moment = require('moment')
@@ -101,15 +103,10 @@ class fileBackupQueue {
     }
 
     init() {
-        this.watch = watch(this.watchPath, { recursive: true })
-        this.watch.on('change', (evt, name) => {
-            switch(evt){
-                case "update": 
-                    const fileName = name.split('/').pop()
-                    this.add(fileName) 
-                    break
-                default: null
-            }
+        this.watch =  chokidar.watch(this.watchPath, {awaitWriteFinish: true})
+        rawStoreWatcher.on('add', function(name) {
+            const fileName = name.split('/').pop()
+            this.add(fileName) 
         })
     }
 
