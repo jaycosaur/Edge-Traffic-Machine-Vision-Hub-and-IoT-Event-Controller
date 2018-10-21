@@ -26,37 +26,40 @@ module.exports = actionHandler = (action) => {
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
 
-        // meta data tagging : 
-        axios.get('http://192.168.1.100:8000/gps-coords')
-            .then(function (response) {
-                const { lat, lon, time } = response.data
-                const objToWrite = {
-                    ID: ID,
-                    timeUNIX: UNIX,
-                    timeISO: moment.unix(Math.round(UNIX/1000)).toISOString(),
-                    timeGPS: time,
-                    GPS_COORDS: `${lat}, ${lon}`,
-                    CAM,
-                    PLATE,
-                    PATH: fileName
-                }
-                processedRecordLog.write(objToWrite)
-                return response.data
-            }).then(data => {
-                encode({
-                        direction_of_travel: "west",
-                        gps_latitude: data.lat,
-                        gps_longitude: data.lon,
-                        gps_time_iso: data.time,
-                        capture_time_unixms: UNIX,
-                    }, action.payload.path, `${config.PROCESSED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,
-                    () => {
-                        // delete file at action.payload.path
-                        fs.unlink(action.payload.path,(err)=>{
-                            if (err) throw err;
-                        })
-                    }
-                )
-            })
+        fs.exists(action.payload.path, function(exists) {
+            if (exists) {
+                axios.get('http://192.168.1.100:8000/gps-coords')
+                    .then(function (response) {
+                        const { lat, lon, time } = response.data
+                        const objToWrite = {
+                            ID: ID,
+                            timeUNIX: UNIX,
+                            timeISO: moment.unix(Math.round(UNIX/1000)).toISOString(),
+                            timeGPS: time,
+                            GPS_COORDS: `${lat}, ${lon}`,
+                            CAM,
+                            PLATE,
+                            PATH: fileName
+                        }
+                        processedRecordLog.write(objToWrite)
+                        return response.data
+                    }).then(data => {
+                        encode({
+                                direction_of_travel: "west",
+                                gps_latitude: data.lat,
+                                gps_longitude: data.lon,
+                                gps_time_iso: data.time,
+                                capture_time_unixms: UNIX,
+                            }, action.payload.path, `${config.PROCESSED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,
+                            () => {
+                                // delete file at action.payload.path
+                                fs.unlink(action.payload.path,(err)=>{
+                                    if (err) throw err;
+                                })
+                            }
+                        )
+                    })
+            }
+          });
     }
 }
