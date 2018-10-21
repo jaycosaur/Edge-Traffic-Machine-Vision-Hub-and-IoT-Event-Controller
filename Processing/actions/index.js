@@ -13,7 +13,7 @@ const processedRecordLog = new logWriter({path: config.PROCESSED_LOGS_PATH})
 const workerpool = require('workerpool')
 const pool = workerpool.pool()
 
-const hashingWorker = (data, pathin, pathout) => {
+const hashingWorker = (data, pathin, pathout, encode) => {
     encode(data, pathin, pathout,
         () => {
             fs.unlink(pathin,(err)=>{
@@ -99,7 +99,7 @@ module.exports = actionHandler = (action) => {
                 }
                 const pathin = action.payload.path
                 const pathout = `${config.BACKUP_LOCATIONS[0]}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`
-                pool.exec(hashingWorker, [dataToWrite, pathin, pathout]).then(res=>console.log("done")).catch(err=>console.log(err))
+                pool.exec(hashingWorker, [dataToWrite, pathin, pathout], encode).then(res=>console.log("done")).catch(err=>console.log(err))
             }).catch(err=>console.log(err))     
     }
     if(action.type === actionTypes.processedStoreFileUpdated){
