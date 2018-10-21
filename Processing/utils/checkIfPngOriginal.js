@@ -19,16 +19,18 @@ const textChunks = chunks.filter(function (chunk) {
 
 console.log('META DATA STORED ON IMAGE:')
 
-Object.keys(textChunks).map(key=>console.log(`${key}: ${textChunks[key]}`))
+textChunks.map(chunk=>console.log(`${chunk.keyword}: ${chunk.text}`))
 
-console.log(`SECURITY INDICATOR IN META DATA: ${textChunks["security_indicator"]}`)
+const metaSecInd = textChunks.map(i=>i[0]).indexOf("security_indicator")>-1?textChunks[textChunks.map(i=>i[0]).indexOf("security_indicator")][1]:null
+
+console.log(`SECURITY INDICATOR IN META DATA: ${metaSecInd}`)
+
 
 new PNG(buffer).decode((pixels)=>{
     newSecInd = sha256(pixels.toString('utf8'))
+    console.log(`SECURITY INDICATOR ON IMAGE: ${newSecInd}`)
+    console.log(newSecInd===metaSecInd?`SECURITY INDICATORS MATCH, PASS`:`SECURITY INDICATORS DO NOT MATCH, FAIL`)
 })
 
-console.log(`SECURITY INDICATOR ON IMAGE: ${newSecInd}`)
-
-console.log(newSecInd===textChunks["security_indicator"]?`SECURITY INDICATORS MATCH, PASS`:`SECURITY INDICATORS DO NOT MATCH, FAIL`)
 
 
