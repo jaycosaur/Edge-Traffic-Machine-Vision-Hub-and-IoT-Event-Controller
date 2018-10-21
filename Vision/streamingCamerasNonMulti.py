@@ -172,8 +172,9 @@ def mainWorker(camId):
         def nothing(x):
             pass
 
-        def toggleBoxes(x):
-            print(x)
+        def toggleBoxes(x, userdata):
+            print(x, userdata)
+            print('woo')
             if x==1:
                 showLines = True
             else:
