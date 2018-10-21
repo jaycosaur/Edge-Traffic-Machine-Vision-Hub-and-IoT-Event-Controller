@@ -246,6 +246,7 @@ def mainWorker(camId):
             pass
 
         def toggleBoxes(x):
+            nonlocal showLines
             if x==1:
                 showLines = True
                 print("SHOWING TRIGGER BOXES")
@@ -253,6 +254,7 @@ def mainWorker(camId):
                 showLines = False
                 print("HIDING TRIGGER BOXES")
         def toggleLogs(x):
+            nonlocal logsOn
             if x==1:
                 logsOn = True
                 print("SHOWING LOGS")
@@ -274,6 +276,7 @@ def mainWorker(camId):
                 logsOn = False
                 print("AUTO GAIN OFF")
         def switchMode(x):
+            nonlocal MODE
             if x==1:
                 MODE = "DAY"
                 setDefaultValues(MODE)
