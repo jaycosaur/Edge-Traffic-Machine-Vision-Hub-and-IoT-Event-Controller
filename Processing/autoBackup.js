@@ -104,7 +104,7 @@ class fileBackupQueue {
 
     init() {
         this.watch =  chokidar.watch(this.watchPath, {awaitWriteFinish: true})
-        rawStoreWatcher.on('add', function(name) {
+        this.watch.on('add', function(name) {
             const fileName = name.split('/').pop()
             this.add(fileName) 
         })
