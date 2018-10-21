@@ -35,6 +35,8 @@ const convertNameToObj = (meta) => {
     }, {fileType, fileName: meta})
 }
 
+
+
 module.exports = actionHandler = (action) => {
     //console.log(chalk.black.bgYellow('Action Received: ', action.type))
     if(action.type === actionTypes.rawStoreFileUpdated){
@@ -42,7 +44,6 @@ module.exports = actionHandler = (action) => {
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
         axios.get('http://192.168.1.100:8000/gps-coords')
             .then(function (response) {
-                console.log("STAGE 1")
                 const { lat, lon, time } = response.data
                 const objToWrite = {
                     ID: ID,
@@ -57,7 +58,6 @@ module.exports = actionHandler = (action) => {
                 processedRecordLog.write(objToWrite)
                 return response.data
             }).then(data => {
-                console.log("STAGE 2")
                 encode({
                         direction_of_travel: "west",
                         gps_latitude: data.lat,
@@ -66,7 +66,6 @@ module.exports = actionHandler = (action) => {
                         capture_time_unixms: UNIX,
                     }, action.payload.path, `${config.PROCESSED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,
                     () => {
-                        console.log("STAGE 3")
                         fs.unlink(action.payload.path,(err)=>{
                             if (err) console.log(err);
                         })
