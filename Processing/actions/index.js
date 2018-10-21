@@ -57,7 +57,7 @@ module.exports = actionHandler = (action) => {
                         })
                     }
                 )
-            })       
+            }).catch(err=>console.log(err))     
     }
 }
 
