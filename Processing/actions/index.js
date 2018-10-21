@@ -47,7 +47,7 @@ module.exports = actionHandler = (action) => {
                         direction_of_travel: "west",
                         gps_latitude: data.lat,
                         gps_longitude: data.lon,
-                        gps_time_unixms: data.time,
+                        gps_time_iso: data.time,
                         capture_time_unixms: UNIX,
                     }, action.payload.path, `${config.PROCESSED_STORE_PATH}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,
                     () => {
