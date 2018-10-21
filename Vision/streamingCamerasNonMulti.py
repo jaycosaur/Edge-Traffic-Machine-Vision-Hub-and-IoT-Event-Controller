@@ -87,13 +87,13 @@ DEFAULT_VALUES = {
         'csdThreshold': 30,
     },
     'NIGHT': {
-        'farBoxCenter': [97, 295] ,
-        'farBoxWidth': 15 ,
+        'farBoxCenter': [97, 295],
+        'farBoxWidth': 15,
         'farBoxHeight': 10,
         'truckBoxCenter': [97, 190],
-        'truckBoxWidth': 30 ,
-        'truckBoxHeight': 20 ,
-        'closeBoxCenter': [97, 50] ,
+        'truckBoxWidth': 30,
+        'truckBoxHeight': 20,
+        'closeBoxCenter': [97, 50],
         'closeBoxWidth': 35,
         'closeBoxHeight': 35,
         'sdThreshold': 2,
@@ -261,20 +261,6 @@ def mainWorker(camId):
             else:
                 logsOn = False
                 print("HIDING LOGS")
-        def toggleAutoExposure(x):
-            if x==1:
-                logsOn = True
-                print("AUTO EXPOSURE ON")
-            else:
-                logsOn = False
-                print("AUTO EXPOSURE OFF")
-        def toggleAutoGain(x):
-            if x==1:
-                logsOn = True
-                print("AUTO GAIN ON")
-            else:
-                logsOn = False
-                print("AUTO GAIN OFF")
         def switchMode(x):
             nonlocal MODE
             if x==1:
@@ -287,6 +273,14 @@ def mainWorker(camId):
                 setDefaultValues(MODE)
                 #set camera defaults
                 print("SWITCHED TO NIGHT MODE")
+        def handleChangeInTrigger(x):
+            nonlocal logsOn
+            if x==1:
+                logsOn = True
+                print("SHOWING LOGS")
+            else:
+                logsOn = False
+                print("HIDING LOGS")
 
         uproadLastTrigger = time.time()
         truckLastTrigger = time.time()
@@ -305,16 +299,11 @@ def mainWorker(camId):
 
         cv2.createTrackbar(showBoxes,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar(outputLogs,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
         cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
+        cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
-        cv2.createTrackbar(autoExposureSwitch,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar(autoGainSwitch,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar('Exposure',WINDOW_NAME,20,1000,nothing)
-        cv2.createTrackbar('Gain',WINDOW_NAME,0,24,nothing)
-        # setThresholds("DAY", factor)
 
         showBoxesValue = None
         outputLogsValue = None
@@ -323,10 +312,6 @@ def mainWorker(camId):
         farGrayValue = None
         truckGrayValue = None
         closeGrayValue = None
-        autoExposureValue = None
-        autoGainValue = None
-        exposureValue = None
-        gainValue = None
 
         while(IS_CAM_OK): # MAIN WHILE LOOP FOR IMAGE ACQUISITION
             with timeout(seconds=1, error_message='FETCH_ERROR'):
@@ -346,12 +331,9 @@ def mainWorker(camId):
                 if cv2.getTrackbarPos(outputLogs,WINDOW_NAME)!=outputLogsValue:
                     outputLogsValue = cv2.getTrackbarPos(outputLogs,WINDOW_NAME)
                     toggleLogs(outputLogsValue)
-                if cv2.getTrackbarPos(autoExposureSwitch,WINDOW_NAME)!=autoExposureValue:
-                    autoExposureValue = cv2.getTrackbarPos(autoExposureSwitch,WINDOW_NAME)
-                    toggleAutoExposure(autoExposureValue)
-                if cv2.getTrackbarPos(autoGainSwitch,WINDOW_NAME)!=autoGainValue:
-                    autoGainValue = cv2.getTrackbarPos(autoGainSwitch,WINDOW_NAME)
-                    toggleAutoGain(autoGainValue)
+                if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
+                    modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
+                    switchMode(modeSwitchValue)
                 if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
                     modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
                     switchMode(modeSwitchValue)
