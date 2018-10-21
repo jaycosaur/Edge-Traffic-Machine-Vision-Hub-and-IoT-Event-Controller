@@ -173,6 +173,7 @@ def mainWorker(camId):
             pass
 
         def toggleBoxes(x):
+            print(x)
             if x==1:
                 showLines = True
             else:
@@ -219,7 +220,7 @@ def mainWorker(camId):
                 frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                 frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
                 c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
-                
+
                 if MODE=="NIGHT":
                     farBoxCenter = [97, 295] 
                     farBoxWidth = 15 
