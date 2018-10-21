@@ -16,7 +16,7 @@ const encoder = (keyvalue, currentPath, newPath, callback) => {
             chunks.splice(-1, 0, text.encode("security_indicator", securityIndicator))
             fs.writeFile(newPath, new Buffer(encode(chunks)),
                 (err) => {
-                    if (err) throw err;
+                    if (err) console.log(err);
                     callback()
                 }
             )

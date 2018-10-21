@@ -60,7 +60,7 @@ module.exports = actionHandler = (action) => {
                                 () => {
                                     // delete file at action.payload.path
                                     fs.unlink(action.payload.path,(err)=>{
-                                        if (err) throw err;
+                                        if (err) console.log(err);
                                     })
                                 }
                             )
@@ -73,7 +73,7 @@ module.exports = actionHandler = (action) => {
 
         fs.stat(action.payload.path, function (err, stat) {
             // Replace error checking with something appropriate for your app.
-            if (err) throw err;
+            if (err) console.log(err);
             setTimeout(checkEnd, end_timeout, action.payload.path, stat);
         });
 
