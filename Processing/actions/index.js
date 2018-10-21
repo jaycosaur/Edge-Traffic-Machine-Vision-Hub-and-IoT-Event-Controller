@@ -28,7 +28,7 @@ module.exports = actionHandler = (action) => {
         console.log("TEST1")
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
-        return axios.get('http://192.168.1.100:8000/gps-coords')
+        axios.get('http://192.168.1.100:8000/gps-coords')
             .then(function (response) {
                 const { lat, lon, time } = response.data
                 const objToWrite = {
@@ -61,10 +61,6 @@ module.exports = actionHandler = (action) => {
                 )
             }).catch(err=>console.log(err))     
     }
-}
-
-module.exports = actionHandler = (action) => {
-    //console.log(chalk.black.bgYellow('Action Received: ', action.type))
     if(action.type === actionTypes.processedStoreFileUpdated){
         // backup to external and unlink
         const pathComps = action.payload.path.split("/")
