@@ -193,7 +193,8 @@ def mainWorker(camId):
         autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
         autoGainSwitch = '0 : Auto Gain OFF \n1 : Auto Gain ON'
         modeSwitch = '0 : Night Mode\n1 : Day Mode'
-        cv2.createTrackbar(showBoxes,WINDOW_NAME,0,1,toggleBoxes)
+
+        cv2.createTrackbar(showBoxes,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
         cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
@@ -221,6 +222,9 @@ def mainWorker(camId):
                 frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                 frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
                 c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
+
+                # CHECKING POSITION OF ALL TRACKBARS
+                print(cv2.getTrackbarPos(showBoxes,WINDOW_NAME))
 
                 if MODE=="NIGHT":
                     farBoxCenter = [97, 295] 
