@@ -316,6 +316,7 @@ def mainWorker(camId):
                 cv2.waitKey(1)
                 avFrameRate=avFrameRate*49/50+int(1.0/(time.time()-lastTime))/50
                 if frameCount%1==0:
+                    a = 1
                     #print("CF", numberFar, "CT", numberTruck,"CC", numberClose,"avFPS", int(avFrameRate),"FV", int(triggerBoxFarStd),"TV", int(triggerBoxTruckStd), "CV", int(triggerBoxCloseStd))
                 lastTime = time.time()
                 frameCount += 1
