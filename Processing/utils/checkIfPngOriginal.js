@@ -21,9 +21,9 @@ console.log('META DATA STORED ON IMAGE:')
 
 textChunks.map(chunk=>console.log(`${chunk.keyword}: ${chunk.text}`))
 
-console.log(textChunks.map(i=>i[0]))
+console.log(textChunks.map(i=>i.keyword))
 
-const metaSecInd = textChunks.map(i=>i[0]).indexOf("security_indicator")>-1?textChunks[textChunks.map(i=>i[0]).indexOf("security_indicator")][1]:null
+const metaSecInd = textChunks.map(i=>i.keyword).indexOf("security_indicator")>-1?textChunks[textChunks.map(i=>i.keyword).indexOf("security_indicator")].text:null
 
 console.log(`SECURITY INDICATOR IN META DATA: ${metaSecInd}`)
 
