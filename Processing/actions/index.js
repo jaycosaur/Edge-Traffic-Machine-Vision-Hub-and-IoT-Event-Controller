@@ -37,7 +37,7 @@ const convertNameToObj = (meta) => {
 
 module.exports = actionHandler = (action) => {
     //console.log(chalk.black.bgYellow('Action Received: ', action.type))
-    if(false && action.type === actionTypes.rawStoreFileUpdated){
+    if(action.type === actionTypes.rawStoreFileUpdated){
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
         axios.get('http://192.168.1.100:8000/gps-coords')
@@ -71,7 +71,7 @@ module.exports = actionHandler = (action) => {
                 )
             }).catch(err=>console.log(err))     
     }
-    if(action.type === actionTypes.rawStoreFileUpdated){
+    if(false && action.type === actionTypes.rawStoreFileUpdated){
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
         axios.get('http://192.168.1.100:8000/gps-coords')
