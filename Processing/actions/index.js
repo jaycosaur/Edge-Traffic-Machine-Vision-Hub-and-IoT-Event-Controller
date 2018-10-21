@@ -65,6 +65,8 @@ module.exports = actionHandler = (action) => {
                         gps_time_iso: data.time,
                         capture_time_unixms: UNIX,
                     }, action.payload.path, `${config.BACKUP_LOCATIONS[0]}ID=${ID}_CAM=${CAM}_PLATE=${'ERROR'}_UNIX=${UNIX}${fileType}`,
+                    false
+                    ,
                     () => {
                         fs.unlink(action.payload.path,(err)=>{
                             if (err) console.log(err);
