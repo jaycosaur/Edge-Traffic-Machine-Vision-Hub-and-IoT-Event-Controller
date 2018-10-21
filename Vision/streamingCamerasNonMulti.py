@@ -71,6 +71,37 @@ THRESHOLDS = {
     }
 }
 
+DEFAULT_VALUES = {
+    'DAY': {
+        'farBoxCenter': [97, 298]
+        'farBoxWidth': 5
+        'farBoxHeight': 10
+        'truckBoxCenter': [97, 170]
+        'truckBoxWidth': 5
+        'truckBoxHeight': 10
+        'closeBoxCenter': [97, 50]
+        'closeBoxWidth': 15
+        'closeBoxHeight': 15
+        'sdThreshold': 30
+        'tsdThreshold': 30
+        'csdThreshold': 30
+    },
+    'NIGHT': {
+        'farBoxCenter': [97, 295] 
+        'farBoxWidth': 15 
+        'farBoxHeight': 10
+        'truckBoxCenter': [97, 190]
+        'truckBoxWidth': 30 
+        'truckBoxHeight': 20 
+        'closeBoxCenter': [97, 50] 
+        'closeBoxWidth': 35
+        'closeBoxHeight': 35
+        'sdThreshold': 2
+        'tsdThreshold': 0.8
+        'csdThreshold': 0.3
+    }
+}
+
 class timeout:
     def __init__(self, seconds=1, error_message='Timeout'):
         self.seconds = seconds
@@ -96,8 +127,6 @@ def mainWorker(camId):
     CAM_NAME = CAM_CONFIG[camId]['name']
     WINDOW_NAME = CAM_CONFIG[camId]['window']
     IS_ROTATE = CAM_CONFIG[camId]['rotate']
-    # main worker event loop, will keep restarting on camera dropout
-
     #variable declarations
     lastTime = time.time()
     transposeTime = 0
@@ -113,12 +142,13 @@ def mainWorker(camId):
     scale = 800/1920
     factor = baseRes/320
     showLines = False
+    logsOn = False
     showYolo = False
     IS_CAM_OK = True
     MODE = "DAY"
     CLOSE_TRIGGER_METHOD = "DELAY" # DELAY, CALC
 
-    # SET MODE BASED ON TIME
+    # SET MODE BASED ON CURRENT TIME
     
     # SET THRESHES LOCALLY
     uproadThresh = 0 
@@ -134,6 +164,47 @@ def mainWorker(camId):
     isFarClear = True
     isTruckClear = True
     isCloseClear = True
+
+    farBoxCenter = [97, 295] 
+    farBoxWidth = 15 
+    farBoxHeight = 10
+    truckBoxCenter = [97, 190]
+    truckBoxWidth = 30 
+    truckBoxHeight = 20 
+    closeBoxCenter = [97, 50] 
+    closeBoxWidth = 35
+    closeBoxHeight = 35
+    sdThreshold = 2#32 #30 #2
+    tsdThreshold = 0.8 #32 #0.8
+    csdThreshold = 0.3 #32 #0.3
+
+    def setDefaultValues(MODE):
+        values = DEFAULT_VALUES[MODE]
+        nonlocal farBoxCenter
+        nonlocal farBoxWidth
+        nonlocal farBoxHeight
+        nonlocal truckBoxCenter
+        nonlocal truckBoxWidth
+        nonlocal truckBoxHeight
+        nonlocal closeBoxCenter
+        nonlocal closeBoxWidth
+        nonlocal closeBoxHeight
+        nonlocal sdThreshold
+        nonlocal tsdThreshold
+        nonlocal csdThreshold
+
+        farBoxCenter = values['farBoxCenter']
+        farBoxWidth = values['farBoxWidth']
+        farBoxHeight = values['farBoxHeight']
+        truckBoxCenter = values['truckBoxCenter']
+        truckBoxWidth = values['truckBoxWidth']
+        truckBoxHeight = values['truckBoxHeight']
+        closeBoxCenter = values['closeBoxCenter']
+        closeBoxWidth = values['closeBoxWidth']
+        closeBoxHeight = values['closeBoxHeight']
+        sdThreshold = values['sdThreshold']
+        tsdThreshold = values['tsdThreshold']
+        csdThreshold = values['csdThreshold']
 
     def setThresholds(MODE, factor):
         thresh = THRESHOLDS[MODE]
@@ -157,6 +228,9 @@ def mainWorker(camId):
         marginOfError = int(thresh['marginOfError']*factor)
 
     setThresholds(MODE, factor)
+
+    setDefaultValues(MODE)
+
     startTime = time.time()
     IS_CAM_OK = True
     while(IS_CAM_OK):
@@ -165,36 +239,69 @@ def mainWorker(camId):
         h.add_cti_file(CTI_FILE)
         h.update_device_info_list()
         cam = h.create_image_acquisition_manager(serial_number=CAM_NAME)
-        print ("Camera found!")
         cam.start_image_acquisition()
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
 
         def nothing(x):
             pass
 
-        def toggleBoxes(x, userdata):
-            print(x, userdata)
-            print('woo')
+        def toggleBoxes(x):
             if x==1:
                 showLines = True
+                print("SHOWING TRIGGER BOXES")
             else:
                 showLines = False
-
+                print("HIDING TRIGGER BOXES")
+        def toggleLogs(x):
+            if x==1:
+                logsOn = True
+                print("SHOWING LOGS")
+            else:
+                logsOn = False
+                print("HIDING LOGS")
+        def toggleAutoExposure(x):
+            if x==1:
+                logsOn = True
+                print("AUTO EXPOSURE ON")
+            else:
+                logsOn = False
+                print("AUTO EXPOSURE OFF")
+        def toggleAutoGain(x):
+            if x==1:
+                logsOn = True
+                print("AUTO GAIN ON")
+            else:
+                logsOn = False
+                print("AUTO GAIN OFF")
         def switchMode(x):
             if x==1:
                 MODE = "DAY"
+                setDefaultValues(MODE)
+                #set camera defaults
+                print("SWITCHED TO DAY MODE")
             else:
                 MODE = "NIGHT"
+                setDefaultValues(MODE)
+                #set camera defaults
+                print("SWITCHED TO NIGHT MODE")
 
-        # cv2.setTrackbarPos(trackbarname, winname, pos)
+        uproadLastTrigger = time.time()
+        truckLastTrigger = time.time()
+        closeLastTrigger = time.time()
+        farStdAv = 0.0
+        closeStdAv = 0.0
+        truckStdAv = 0.0
+        baseAv = 0.0
 
         # create variable track bars
         showBoxes = '0 : BOXES OFF \n1 : BOXES ON'
+        outputLogs = '0 : LOGS OFF \n1 : LOGS ON'
         autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
         autoGainSwitch = '0 : Auto Gain OFF \n1 : Auto Gain ON'
         modeSwitch = '0 : Night Mode\n1 : Day Mode'
 
         cv2.createTrackbar(showBoxes,WINDOW_NAME,0,1,nothing)
+        cv2.createTrackbar(outputLogs,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
         cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
@@ -205,13 +312,18 @@ def mainWorker(camId):
         cv2.createTrackbar('Exposure',WINDOW_NAME,20,1000,nothing)
         cv2.createTrackbar('Gain',WINDOW_NAME,0,24,nothing)
         # setThresholds("DAY", factor)
-        uproadLastTrigger = time.time()
-        truckLastTrigger = time.time()
-        closeLastTrigger = time.time()
-        farStdAv = 0.0
-        closeStdAv = 0.0
-        truckStdAv = 0.0
-        baseAv = 0.0
+
+        showBoxesValue = None
+        outputLogsValue = None
+        triggerResetDelayValue = None
+        modeSwitchValue = None
+        farGrayValue = None
+        truckGrayValue = None
+        closeGrayValue = None
+        autoExposureValue = None
+        autoGainValue = None
+        exposureValue = None
+        gainValue = None
 
         while(IS_CAM_OK): # MAIN WHILE LOOP FOR IMAGE ACQUISITION
             with timeout(seconds=1, error_message='FETCH_ERROR'):
@@ -224,41 +336,22 @@ def mainWorker(camId):
                 c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
 
                 # CHECKING POSITION OF ALL TRACKBARS
-                print(cv2.getTrackbarPos(showBoxes,WINDOW_NAME))
-
-                if MODE=="NIGHT":
-                    farBoxCenter = [97, 295] 
-                    farBoxWidth = 15 
-                    farBoxHeight = 10
-
-                    truckBoxCenter = [97, 190]
-                    truckBoxWidth = 30 
-                    truckBoxHeight = 20 
-
-                    closeBoxCenter = [97, 50] 
-                    closeBoxWidth = 35
-                    closeBoxHeight = 35
-
-                    sdThreshold = 2#32 #30 #2
-                    tsdThreshold = 0.8 #32 #0.8
-                    csdThreshold = 0.3 #32 #0.3
-  
-                else: # DAY DEFAULTS
-                    farBoxCenter = [97, 298]
-                    farBoxWidth = 5
-                    farBoxHeight = 10
-
-                    truckBoxCenter = [97, 170]
-                    truckBoxWidth = 5
-                    truckBoxHeight = 10
-
-                    closeBoxCenter = [97, 50]
-                    closeBoxWidth = 15
-                    closeBoxHeight = 15
-
-                    sdThreshold = 30#32 #30 #2
-                    tsdThreshold = 30 #32 #0.8
-                    csdThreshold = 30 #32 #0.3
+                # cv2.setTrackbarPos(trackbarname, winname, pos)
+                if cv2.getTrackbarPos(showBoxes,WINDOW_NAME)!=showBoxesValue:
+                    showBoxesValue = cv2.getTrackbarPos(showBoxes,WINDOW_NAME)
+                    toggleBoxes(showBoxesValue)
+                if cv2.getTrackbarPos(outputLogs,WINDOW_NAME)!=outputLogsValue:
+                    outputLogsValue = cv2.getTrackbarPos(outputLogs,WINDOW_NAME)
+                    toggleLogs(outputLogsValue)
+                if cv2.getTrackbarPos(autoExposureSwitch,WINDOW_NAME)!=autoExposureValue:
+                    autoExposureValue = cv2.getTrackbarPos(autoExposureSwitch,WINDOW_NAME)
+                    toggleAutoExposure(autoExposureValue)
+                if cv2.getTrackbarPos(autoGainSwitch,WINDOW_NAME)!=autoGainValue:
+                    autoGainValue = cv2.getTrackbarPos(autoGainSwitch,WINDOW_NAME)
+                    toggleLogs(autoGainValue)
+                if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
+                    modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
+                    switchMode(modeSwitchValue)
 
                 triggerBoxFar = frameScaled[farBoxCenter[0]-farBoxWidth:farBoxCenter[0]+farBoxWidth,farBoxCenter[1]:farBoxCenter[1]+farBoxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                 triggerBoxTruck = frameScaled[truckBoxCenter[0]-truckBoxWidth:truckBoxCenter[0]+truckBoxWidth,truckBoxCenter[1]:truckBoxCenter[1]+truckBoxHeight]  #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
@@ -320,9 +413,8 @@ def mainWorker(camId):
                 frame.queue()
                 cv2.waitKey(1)
                 avFrameRate=avFrameRate*49/50+int(1.0/(time.time()-lastTime))/50
-                if frameCount%1==0:
-                    a = 1
-                    #print("CF", numberFar, "CT", numberTruck,"CC", numberClose,"avFPS", int(avFrameRate),"FV", int(triggerBoxFarStd),"TV", int(triggerBoxTruckStd), "CV", int(triggerBoxCloseStd))
+                if frameCount%1==0 and logsOn:
+                    print("CF", numberFar, "CT", numberTruck,"CC", numberClose,"avFPS", int(avFrameRate),"FV", int(triggerBoxFarStd),"TV", int(triggerBoxTruckStd), "CV", int(triggerBoxCloseStd))
                 lastTime = time.time()
                 frameCount += 1
 
