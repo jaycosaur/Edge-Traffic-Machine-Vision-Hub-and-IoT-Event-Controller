@@ -23,7 +23,7 @@ const convertNameToObj = (meta) => {
 const end_timeout = 1000;
 
 module.exports = actionHandler = (action) => {
-    console.log(chalk.black.bgYellow('Action Received: ', action.type))
+    //console.log(chalk.black.bgYellow('Action Received: ', action.type))
     if(action.type === actionTypes.rawStoreFileUpdated){
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
