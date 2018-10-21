@@ -103,8 +103,8 @@ class fileBackupQueue {
     }
 
     init() {
-        this.watch =  chokidar.watch(this.watchPath, { awaitWriteFinish: true })
-        this.watch.on('add', function(name) {
+        this.watch =  null//chokidar.watch(this.watchPath, { awaitWriteFinish: true })
+        chokidar.watch(this.watchPath, { awaitWriteFinish: true }).on('add', function(name) {
             const fileName = name.split('/').pop()
             this.add(fileName) 
         })
