@@ -372,7 +372,10 @@ def mainWorker(camId):
                 if cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)!=varianceMethodSwitchValue:
                     varianceMethodSwitchValue = cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)
                     toggleVarianceMethod(varianceMethodSwitchValue)
-
+                    cv2.setTrackbarPos('Far Gray',WINDOW_NAME, int(triggerBoxFarStd))
+                    cv2.setTrackbarPos('Truck Gray',WINDOW_NAME, int(triggerBoxTruckStd))
+                    cv2.setTrackbarPos('Close Gray',WINDOW_NAME, int(triggerBoxCloseStd))
+                    
                 triggerBoxFar = frameScaled[farBoxCenter[0]-farBoxWidth:farBoxCenter[0]+farBoxWidth,farBoxCenter[1]:farBoxCenter[1]+farBoxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                 triggerBoxTruck = frameScaled[truckBoxCenter[0]-truckBoxWidth:truckBoxCenter[0]+truckBoxWidth,truckBoxCenter[1]:truckBoxCenter[1]+truckBoxHeight]  #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
                 triggerBoxClose = frameScaled[closeBoxCenter[0]-closeBoxWidth:closeBoxCenter[0]+closeBoxWidth,closeBoxCenter[1]:closeBoxCenter[1]+closeBoxHeight]   #frameScaled[closeThresh:closeThresh+boxHeight,closeBoxCenter-closeBoxWidth:closeBoxCenter+closeBoxWidth] 
