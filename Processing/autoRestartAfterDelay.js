@@ -75,7 +75,7 @@ main = async () => {
         //pkill -9 python
         if (!hasRawFailed && moment(lastRawFile).add(timeDifferenceRaw, 's').isBefore(moment())){
             hasRawFailed = true
-            exec('pkill -9 python',
+            exec('pm2 restart streaming-camera',
                 (error, stdout, stderr) => {
                     cameraFailAlert()
                 })
