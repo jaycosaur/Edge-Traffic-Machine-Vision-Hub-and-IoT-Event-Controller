@@ -297,9 +297,9 @@ def mainWorker(camId):
         autoGainSwitch = '0 : Auto Gain OFF \n1 : Auto Gain ON'
         modeSwitch = '0 : Night Mode\n1 : Day Mode'
 
-        cv2.createTrackbar(showBoxes,WINDOW_NAME,0,1,nothing)
+        cv2.createTrackbar(showBoxes,WINDOW_NAME,1,1,nothing)
         cv2.createTrackbar(outputLogs,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
+        cv2.createTrackbar(modeSwitch,WINDOW_NAME,1,1,switchMode)
         cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
