@@ -150,6 +150,7 @@ def mainWorker(camId):
     MODE = "DAY"
     CLOSE_TRIGGER_METHOD = "DELAY" # DELAY, CALC
     triggerDelay = 0.5
+    VARIANCE_METHOD = False
 
     # SET MODE BASED ON CURRENT TIME
     
@@ -268,6 +269,14 @@ def mainWorker(camId):
             else:
                 logsOn = False
                 print("HIDING LOGS")
+        def toggleVarianceMethod(x):
+            nonlocal VARIANCE_METHOD
+            if x==1:
+                VARIANCE_METHOD = True
+                print("SWITCHED TO USER CONTROLLED VALUES FOR TRIGGERING")
+            else:
+                VARIANCE_METHOD = False
+                print("SWITCHED TO AVERAGE VALUES FOR TRIGGERING")
         def switchMode(x):
             nonlocal MODE
             if x==1:
@@ -303,6 +312,7 @@ def mainWorker(camId):
         autoExposureSwitch = '0 : Auto Exp OFF \n1 : Auto Exp ON'
         autoGainSwitch = '0 : Auto Gain OFF \n1 : Auto Gain ON'
         modeSwitch = '0 : Night Mode\n1 : Day Mode'
+        varianceMethodSwitch = '0 : Auto Variance\n1 : Manual Variance'
 
         currentHour = int(float(time.strftime('%H')))
 
@@ -316,6 +326,7 @@ def mainWorker(camId):
         cv2.createTrackbar(outputLogs,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,int(triggerDelay*1000),1000,nothing)
 
+        cv2.createTrackbar(varianceMethodSwitch,WINDOW_NAME,0,1,nothing)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
@@ -324,6 +335,7 @@ def mainWorker(camId):
         outputLogsValue = None
         triggerResetDelayValue = None
         modeSwitchValue = None
+        varianceMethodSwitchValue = None
         farGrayValue = None
         truckGrayValue = None
         closeGrayValue = None
@@ -339,7 +351,7 @@ def mainWorker(camId):
                 frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
                 c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
                 currentHour = int(float(time.strftime('%H')))
-                if(MODE=="NIGHT" and currentHour>=DAY_MODE_HOUR):
+                if(MODE=="NIGHT" and currentHour>=DAY_MODE_HOUR and currentHour<NIGHT_MODE_HOUR):
                     switchMode(modeSwitchValue)
                     cv2.setTrackbarPos(modeSwitch,WINDOW_NAME, 1)
                 if(MODE=="DAY" and currentHour>=NIGHT_MODE_HOUR):
@@ -357,6 +369,9 @@ def mainWorker(camId):
                 if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
                     modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
                     switchMode(modeSwitchValue)
+                if cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)!=varianceMethodSwitchValue:
+                    varianceMethodSwitchValue = cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)
+                    toggleVarianceMethod(varianceMethodSwitchValue)
 
                 triggerBoxFar = frameScaled[farBoxCenter[0]-farBoxWidth:farBoxCenter[0]+farBoxWidth,farBoxCenter[1]:farBoxCenter[1]+farBoxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                 triggerBoxTruck = frameScaled[truckBoxCenter[0]-truckBoxWidth:truckBoxCenter[0]+truckBoxWidth,truckBoxCenter[1]:truckBoxCenter[1]+truckBoxHeight]  #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
