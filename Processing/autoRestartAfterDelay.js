@@ -15,6 +15,7 @@ const BACKUP_PATH = config.BACKUP_LOCATIONS[0]
 const rawStoreWatcher = chokidar.watch(RAW_PATH, {awaitWriteFinish: true})
 const backupWatcher = chokidar.watch(RAW_PATH, {awaitWriteFinish: true})
 
+const RESET_TIMER_DELAY = 60 //seconds!
 
 console.log(chalk.bgGreen.bold.black("RUNNING WATCH SCRIPTS ..."))
 console.log(chalk.bgGreen.black(`Now watching '${RAW_PATH}' and '${BACKUP_PATH }'`))
@@ -70,8 +71,7 @@ backupWatcher.on('add', function(name) {
     lastBackupFile = moment().toISOString()
 })
 
-let timeDifferenceRaw = 60
-let timeDifferenceBackup = 60
+let timeDifferenceRaw = RESET_TIMER_DELAY
 
 function pause(time) {
     return new Promise(resolve => setTimeout(() => {
