@@ -263,5 +263,6 @@ def worker(camId):
 
     cam.stop_acquisition ()
     
-print(sys.argv)
+print(sys.argv
+time.sleep(10)
 worker(sys.argv[1])
