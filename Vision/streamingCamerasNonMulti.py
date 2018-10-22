@@ -24,7 +24,6 @@ TRIGGER_TRUCK_FLASH_URL = 'http://192.168.1.100:8000/trigger-truck-flash'
 CTI_FILE = '/opt/mvIMPACT_Acquire/lib/x86_64/mvGenTLProducer.cti'
 
 TIMEOUT_DELAY = 5
-triggerDelay = 0.5
 scaledRes = 416
 LOG = False
 DELAY_TIME_FROM_INIT_TO_TRIGGER = 20
@@ -150,6 +149,7 @@ def mainWorker(camId):
     IS_CAM_OK = True
     MODE = "DAY"
     CLOSE_TRIGGER_METHOD = "DELAY" # DELAY, CALC
+    triggerDelay = 0.5
 
     # SET MODE BASED ON CURRENT TIME
     
@@ -248,6 +248,10 @@ def mainWorker(camId):
         def nothing(x):
             pass
 
+        def changeDelay(x):
+            nonlocal triggerDelay
+            triggerDelay = x/1000
+
         def toggleBoxes(x):
             nonlocal showLines
             if x==1:
@@ -301,7 +305,7 @@ def mainWorker(camId):
         modeSwitch = '0 : Night Mode\n1 : Day Mode'
 
         currentHour = int(float(time.strftime('%H')))
-        
+
         if(currentHour>=DAY_MODE_HOUR and currentHour<=NIGHT_MODE_HOUR ):
             cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
         else:
@@ -310,8 +314,8 @@ def mainWorker(camId):
 
         cv2.createTrackbar(showBoxes,WINDOW_NAME,1,1,nothing)
         cv2.createTrackbar(outputLogs,WINDOW_NAME,0,1,nothing)
+        cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,triggerDelay,1000,nothing)
         
-        cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
