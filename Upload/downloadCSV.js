@@ -40,7 +40,8 @@ const main = async () => {
                 PROCESSED_BY: dat.processedBy,
                 PROCESSED_ON:  moment(dat['processedOn']).format("LLLL"),
                 REVIEWED_BY: dat.reviewedBy,
-                REVIEWED_ON: dat['reviewedOn']?moment(dat['reviewedOn']).format("LLLL"):""
+                REVIEWED_ON: dat['reviewedOn']?moment(dat['reviewedOn']).format("LLLL"):"",
+                SIGHTING_NOTES: dat.sightingNotes
             })
         })
         return results
