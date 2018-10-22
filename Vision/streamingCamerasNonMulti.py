@@ -395,9 +395,9 @@ def mainWorker(camId):
                 if cv2.getTrackbarPos('Far Gray',WINDOW_NAME)!=farGrayValue:
                     farGrayValue = cv2.getTrackbarPos('Far Gray',WINDOW_NAME)
                 if cv2.getTrackbarPos('Truck Gray',WINDOW_NAME)!=truckGrayValue:
-                    truckGrayValue = cv2.getTrackbarPos('Far Gray',WINDOW_NAME)
+                    truckGrayValue = cv2.getTrackbarPos('Truck Gray',WINDOW_NAME)
                 if cv2.getTrackbarPos('Close Gray',WINDOW_NAME)!=closeGrayValue:
-                    closeGrayValue = cv2.getTrackbarPos('Far Gray',WINDOW_NAME)
+                    closeGrayValue = cv2.getTrackbarPos('Close Gray',WINDOW_NAME)
 
                 if (VARIANCE_METHOD == True):
                     farDiff = abs(farGrayValue -triggerBoxFarStd)
