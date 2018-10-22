@@ -263,8 +263,5 @@ def worker(camId):
 
     cam.stop_acquisition ()
     
-if __name__ == '__main__':
-    camIds = ['CAM_1','CAM_2','CAM_3', 'CAM_4', 'CAM_5','CAM_6', 'CAM_7','CAM_8','CAM_9']
-    for i in camIds:
-        p = multiprocessing.Process(target=worker, args=(i,))
-        p.start()
+print(sys.argv)
+worker(sys.argv[1])
