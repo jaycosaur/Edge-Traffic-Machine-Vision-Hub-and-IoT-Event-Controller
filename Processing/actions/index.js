@@ -83,6 +83,15 @@ module.exports = actionHandler = (action) => {
                 )
             }) */
     }
+    if(action.type === actionTypes.processedStoreFileUpdated){
+        // backup to external and unlink
+        const pathComps = action.payload.path.split("/")
+        const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
+        fsX.move(action.payload.path, path.join(config.BACKUP_LOCATIONS[0], fileName) , {overwrite: true}, (err) => {
+            if (err) console.log("Error Backing up: %s", fileName, err)
+            console.log('Backed up %s', fileName)
+        })
+    }
     if(false && action.type === actionTypes.rawStoreFileUpdated){
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
