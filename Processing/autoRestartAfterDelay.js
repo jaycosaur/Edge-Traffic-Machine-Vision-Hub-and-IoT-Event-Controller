@@ -29,6 +29,11 @@ const cameraFailAlert = () => axios.post(config.SLACK_WEBHOOK_URL, {
     color: "#66ff66"
 })
 
+const cameraBackAlert = () => axios.post(config.SLACK_WEBHOOK_URL, {
+    text: "Cameras are back bojack.",
+    color: "#66ff66"
+})
+
 const cameraReturnedToNormal= () => axios.post(config.SLACK_WEBHOOK_URL, {
     text: "All cameras have resumed normal operations.",
     color: "#66ff66"
@@ -51,9 +56,13 @@ const cameraReturnedToNormal= () => axios.post(config.SLACK_WEBHOOK_URL, {
 let lastRawFile = moment().toISOString()
 let lasBackupFile = moment().toISOString()
 let hasRawFailed = false
+let hasRawRecovered = false
 
 rawStoreWatcher.on('add', (name) => {
     lastRawFile = moment().toISOString()
+    if (hasRawFailed){
+        hasRawRecovered = true
+    }
     hasRawFailed = false
 })
 
@@ -79,6 +88,10 @@ main = async () => {
                 (error, stdout, stderr) => {
                     cameraFailAlert()
                 })
+        }
+        if (hasRawRecovered) {
+            cameraBackAlert()
+            hasRawRecovered = false
         }
         if (false){
             cameraReturnedToNormal()
