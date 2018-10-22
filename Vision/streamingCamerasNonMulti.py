@@ -29,6 +29,9 @@ scaledRes = 416
 LOG = False
 DELAY_TIME_FROM_INIT_TO_TRIGGER = 20
 
+DAY_MODE_HOUR = 6
+NIGHT_MODE_HOUR = 19
+
 CAM_CONFIG = {
     'CAM_1': {
         'name': 'QG0170070016',
@@ -297,9 +300,17 @@ def mainWorker(camId):
         autoGainSwitch = '0 : Auto Gain OFF \n1 : Auto Gain ON'
         modeSwitch = '0 : Night Mode\n1 : Day Mode'
 
+        currentHour = int(float(time.strftime('%H')))
+        
+        if(currentHour>=DAY_MODE_HOUR and currentHour<=NIGHT_MODE_HOUR ):
+            cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
+        else:
+            cv2.createTrackbar(modeSwitch,WINDOW_NAME,0,1,switchMode)
+
+
         cv2.createTrackbar(showBoxes,WINDOW_NAME,1,1,nothing)
         cv2.createTrackbar(outputLogs,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar(modeSwitch,WINDOW_NAME,1,1,switchMode)
+        
         cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,0,1000,nothing)
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
@@ -318,10 +329,18 @@ def mainWorker(camId):
                 frame = cam.fetch_buffer()
 
             if(IS_CAM_OK and frame.payload.components):
+                timestamp = time.strftime('%H:%M:%S')
                 image = frame.payload.components[0].data
                 frameScaled = cv2.resize(image, dsize=(baseRes, int(baseRes*scale)), interpolation=cv2.INTER_CUBIC)
                 frameColorised = cv2.cvtColor(frameScaled, cv2.COLOR_BayerRG2RGB)
                 c, h1, w1 = frameColorised.shape[2], frameColorised.shape[1], frameColorised.shape[0]
+                currentHour = int(float(time.strftime('%H')))
+                if(MODE=="NIGHT" and currentHour>=DAY_MODE_HOUR):
+                    switchMode(modeSwitchValue)
+                    cv2.setTrackbarPos(modeSwitch,WINDOW_NAME, 1)
+                if(MODE=="DAY" and currentHour>=NIGHT_MODE_HOUR):
+                    switchMode(modeSwitchValue)
+                    cv2.setTrackbarPos(modeSwitch,WINDOW_NAME, 0)
 
                 # CHECKING POSITION OF ALL TRACKBARS
                 # cv2.setTrackbarPos(trackbarname, winname, pos)
@@ -331,9 +350,6 @@ def mainWorker(camId):
                 if cv2.getTrackbarPos(outputLogs,WINDOW_NAME)!=outputLogsValue:
                     outputLogsValue = cv2.getTrackbarPos(outputLogs,WINDOW_NAME)
                     toggleLogs(outputLogsValue)
-                if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
-                    modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
-                    switchMode(modeSwitchValue)
                 if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
                     modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
                     switchMode(modeSwitchValue)
