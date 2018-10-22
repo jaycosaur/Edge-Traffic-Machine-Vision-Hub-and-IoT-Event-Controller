@@ -314,8 +314,8 @@ def mainWorker(camId):
 
         cv2.createTrackbar(showBoxes,WINDOW_NAME,1,1,nothing)
         cv2.createTrackbar(outputLogs,WINDOW_NAME,0,1,nothing)
-        cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,triggerDelay,1000,nothing)
-        
+        cv2.createTrackbar('Trigger Reset Delay ms',WINDOW_NAME,int(triggerDelay*1000),1000,nothing)
+
         cv2.createTrackbar('Far Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Truck Gray',WINDOW_NAME,0,255,nothing)
         cv2.createTrackbar('Close Gray',WINDOW_NAME,0,255,nothing)
