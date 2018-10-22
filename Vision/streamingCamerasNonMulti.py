@@ -388,13 +388,27 @@ def mainWorker(camId):
                 if cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)!=varianceMethodSwitchValue:
                     varianceMethodSwitchValue = cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)
                     toggleVarianceMethod(varianceMethodSwitchValue)
-                    cv2.setTrackbarPos('Far Gray',WINDOW_NAME, int(triggerBoxFarStd))
-                    cv2.setTrackbarPos('Truck Gray',WINDOW_NAME, int(triggerBoxTruckStd))
-                    cv2.setTrackbarPos('Close Gray',WINDOW_NAME, int(triggerBoxCloseStd))
+                    cv2.setTrackbarPos('Far Gray',WINDOW_NAME, int(farStdAv))
+                    cv2.setTrackbarPos('Truck Gray',WINDOW_NAME, int(truckStdAv))
+                    cv2.setTrackbarPos('Close Gray',WINDOW_NAME, int(closeStdAv))
 
-                farDiff = abs(farStdAv -triggerBoxFarStd)
-                truckDiff = abs(truckStdAv-triggerBoxTruckStd)
-                closeDiff = abs(closeStdAv-triggerBoxCloseStd)
+                if cv2.getTrackbarPos('Far Gray',WINDOW_NAME)!=farGrayValue:
+                    farGrayValue = cv2.getTrackbarPos('Far Gray',WINDOW_NAME)
+                if cv2.getTrackbarPos('Truck Gray',WINDOW_NAME)!=truckGrayValue:
+                    truckGrayValue = cv2.getTrackbarPos('Far Gray',WINDOW_NAME)
+                if cv2.getTrackbarPos('Close Gray',WINDOW_NAME)!=closeGrayValue:
+                    closeGrayValue = cv2.getTrackbarPos('Far Gray',WINDOW_NAME)
+
+                if (VARIANCE_METHOD == True):
+                    farDiff = abs(farStdAv -farGrayValue)
+                    truckDiff = abs(truckStdAv-truckGrayValue)
+                    closeDiff = abs(closeStdAv-closeGrayValue)
+
+                else:
+                    farDiff = abs(farStdAv -triggerBoxFarStd)
+                    truckDiff = abs(truckStdAv-triggerBoxTruckStd)
+                    closeDiff = abs(closeStdAv-triggerBoxCloseStd)
+
                 currentTime = time.time()
 
                 # WAS GOING TO BE USED TO IDENTIFY CARS, NOW JUST A VISUAL AID FOR WHEN ZONES ARE RESETTING OR NOT
