@@ -165,18 +165,18 @@ def mainWorker(camId):
     isTruckClear = True
     isCloseClear = True
 
-    farBoxCenter = [97, 295] 
-    farBoxWidth = 15 
-    farBoxHeight = 10
-    truckBoxCenter = [97, 190]
-    truckBoxWidth = 30 
-    truckBoxHeight = 20 
-    closeBoxCenter = [97, 50] 
-    closeBoxWidth = 35
-    closeBoxHeight = 35
-    sdThreshold = 2#32 #30 #2
-    tsdThreshold = 0.8 #32 #0.8
-    csdThreshold = 0.3 #32 #0.3
+    farBoxCenter= [97, 298],
+    farBoxWidth= 5,
+    farBoxHeight= 10,
+    truckBoxCenter= [97, 170],
+    truckBoxWidth= 5,
+    truckBoxHeight= 10,
+    closeBoxCenter= [97, 50],
+    closeBoxWidth= 15,
+    closeBoxHeight= 15,
+    sdThreshold= 30,
+    tsdThreshold= 30,
+    csdThreshold= 30,
 
     def setDefaultValues(MODE):
         values = DEFAULT_VALUES[MODE]
