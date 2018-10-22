@@ -4,10 +4,8 @@ Starting Upload Scripts
 
 On Site Processing Scripts
     These are fully responsible for the management of files, metadata, backup, security indicator writing etc.
-    It is broken down into three main scripts:
+    It is broken down into one scripts:
         - index.js - responsible for watching the raw folder, upon file save to raw folder it appends meta-data to the file and then moves file to the processed cache
-        - autoBackup.js - responsible for backing up data to the BACKUP_LOCATIONS denoted in the config.json, watches the processed cache.
-        - nasBackup.js - responsible for backing up data to the NAS drive, it watches the first BACKUP_LOCATION and on save it automatically begins to transfer data to NAS location given in config.json
     
     Supplementary scripts are as follows:
         - resetStore.js - **DO NOT RUN AS SUDO** this cleans out the local store and resets to default state - run with: node resetStore.js

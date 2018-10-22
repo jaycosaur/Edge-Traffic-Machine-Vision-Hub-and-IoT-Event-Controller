@@ -1,35 +1,3 @@
-/* 
-
-    firestore objects: {
-        boundingBox: [
-            { // bottom left corner
-                x: fraction,
-                y: fraction
-            },
-            { //top right corner
-                x: fraction,
-                y: fraction
-            }
-        ]
-    }
-
-    convert from point
-
-    yolo output format: [category number] [object center in X] [object center in Y] [object width in X] [object width in Y]
-*/
-
-// fetch from firebase
-
-// check against current store
-
-// download files
-
-// post DONE!
-
-/* 
-    --clear-all-text
-*/
-
 const fs = require('fs');
 const path = require('path');
 const prompt = require('prompt');
@@ -38,19 +6,18 @@ const Firestore = require('@google-cloud/firestore');
 const projectId = "onetask-tfnsw-web"
 const bucketName = "onetask-sydney-tfnsw"
 
-
 const argv = require('minimist')(process.argv.slice(2));
 let IMAGE_PATH = null
 
 const firestore = new Firestore({
     projectId: projectId,
     keyFilename: process.env.gcloudkeypath,
-  });
+})
 
 const storage = new Storage({
     projectId: projectId,
     keyFilename: process.env.gcloudkeypath,
-});
+})
 
 firestore.settings({
     timestampsInSnapshots: true

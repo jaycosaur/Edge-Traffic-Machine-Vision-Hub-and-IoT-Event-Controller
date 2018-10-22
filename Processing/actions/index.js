@@ -57,7 +57,15 @@ module.exports = actionHandler = (action) => {
                 }
                 processedRecordLog.write(objToWrite)
                 return response.data
-            }).then(data => {
+            }).then(()=>{
+                fsX.move(action.payload.path, path.join(config.BACKUP_LOCATIONS[0], fileName) , {overwrite: true}, (err) => {
+                    if (err) console.log("Error Backing up: %s", fileName, err)
+                    console.log('Backed up %s', fileName)
+                })
+            }).catch(err=>console.log(err))     
+            
+            
+            /* .then(data => {
                 encode({
                         direction_of_travel: "west",
                         gps_latitude: data.lat,
@@ -73,7 +81,7 @@ module.exports = actionHandler = (action) => {
                         })
                     }
                 )
-            }).catch(err=>console.log(err))     
+            }) */
     }
     if(false && action.type === actionTypes.rawStoreFileUpdated){
         const pathComps = action.payload.path.split("/")
