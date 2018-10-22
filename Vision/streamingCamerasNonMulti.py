@@ -369,12 +369,6 @@ def mainWorker(camId):
                 if cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)!=modeSwitchValue:
                     modeSwitchValue = cv2.getTrackbarPos(modeSwitch,WINDOW_NAME)
                     switchMode(modeSwitchValue)
-                if cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)!=varianceMethodSwitchValue:
-                    varianceMethodSwitchValue = cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)
-                    toggleVarianceMethod(varianceMethodSwitchValue)
-                    cv2.setTrackbarPos('Far Gray',WINDOW_NAME, int(triggerBoxFarStd))
-                    cv2.setTrackbarPos('Truck Gray',WINDOW_NAME, int(triggerBoxTruckStd))
-                    cv2.setTrackbarPos('Close Gray',WINDOW_NAME, int(triggerBoxCloseStd))
                     
                 triggerBoxFar = frameScaled[farBoxCenter[0]-farBoxWidth:farBoxCenter[0]+farBoxWidth,farBoxCenter[1]:farBoxCenter[1]+farBoxHeight]   #frameScaled[uproadThresh:uproadThresh+boxHeight,farBoxCenter-farBoxWidth:farBoxCenter+farBoxWidth]    
                 triggerBoxTruck = frameScaled[truckBoxCenter[0]-truckBoxWidth:truckBoxCenter[0]+truckBoxWidth,truckBoxCenter[1]:truckBoxCenter[1]+truckBoxHeight]  #frameScaled[truckThresh:truckThresh+boxHeight,truckBoxCenter-truckBoxWidth:truckBoxCenter+truckBoxWidth] 
@@ -390,6 +384,13 @@ def mainWorker(camId):
                 farStdAv = farStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxFarStd/numberOfFrames
                 truckStdAv = truckStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxTruckStd/numberOfFrames
                 closeStdAv = closeStdAv*(numberOfFrames-1)/numberOfFrames + triggerBoxCloseStd/numberOfFrames
+
+                if cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)!=varianceMethodSwitchValue:
+                    varianceMethodSwitchValue = cv2.getTrackbarPos(varianceMethodSwitch,WINDOW_NAME)
+                    toggleVarianceMethod(varianceMethodSwitchValue)
+                    cv2.setTrackbarPos('Far Gray',WINDOW_NAME, int(triggerBoxFarStd))
+                    cv2.setTrackbarPos('Truck Gray',WINDOW_NAME, int(triggerBoxTruckStd))
+                    cv2.setTrackbarPos('Close Gray',WINDOW_NAME, int(triggerBoxCloseStd))
 
                 farDiff = abs(farStdAv -triggerBoxFarStd)
                 truckDiff = abs(truckStdAv-triggerBoxTruckStd)
