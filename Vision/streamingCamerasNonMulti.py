@@ -296,11 +296,7 @@ def mainWorker(camId):
                 cam.device.node_map.ExposureAuto = 'Off'
                 cam.device.node_map.GainAuto = 'Off'
                 cam.device.node_map.ExposureTime.value = 150.69
-                cam.device.node_map.Gain.value = 15
-                cam.device.node_map.Gain.value = 15
-                cam.device.node_map.Gain.value = 15
-                cam.device.node_map.Gain.value = 15
-                cam.device.node_map.Gain.value = 15
+                cam.device.node_map.Gain.value = 15.5
 
                 print(cam.device.node_map.Gain)
                 print(dir(cam.device.node_map.Gain))
