@@ -297,8 +297,7 @@ def mainWorker(camId):
                 cam.device.node_map.GainAuto = 'Off'
                 cam.device.node_map.ExposureTime.value = 150.69
                 #cam.device.node_map.Gain. = 15
-                print(cam.device.node_map.Gain.get_value)
-                print(cam.device.node_map.Gain.get_value())
+                print(cam.device.node_map.Gain.value)
                 print(dir(cam.device.node_map.Gain))
         def handleChangeInTrigger(x):
             nonlocal logsOn
