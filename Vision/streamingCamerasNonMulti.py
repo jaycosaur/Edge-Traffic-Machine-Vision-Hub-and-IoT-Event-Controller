@@ -254,8 +254,6 @@ def mainWorker(camId):
         print("ExposureTime ", cam.device.node_map.ExposureTime.list_of_valid_values)
         print("GAIN ", cam.device.node_map.Gain.list_of_valid_values
 
-        quit()
-
         #cam.device.node_map.GainAuto
         #cam.device.node_map.ExposureAuto
         #cam.device.node_map.ExposureTime
