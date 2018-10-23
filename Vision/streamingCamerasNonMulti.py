@@ -246,6 +246,9 @@ def mainWorker(camId):
         cam.start_image_acquisition()
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
 
+        print(dir(cam.device.node_map))
+        #cam.device.node_map.ExposureTime.value = exp
+
         def nothing(x):
             pass
 
