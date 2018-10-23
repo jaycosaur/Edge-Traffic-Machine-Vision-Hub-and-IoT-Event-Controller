@@ -247,17 +247,11 @@ def mainWorker(camId):
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
 
         #print(dir(cam.device.node_map))
-        #cam.device.node_map.ExposureTime.value = exp
-
-        print("GAINAUTO ", cam.device.node_map.GainAuto.get_int_value)
-        print("EXPAUTO ",cam.device.node_map.ExposureAuto.get_int_value)
-        print("ExposureTime ", cam.device.node_map.ExposureTime.list_of_valid_values)
-        print("GAIN ", cam.device.node_map.Gain.list_of_valid_values)
-
-        #cam.device.node_map.GainAuto
-        #cam.device.node_map.ExposureAuto
-        #cam.device.node_map.ExposureTime
-        #cam.device.node_map.Gain
+        
+        cam.device.node_map.ExposureAuto = 'Off'
+        cam.device.node_map.GainAuto = 'Off'
+        cam.device.node_map.ExposureTime.value = 1000
+        cam.device.node_map.Gain.value = 7
 
         def nothing(x):
             pass
