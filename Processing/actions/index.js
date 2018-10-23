@@ -57,13 +57,14 @@ module.exports = actionHandler = (action) => {
                 }
                 processedRecordLog.write(objToWrite)
                 return response.data
-            }).then(()=>{
+            }).catch(err=>console.log(err))     
+            
+            /* .then(()=>{
                 fsX.move(action.payload.path, path.join(config.BACKUP_LOCATIONS[0], fileName) , {overwrite: true}, (err) => {
                     if (err) console.log("Error Backing up: %s", fileName, err)
                     console.log('Backed up %s', fileName)
                 })
-            }).catch(err=>console.log(err))     
-            
+            }) */
             
             /* .then(data => {
                 encode({
@@ -83,7 +84,7 @@ module.exports = actionHandler = (action) => {
                 )
             }) */
     }
-    if(action.type === actionTypes.processedStoreFileUpdated){
+    /* if(action.type === actionTypes.processedStoreFileUpdated){
         // backup to external and unlink
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
@@ -131,5 +132,5 @@ module.exports = actionHandler = (action) => {
             if (err) console.log("Error Backing up: %s", fileName, err)
             console.log('Backed up %s', fileName)
         })
-    }
+    } */
 }
