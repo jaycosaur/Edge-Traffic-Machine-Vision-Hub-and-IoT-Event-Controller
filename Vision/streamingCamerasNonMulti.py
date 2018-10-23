@@ -296,11 +296,7 @@ def mainWorker(camId):
                 cam.device.node_map.ExposureAuto = 'Off'
                 cam.device.node_map.GainAuto = 'Off'
                 #cam.device.node_map.ExposureTime.value = 150.69
-                cam.device.node_map.Gain.set_value = 15.5
-
-                print(cam.device.node_map.Gain.unit)
-                print(cam.device.node_map.Gain)
-                print(dir(cam.device.node_map.Gain))
+                #cam.device.node_map.Gain.value = 15.5
         def handleChangeInTrigger(x):
             nonlocal logsOn
             if x==1:
@@ -366,7 +362,7 @@ def mainWorker(camId):
                 if(MODE=="NIGHT" and currentHour>=DAY_MODE_HOUR and currentHour<NIGHT_MODE_HOUR):
                     switchMode(modeSwitchValue)
                     cv2.setTrackbarPos(modeSwitch,WINDOW_NAME, 1)
-                if(MODE=="DAY" and currentHour>=NIGHT_MODE_HOUR):
+                if(False and MODE=="DAY" and currentHour>=NIGHT_MODE_HOUR):
                     switchMode(modeSwitchValue)
                     cv2.setTrackbarPos(modeSwitch,WINDOW_NAME, 0)
 
