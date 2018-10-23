@@ -1,6 +1,6 @@
 {
     "STORE_PATH": "/home/server/store/",
-    "RAW_STORE_PATH": "/home/server/store/raw/",
+    "RAW_STORE_PATH": " /media/server/ONETASK-THR/",
     "STAGED_STORE_PATH": "/home/server/store/staged/",
     "PROCESSED_STORE_PATH": "/media/server/CACHE/store/processed/",
     "EVENT_LOGS_PATH": "/home/server/store/events.csv",
