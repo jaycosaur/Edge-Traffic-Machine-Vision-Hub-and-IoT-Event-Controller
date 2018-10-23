@@ -247,11 +247,6 @@ def mainWorker(camId):
         cv2.namedWindow(WINDOW_NAME, flags=0) # create dedicated stream window
 
         #print(dir(cam.device.node_map))
-        
-        cam.device.node_map.ExposureAuto = 'Off'
-        cam.device.node_map.GainAuto = 'Off'
-        cam.device.node_map.ExposureTime.value = 1000
-        cam.device.node_map.Gain.value = 7
 
         def nothing(x):
             pass
@@ -291,11 +286,17 @@ def mainWorker(camId):
                 setDefaultValues(MODE)
                 #set camera defaults
                 print("SWITCHED TO DAY MODE")
+                cam.device.node_map.ExposureAuto = 'Continuous'
+                cam.device.node_map.GainAuto = 'Continuous'
             else:
                 MODE = "NIGHT"
                 setDefaultValues(MODE)
                 #set camera defaults
                 print("SWITCHED TO NIGHT MODE")
+                cam.device.node_map.ExposureAuto = 'Off'
+                cam.device.node_map.GainAuto = 'Off'
+                cam.device.node_map.ExposureTime.value = 150.69
+                cam.device.node_map.Gain = 15
         def handleChangeInTrigger(x):
             nonlocal logsOn
             if x==1:
