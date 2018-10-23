@@ -30,7 +30,7 @@ this.writer = createCsvWriter({
 
 fs.readdir(path, (err, items)=> {
     console.log(items)
-    items.filter(i=>i.split('.')[1]==="png").forEach((file)=>{
+    items&&items.filter(i=>i.split('.')[1]==="png").forEach((file)=>{
         const PATH = file
         const components = file.split(".")[0].split("_").map(i=>({key: i.split("=")[0], value: i.split("=")[1]})).reduce((obj,v)=>({...obj, [v.key]: v.value}), {})
         const ID = components["ID"]
