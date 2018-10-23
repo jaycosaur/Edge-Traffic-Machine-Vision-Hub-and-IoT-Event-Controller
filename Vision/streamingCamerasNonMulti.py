@@ -298,7 +298,7 @@ def mainWorker(camId):
                 #cam.device.node_map.ExposureTime.value = 150.69
                 cam.device.node_map.Gain.set_value = 15.5
 
-                print(cam.device.node_map.Gain.list_of_valid_values)
+                print(cam.device.node_map.Gain.unit)
                 print(cam.device.node_map.Gain)
                 print(dir(cam.device.node_map.Gain))
         def handleChangeInTrigger(x):
