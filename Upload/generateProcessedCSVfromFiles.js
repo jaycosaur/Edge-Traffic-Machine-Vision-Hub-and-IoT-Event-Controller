@@ -28,6 +28,8 @@ this.writer = createCsvWriter({
     append: true
 })
 
+console.log(path)
+
 fs.readdir(path, (err, items)=> {
     console.log(items)
     items&&items.filter(i=>i.split('.')[1]==="png").forEach((file)=>{
