@@ -349,7 +349,7 @@ def mainWorker(camId):
         closeGrayValue = None
 
         while(IS_CAM_OK): # MAIN WHILE LOOP FOR IMAGE ACQUISITION
-            with timeout(seconds=1, error_message='FETCH_ERROR'):
+            with timeout(seconds=5, error_message='FETCH_ERROR'):
                 frame = cam.fetch_buffer()
 
             if(IS_CAM_OK and frame.payload.components):
