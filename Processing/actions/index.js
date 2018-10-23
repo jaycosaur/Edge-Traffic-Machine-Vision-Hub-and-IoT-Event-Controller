@@ -38,7 +38,7 @@ const convertNameToObj = (meta) => {
 
 
 module.exports = actionHandler = (action) => {
-    //console.log(chalk.black.bgYellow('Action Received: ', action.type))
+    
     if(action.type === actionTypes.rawStoreFileUpdated){
         const pathComps = action.payload.path.split("/")
         const { CAM, UNIX, fileType, ID, PLATE, fileName } = convertNameToObj(pathComps[pathComps.length-1])
@@ -56,6 +56,7 @@ module.exports = actionHandler = (action) => {
                     PATH: fileName
                 }
                 processedRecordLog.write(objToWrite)
+                console.log(chalk.black.bgYellow('Action Received: ', action.type))
                 return response.data
             }).catch(err=>console.log(err))     
             
