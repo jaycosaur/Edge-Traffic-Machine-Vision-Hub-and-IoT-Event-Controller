@@ -252,7 +252,7 @@ def mainWorker(camId):
         print("GAINAUTO ", cam.device.node_map.GainAuto.get_int_value)
         print("EXPAUTO ",cam.device.node_map.ExposureAuto.get_int_value)
         print("ExposureTime ", cam.device.node_map.ExposureTime.list_of_valid_values)
-        print("GAIN ", cam.device.node_map.Gain.list_of_valid_values
+        print("GAIN ", cam.device.node_map.Gain.list_of_valid_values)
 
         #cam.device.node_map.GainAuto
         #cam.device.node_map.ExposureAuto
