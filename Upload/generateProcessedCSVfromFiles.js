@@ -32,6 +32,7 @@ console.log(path)
 
 fs.readdir(path, (err, items)=> {
     console.log(items)
+    let rowsToWrite = []
     items&&items.filter(i=>i.split('.')[1]==="png").forEach((file)=>{
         const PATH = file
         const components = file.split(".")[0].split("_").map(i=>({key: i.split("=")[0], value: i.split("=")[1]})).reduce((obj,v)=>({...obj, [v.key]: v.value}), {})
@@ -43,8 +44,9 @@ fs.readdir(path, (err, items)=> {
         const timeISO = moment(parseInt(components["UNIX"])).toISOString()
         const timeUNIX = components["UNIX"]
         const time = components["UNIX"]
-        writer.writeRecords([{time, timeUNIX, timeISO, timeGPS, GPS_COORDS, CAM, PLATE, PATH, ID}])
+        rowsToWrite.push({time, timeUNIX, timeISO, timeGPS, GPS_COORDS, CAM, PLATE, PATH, ID})
     })
+    writer.writeRecords(rowsToWrite)
 
     console.log("Produced file and saved in " + path + "as processed.csv")
 })
