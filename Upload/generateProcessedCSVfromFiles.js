@@ -22,7 +22,7 @@ if (process.argv.length<=2) {
 
 const path = process.argv[2]
 
-this.writer = createCsvWriter({
+const writer = createCsvWriter({
     header,
     path: path+"/processed.csv",
     append: true
