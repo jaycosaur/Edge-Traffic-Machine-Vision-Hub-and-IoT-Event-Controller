@@ -41,7 +41,7 @@ fs.readdir(path, (err, items)=> {
         const PLATE = "NONE"
         const GPS_COORDS = ""
         const timeGPS = ""
-        const timeISO = moment(parseInt(components["UNIX"])).toISOString()
+        const timeISO = moment(parseInt(components["UNIX"])).utc().toISOString()
         const timeUNIX = components["UNIX"]
         const time = components["UNIX"]
         rowsToWrite.push({time, timeUNIX, timeISO, timeGPS, GPS_COORDS, CAM, PLATE, PATH, ID})
